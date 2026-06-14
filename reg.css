@@ -1,0 +1,880 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'DS Sofachrome';
+    src: url('DS-Sofachrome.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'DS Sofachrome', 'Courier New', monospace;
+    overflow: hidden;
+}
+
+/* ========== КИБЕРПАНК ШАПКА ========== */
+.cyber-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(8, 12, 25, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    padding: 0 clamp(20px, 4vw, 60px);
+}
+
+.neon-line {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00f0ff, #ff00cc, #00f0ff, transparent);
+    animation: neonPulse 2s infinite;
+}
+
+@keyframes neonPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+}
+
+.logo {
+    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #00f0ff;
+    text-shadow: 0 0 8px #00f0ff, 0 0 15px #0066ff;
+    font-family: 'DS Sofachrome', monospace;
+    position: relative;
+    animation: logoGlow 2s ease-in-out infinite;
+    white-space: nowrap;
+}
+
+@keyframes logoGlow {
+    0%, 100% { text-shadow: 0 0 8px #00f0ff, 0 0 15px #0066ff; }
+    50% { text-shadow: 0 0 15px #00f0ff, 0 0 30px #0066ff, 0 0 5px #ff00cc; }
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: linear-gradient(90deg, #00f0ff, #ff00cc, transparent);
+}
+
+.nav-links {
+    display: flex;
+    gap: clamp(15px, 2.5vw, 45px);
+    align-items: center;
+}
+
+.nav-link {
+    color: #e0e0ff;
+    text-decoration: none;
+    font-size: clamp(0.75rem, 1.2vw, 1rem);
+    letter-spacing: 2px;
+    font-family: 'DS Sofachrome', monospace;
+    padding: 8px 0;
+    position: relative;
+    transition: 0.3s;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00f0ff;
+    transition: 0.3s;
+    box-shadow: 0 0 8px #00f0ff;
+}
+
+.nav-link:hover {
+    color: #00f0ff;
+    text-shadow: 0 0 5px #00f0ff;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: #00f0ff;
+    text-shadow: 0 0 10px #00f0ff, 0 0 20px #00aaff;
+}
+
+.nav-link.active::before {
+    width: 100%;
+    background: #00f0ff;
+    box-shadow: 0 0 12px #00f0ff;
+}
+
+/* ========== КИБЕРПАНК ПОДВАЛ ========== */
+.cyber-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(5, 8, 18, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #ff00cc;
+    box-shadow: 0 -5px 20px rgba(255, 0, 204, 0.2);
+    padding: 8px clamp(15px, 3vw, 40px);
+}
+
+.footer-neon {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ff00cc, #00f0ff, #ff00cc, transparent);
+    animation: neonPulse 1.5s infinite;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(15px, 3vw, 40px);
+}
+
+.footer-text {
+    color: #a0aaff;
+    font-family: 'DS Sofachrome', monospace;
+    font-size: clamp(0.65rem, 1vw, 0.85rem);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: textFlicker 3s infinite;
+    text-align: center;
+}
+
+@keyframes textFlicker {
+    0%, 100% { opacity: 1; text-shadow: 0 0 2px #00f0ff; }
+    95% { opacity: 1; }
+    97% { opacity: 0.3; }
+    98% { opacity: 1; }
+}
+
+.footer-line {
+    width: clamp(40px, 6vw, 80px);
+    height: 1px;
+    background: linear-gradient(90deg, #00f0ff, #ff00cc, transparent);
+}
+
+/* ========== КИБЕРПАНК ДЕКОР ========== */
+.cyber-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ========== ПАРЯЩИЕ ЧАСТИЦЫ ========== */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #00f0ff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatParticle linear infinite;
+    box-shadow: 0 0 4px #00f0ff;
+}
+
+@keyframes floatParticle {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) translateX(0);
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20vh) translateX(50px);
+    }
+}
+
+/* ========== МЕРЦАЮЩИЕ ЗВЁЗДЫ ========== */
+.twinkling-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.8; box-shadow: 0 0 5px #00f0ff; }
+}
+
+/* ========== ГОЛОГРАФИЧЕСКИЙ КРУГ ========== */
+.holo-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(450px, 30vw);
+    height: min(450px, 30vw);
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.04), transparent);
+    animation: holoPulse 4s ease-in-out infinite;
+}
+
+.holo-circle::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 50%;
+    animation: holoRotate 8s linear infinite;
+}
+
+.holo-circle::after {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    right: 35px;
+    bottom: 35px;
+    border: 1px dashed rgba(255, 0, 204, 0.15);
+    border-radius: 50%;
+    animation: holoRotateReverse 6s linear infinite;
+}
+
+@keyframes holoPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; width: min(450px, 30vw); height: min(450px, 30vw); }
+    50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; }
+}
+
+@keyframes holoRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes holoRotateReverse {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* ========== БЕГУЩИЕ ОГНИ ========== */
+.running-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 25;
+    pointer-events: none;
+}
+
+.running-light {
+    position: absolute;
+    width: min(120px, 10vw);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00f0ff, #ff00cc, transparent);
+    animation: runLight 4s linear infinite;
+}
+
+.running-light.top {
+    top: 0;
+    left: min(-120px, -10vw);
+    animation-delay: 0s;
+}
+
+.running-light.bottom {
+    bottom: 0;
+    left: min(-120px, -10vw);
+    animation-delay: 2s;
+}
+
+.running-light.left {
+    left: 0;
+    top: min(-120px, -10vw);
+    width: 2px;
+    height: min(120px, 10vw);
+    background: linear-gradient(180deg, transparent, #ff00cc, #00f0ff, transparent);
+    animation: runLightVertical 4s linear infinite;
+    animation-delay: 1s;
+}
+
+.running-light.right {
+    right: 0;
+    top: min(-120px, -10vw);
+    width: 2px;
+    height: min(120px, 10vw);
+    background: linear-gradient(180deg, transparent, #00f0ff, #ff00cc, transparent);
+    animation: runLightVertical 4s linear infinite;
+    animation-delay: 3s;
+}
+
+@keyframes runLight {
+    0% { left: min(-120px, -10vw); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+
+@keyframes runLightVertical {
+    0% { top: min(-120px, -10vw); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* ========== НЕОНОВЫЕ УГЛЫ ========== */
+.neon-corner {
+    position: absolute;
+    width: min(50px, 4vw);
+    height: min(50px, 4vw);
+    z-index: 25;
+    pointer-events: none;
+}
+
+.corner-tl {
+    top: clamp(60px, 8vh, 100px);
+    left: clamp(15px, 2vw, 40px);
+    border-top: 3px solid #00f0ff;
+    border-left: 3px solid #00f0ff;
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+.corner-tr {
+    top: clamp(60px, 8vh, 100px);
+    right: clamp(15px, 2vw, 40px);
+    border-top: 3px solid #ff00cc;
+    border-right: 3px solid #ff00cc;
+    box-shadow: 0 0 10px #ff00cc;
+}
+
+.corner-bl {
+    bottom: clamp(60px, 8vh, 100px);
+    left: clamp(15px, 2vw, 40px);
+    border-bottom: 3px solid #ff00cc;
+    border-left: 3px solid #ff00cc;
+    box-shadow: 0 0 10px #ff00cc;
+}
+
+.corner-br {
+    bottom: clamp(60px, 8vh, 100px);
+    right: clamp(15px, 2vw, 40px);
+    border-bottom: 3px solid #00f0ff;
+    border-right: 3px solid #00f0ff;
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+/* ========== ОСНОВНОЙ КОНТЕЙНЕР ========== */
+.layer-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    padding-top: 65px;
+    padding-bottom: 55px;
+}
+
+.bg-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.layer-1-wrapper {
+    position: absolute;
+    top: clamp(70px, 8vh, 100px);
+    right: clamp(30px, 5vw, 70px);
+    bottom: clamp(65px, 8vh, 95px);
+    left: clamp(30px, 5vw, 70px);
+    z-index: 2;
+}
+
+.layer-1-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.layer-2-wrapper {
+    position: absolute;
+    top: clamp(75px, 8.5vh, 105px);
+    right: clamp(35px, 5.5vw, 75px);
+    bottom: clamp(70px, 8.5vh, 100px);
+    left: clamp(35px, 5.5vw, 75px);
+    z-index: 3;
+}
+
+.layer-2-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+/* ========== ФОРМА РЕГИСТРАЦИИ (УВЕЛИЧЕННЫЕ ПОЛЯ) ========== */
+.registration-container {
+    text-align: left;
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: clamp(60px, 10vh, 120px);
+    margin-left: clamp(30px, 8vw, 150px);
+    z-index: 30;
+}
+
+.registration-title-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.registration-title {
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(2rem, 5vw, 6rem);
+    color: #00e5ff;
+    letter-spacing: clamp(3px, 1vw, 8px);
+    margin: 0;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 10px #00b4ff, 0 0 20px #0066ff;
+    animation: glitchText 3s infinite;
+}
+
+@keyframes glitchText {
+    0%, 100% { text-shadow: 0 0 10px #00b4ff, 0 0 20px #0066ff; }
+    95% { text-shadow: 0 0 10px #00b4ff, 0 0 20px #0066ff; }
+    97% { text-shadow: -2px 0 #ff00cc, 2px 0 #00f0ff; }
+}
+
+.underline-lines {
+    position: relative;
+    margin-top: 8px;
+    height: 4px;
+    width: 100%;
+}
+
+.line-first {
+    position: absolute;
+    height: 2px;
+    background-color: white;
+    left: 0;
+    width: 65%;
+    top: 0;
+}
+
+.form-container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: clamp(30px, 12vw, 250px);
+    gap: 8px;
+    width: auto;
+    min-width: auto;
+}
+
+.input-group {
+    width: auto;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.input-field {
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    padding: clamp(8px, 1.2vh, 12px) clamp(12px, 1.5vw, 16px);
+    background-color: rgba(255, 255, 255, 0.95);
+    color: black;
+    border: 2px solid white;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    outline: none;
+    width: 500px;
+    cursor: text;
+}
+
+.input-field:focus {
+    background-color: white;
+    border-color: #00b4ff;
+}
+
+.input-field::placeholder {
+    color: #888;
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(0.75rem, 1rem, 0.9rem);
+    letter-spacing: 1px;
+}
+
+.input-field.error-border {
+    border-color: #ff4757;
+    background-color: rgba(255, 71, 87, 0.1);
+}
+
+.error-message {
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: 0.55rem;
+    color: #ff4757;
+    margin-top: 2px;
+    margin-left: 5px;
+    letter-spacing: 0.5px;
+    min-height: 14px;
+}
+
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00f0ff;
+    font-family: 'DS Sofachrome', monospace;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+    color: #00f0ff;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.toggle-password:hover {
+    background: #00f0ff;
+    color: #000;
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+.toggle-password.active {
+    background: #00f0ff;
+    color: #000;
+    border-color: #fff;
+}
+
+.toshka-1 {
+    position: absolute;
+    top: clamp(10px, 2vh, 40px);
+    left: clamp(80px, 8vw, 200px);
+    z-index: 4;
+    width: clamp(15%, 18vw, 25%);
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3));
+}
+
+.toshka-2 {
+    position: absolute;
+    bottom: clamp(-60px, -5vh, -20px);
+    right: clamp(150px, 15vw, 350px);
+    z-index: 8;
+    width: clamp(25%, 28vw, 38%);
+    height: auto;
+    pointer-events: none;
+    transform: translate(50px, -50px);
+    filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.3));
+}
+
+.submit-btn {
+    height: clamp(80px, 12vh, 120px);
+    position: absolute;
+     position: absolute;
+    top: clamp(100px, 12vh, 140px);    /* увеличил значение - чуть ниже */
+    right: clamp(80px, 10vw, 150px);   /* увеличил значение - чуть левее */
+    z-index: 1100;
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(0.9rem, 1.8vw, 1.5rem);
+    padding: clamp(8px, 1vh, 15px) clamp(20px, 3vw, 45px);
+    background-color: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: clamp(2px, 0.3vw, 4px);
+    font-weight: bold;
+    transform: skewX(clamp(20deg, 3vw, 33deg));
+}
+
+.submit-btn span {
+    display: inline-block;
+    transform: skewX(clamp(-20deg, -3vw, -33deg));
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: black;
+}
+
+.submit-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: black;
+}
+
+.submit-btn:hover {
+    background-color: #00b4ff;
+    color: white;
+}
+
+.submit-btn:hover::before,
+.submit-btn:hover::after {
+    background-color: white;
+}
+
+img {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* ========== УВЕДОМЛЕНИЯ ========== */
+.notification {
+    position: fixed;
+    bottom: clamp(60px, 8vh, 80px);
+    right: clamp(15px, 3vw, 30px);
+    color: white;
+    font-family: 'DS Sofachrome', monospace;
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    letter-spacing: 1px;
+    padding: clamp(10px, 1.5vh, 15px) clamp(15px, 2vw, 25px);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: none;
+    opacity: 0;
+    transform: translateX(450px);
+}
+
+.notification.success {
+    background: linear-gradient(135deg, #00b4ff, #0066cc);
+    border-left: 5px solid #00f0ff;
+}
+
+.notification.error {
+    background: linear-gradient(135deg, #ff4757, #c0392b);
+    border-left: 5px solid #ff00cc;
+}
+
+/* ========== АДАПТИВ ========== */
+@media (max-width: 1200px) {
+    .input-field {
+        width: 300px;
+    }
+    #email, #school {
+        width: 360px;
+    }
+    .form-container {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .input-field {
+        width: 260px;
+    }
+    #email, #school {
+        width: 300px;
+    }
+    .form-container {
+        margin-left: 60px;
+    }
+    .registration-title {
+        font-size: 2rem;
+    }
+    .toshka-1 {
+        width: 18%;
+        left: 60px;
+    }
+    .toshka-2 {
+        width: 22%;
+        right: 120px;
+    }
+}
+
+@media (max-width: 800px) {
+    .input-field {
+        width: 230px;
+    }
+    #email, #school {
+        width: 260px;
+    }
+    .form-container {
+        margin-left: 40px;
+    }
+    .registration-title {
+        font-size: 1.6rem;
+    }
+    .toshka-1 {
+        width: 15%;
+        left: 40px;
+    }
+    .toshka-2 {
+        width: 18%;
+        right: 80px;
+    }
+    .toggle-password {
+        font-size: 0.55rem;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 650px) {
+    .input-field {
+        width: 200px;
+    }
+    #email, #school {
+        width: 230px;
+    }
+    .form-container {
+        margin-left: 20px;
+    }
+    .registration-title {
+        font-size: 1.3rem;
+    }
+    .toshka-1 {
+        display: none;
+    }
+    .toshka-2 {
+        display: none;
+    }
+    .submit-btn {
+        position: fixed;
+        bottom: 70px;
+        top: auto;
+        right: 20px;
+        height: auto;
+        transform: skewX(0deg);
+        padding: 8px 20px;
+        font-size: 0.8rem;
+    }
+    .submit-btn span {
+        transform: skewX(0deg);
+    }
+    .toggle-password {
+        font-size: 0.5rem;
+        padding: 2px 6px;
+        right: 5px;
+    }
+}
+
+@media (max-width: 500px) {
+    .input-field {
+        width: 180px;
+        font-size: 0.75rem;
+    }
+    #email, #school {
+        width: 200px;
+    }
+    .form-container {
+        margin-left: 15px;
+    }
+    .registration-container {
+        margin-left: 15px;
+        margin-top: 40px;
+    }
+    .registration-title {
+        font-size: 1.1rem;
+        white-space: normal;
+    }
+}

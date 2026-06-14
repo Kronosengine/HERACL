@@ -1,0 +1,828 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'DS Sofachrome';
+    src: url('DS-Sofachrome.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'DS Sofachrome', 'Courier New', monospace;
+    overflow: hidden;
+}
+
+/* ========== КИБЕРПАНК ШАПКА ========== */
+.cyber-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(8, 12, 25, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    padding: 0 clamp(20px, 4vw, 60px);
+}
+
+.neon-line {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00f0ff, #ff00cc, #00f0ff, transparent);
+    animation: neonPulse 2s infinite;
+}
+
+@keyframes neonPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+}
+
+.logo {
+    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #00f0ff;
+    text-shadow: 0 0 8px #00f0ff, 0 0 15px #0066ff;
+    font-family: 'DS Sofachrome', monospace;
+    position: relative;
+    animation: logoGlow 2s ease-in-out infinite;
+    white-space: nowrap;
+}
+
+@keyframes logoGlow {
+    0%, 100% { text-shadow: 0 0 8px #00f0ff, 0 0 15px #0066ff; }
+    50% { text-shadow: 0 0 15px #00f0ff, 0 0 30px #0066ff, 0 0 5px #ff00cc; }
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: linear-gradient(90deg, #00f0ff, #ff00cc, transparent);
+}
+
+.nav-links {
+    display: flex;
+    gap: clamp(15px, 2.5vw, 45px);
+    align-items: center;
+}
+
+.nav-link {
+    color: #e0e0ff;
+    text-decoration: none;
+    font-size: clamp(0.75rem, 1.2vw, 1rem);
+    letter-spacing: 2px;
+    font-family: 'DS Sofachrome', monospace;
+    padding: 8px 0;
+    position: relative;
+    transition: 0.3s;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00f0ff;
+    transition: 0.3s;
+    box-shadow: 0 0 8px #00f0ff;
+}
+
+.nav-link:hover {
+    color: #00f0ff;
+    text-shadow: 0 0 5px #00f0ff;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: #00f0ff;
+    text-shadow: 0 0 10px #00f0ff, 0 0 20px #00aaff;
+}
+
+.nav-link.active::before {
+    width: 100%;
+    background: #00f0ff;
+    box-shadow: 0 0 12px #00f0ff;
+}
+
+/* ========== КИБЕРПАНК ПОДВАЛ ========== */
+.cyber-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(5, 8, 18, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #ff00cc;
+    box-shadow: 0 -5px 20px rgba(255, 0, 204, 0.2);
+    padding: 8px clamp(15px, 3vw, 40px);
+}
+
+.footer-neon {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ff00cc, #00f0ff, #ff00cc, transparent);
+    animation: neonPulse 1.5s infinite;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(15px, 3vw, 40px);
+}
+
+.footer-text {
+    color: #a0aaff;
+    font-family: 'DS Sofachrome', monospace;
+    font-size: clamp(0.65rem, 1vw, 0.85rem);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: textFlicker 3s infinite;
+    text-align: center;
+}
+
+@keyframes textFlicker {
+    0%, 100% { opacity: 1; text-shadow: 0 0 2px #00f0ff; }
+    95% { opacity: 1; }
+    97% { opacity: 0.3; }
+    98% { opacity: 1; }
+}
+
+.footer-line {
+    width: clamp(40px, 6vw, 80px);
+    height: 1px;
+    background: linear-gradient(90deg, #00f0ff, #ff00cc, transparent);
+}
+
+/* ========== КИБЕРПАНК ДЕКОР ========== */
+.cyber-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ========== ПАРЯЩИЕ ЧАСТИЦЫ ========== */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #00f0ff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatParticle linear infinite;
+    box-shadow: 0 0 4px #00f0ff;
+}
+
+@keyframes floatParticle {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) translateX(0);
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20vh) translateX(50px);
+    }
+}
+
+/* ========== МЕРЦАЮЩИЕ ЗВЁЗДЫ ========== */
+.twinkling-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.8; box-shadow: 0 0 5px #00f0ff; }
+}
+
+/* ========== ГОЛОГРАФИЧЕСКИЙ КРУГ ========== */
+.holo-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(450px, 30vw);
+    height: min(450px, 30vw);
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.04), transparent);
+    animation: holoPulse 4s ease-in-out infinite;
+}
+
+.holo-circle::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 50%;
+    animation: holoRotate 8s linear infinite;
+}
+
+.holo-circle::after {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    right: 35px;
+    bottom: 35px;
+    border: 1px dashed rgba(255, 0, 204, 0.15);
+    border-radius: 50%;
+    animation: holoRotateReverse 6s linear infinite;
+}
+
+@keyframes holoPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; width: min(450px, 30vw); height: min(450px, 30vw); }
+    50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; }
+}
+
+@keyframes holoRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes holoRotateReverse {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* ========== БЕГУЩИЕ ОГНИ ========== */
+.running-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 25;
+    pointer-events: none;
+}
+
+.running-light {
+    position: absolute;
+    width: min(120px, 10vw);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00f0ff, #ff00cc, transparent);
+    animation: runLight 4s linear infinite;
+}
+
+.running-light.top {
+    top: 0;
+    left: min(-120px, -10vw);
+    animation-delay: 0s;
+}
+
+.running-light.bottom {
+    bottom: 0;
+    left: min(-120px, -10vw);
+    animation-delay: 2s;
+}
+
+.running-light.left {
+    left: 0;
+    top: min(-120px, -10vw);
+    width: 2px;
+    height: min(120px, 10vw);
+    background: linear-gradient(180deg, transparent, #ff00cc, #00f0ff, transparent);
+    animation: runLightVertical 4s linear infinite;
+    animation-delay: 1s;
+}
+
+.running-light.right {
+    right: 0;
+    top: min(-120px, -10vw);
+    width: 2px;
+    height: min(120px, 10vw);
+    background: linear-gradient(180deg, transparent, #00f0ff, #ff00cc, transparent);
+    animation: runLightVertical 4s linear infinite;
+    animation-delay: 3s;
+}
+
+@keyframes runLight {
+    0% { left: min(-120px, -10vw); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+
+@keyframes runLightVertical {
+    0% { top: min(-120px, -10vw); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* ========== НЕОНОВЫЕ УГЛЫ ========== */
+.neon-corner {
+    position: absolute;
+    width: min(50px, 4vw);
+    height: min(50px, 4vw);
+    z-index: 25;
+    pointer-events: none;
+}
+
+.corner-tl {
+    top: clamp(60px, 8vh, 100px);
+    left: clamp(15px, 2vw, 40px);
+    border-top: 3px solid #00f0ff;
+    border-left: 3px solid #00f0ff;
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+.corner-tr {
+    top: clamp(60px, 8vh, 100px);
+    right: clamp(15px, 2vw, 40px);
+    border-top: 3px solid #ff00cc;
+    border-right: 3px solid #ff00cc;
+    box-shadow: 0 0 10px #ff00cc;
+}
+
+.corner-bl {
+    bottom: clamp(60px, 8vh, 100px);
+    left: clamp(15px, 2vw, 40px);
+    border-bottom: 3px solid #ff00cc;
+    border-left: 3px solid #ff00cc;
+    box-shadow: 0 0 10px #ff00cc;
+}
+
+.corner-br {
+    bottom: clamp(60px, 8vh, 100px);
+    right: clamp(15px, 2vw, 40px);
+    border-bottom: 3px solid #00f0ff;
+    border-right: 3px solid #00f0ff;
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+/* ========== ОСНОВНОЙ КОНТЕЙНЕР ========== */
+.layer-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    padding-top: 65px;
+    padding-bottom: 55px;
+}
+
+.bg-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.layer-1-wrapper {
+    position: absolute;
+    top: clamp(70px, 8vh, 100px);
+    right: clamp(30px, 5vw, 70px);
+    bottom: clamp(65px, 8vh, 95px);
+    left: clamp(30px, 5vw, 70px);
+    z-index: 2;
+}
+
+.layer-1-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.layer-2-wrapper {
+    position: absolute;
+    top: clamp(75px, 8.5vh, 105px);
+    right: clamp(35px, 5.5vw, 75px);
+    bottom: clamp(70px, 8.5vh, 100px);
+    left: clamp(35px, 5.5vw, 75px);
+    z-index: 3;
+}
+
+.layer-2-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+.toshka-1 {
+    position: absolute;
+    top: clamp(10px, 2vh, 40px);
+    left: clamp(80px, 8vw, 200px);
+    z-index: 4;
+    width: clamp(15%, 18vw, 25%);
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3));
+}
+
+.toshka-2 {
+    position: absolute;
+    bottom: clamp(-60px, -5vh, -20px);
+    right: clamp(150px, 15vw, 350px);
+    z-index: 8;
+    width: clamp(25%, 28vw, 38%);
+    height: auto;
+    pointer-events: none;
+    transform: translate(50px, -50px);
+    filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.3));
+}
+
+.men-1 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    width: auto;
+    height: auto;
+    max-height: 85vh;
+    filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.3));
+    transform: scale(1.05);
+    transform-origin: bottom right;
+}
+
+.men-2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 9;
+    width: auto;
+    height: auto;
+    max-height: 85vh;
+    filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.3));
+    transform: scale(1.08);
+    transform-origin: bottom right;
+}
+
+.foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.text-container {
+    text-align: center;
+    pointer-events: auto;
+    margin-top: clamp(0px, 5vh, 180px);
+    margin-left: clamp(-600px, -30vw, -300px);
+    max-width: 85%;
+    width: 100%;
+}
+
+.info-text {
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 3rem);
+    color: black;
+    letter-spacing: clamp(2px, 0.5vw, 6px);
+    margin-bottom: clamp(15px, 3vh, 40px);
+    white-space: nowrap;
+}
+
+/* ========== ЭФФЕКТЫ ДЛЯ НАДПИСИ ГЕРАКЛ ========== */
+.heracles-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: clamp(25px, 5vh, 50px);
+    cursor: default;
+}
+
+.heracles-shadow {
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(2rem, 6vw, 7rem);
+    color: rgba(0, 0, 0, 0.7);
+    letter-spacing: clamp(3px, 1vw, 8px);
+    margin: 0;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+    text-shadow: 
+        0 0 5px rgba(0, 180, 255, 0.3),
+        0 0 10px rgba(0, 180, 255, 0.2);
+}
+
+.heracles-white {
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(2rem, 6vw, 7rem);
+    color: #00e5ff;
+    letter-spacing: clamp(3px, 1vw, 8px);
+    margin: 0;
+    white-space: nowrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transform: translate(clamp(5px, 1vw, 16px), clamp(5px, 1vw, 16px));
+    text-shadow: 
+        0 0 10px #00b4ff,
+        0 0 20px #00b4ff,
+        0 0 30px #0066cc,
+        0 0 40px #003366;
+    animation: neonPulseText 1.5s ease-in-out infinite, glitchText 3s infinite;
+}
+
+@keyframes neonPulseText {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px #00b4ff,
+            0 0 20px #00b4ff,
+            0 0 30px #0066cc,
+            0 0 40px #003366;
+        opacity: 1;
+    }
+    50% {
+        text-shadow: 
+            0 0 15px #00f0ff,
+            0 0 25px #00f0ff,
+            0 0 35px #0088ff,
+            0 0 50px #0044aa;
+        opacity: 0.95;
+    }
+}
+
+@keyframes glitchText {
+    0%, 100% {
+        transform: translate(clamp(5px, 1vw, 16px), clamp(5px, 1vw, 16px)) skew(0deg, 0deg);
+    }
+    95% {
+        transform: translate(clamp(5px, 1vw, 16px), clamp(5px, 1vw, 16px)) skew(0deg, 0deg);
+    }
+    96% {
+        transform: translate(clamp(3px, 0.8vw, 14px), clamp(7px, 1.2vw, 18px)) skew(1deg, 0deg);
+    }
+    97% {
+        transform: translate(clamp(7px, 1.2vw, 18px), clamp(3px, 0.8vw, 14px)) skew(-0.5deg, 0.5deg);
+    }
+    98% {
+        transform: translate(clamp(4px, 0.9vw, 15px), clamp(6px, 1.1vw, 17px)) skew(0.5deg, -0.5deg);
+    }
+}
+
+.heracles-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: radial-gradient(circle at center, rgba(0, 240, 255, 0.08), transparent);
+    border-radius: 50%;
+    animation: auraPulse 2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes auraPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(0.95);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+.heracles-wrapper::after {
+    content: '✦ ✦ ✦';
+    position: absolute;
+    top: clamp(-35px, -4vh, -25px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(0.6rem, 1.5vw, 1.2rem);
+    color: #00f0ff;
+    opacity: 0;
+    animation: sparkleAround 2s ease-in-out infinite;
+    letter-spacing: clamp(8px, 1.5vw, 20px);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+@keyframes sparkleAround {
+    0%, 100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    50% { opacity: 0.8; transform: translateX(-50%) translateY(0); }
+}
+
+.ukrash-img {
+    display: block;
+    width: 100%;
+    max-width: min(500px, 40vw);
+    height: auto;
+    margin: clamp(15px, 3vh, 35px) auto clamp(20px, 4vh, 45px) auto;
+}
+
+.description-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: clamp(80px, 12vh, 140px);
+    position: relative;
+}
+
+.description-text {
+    font-family: 'DS Sofachrome', sans-serif;
+    font-size: clamp(0.7rem, 1.5vw, 1.4rem);
+    color: #e8e8ff;
+    text-shadow: 0 0 4px rgba(0, 240, 255, 0.5);
+    letter-spacing: 1px;
+    line-height: 1.5;
+    text-align: center;
+    width: clamp(280px, 45vw, 700px);
+    background: transparent;
+    padding: 0;
+    word-wrap: break-word;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+img {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* ========== АДАПТИВ ========== */
+
+/* 1280px - 1366px (ноутбуки) */
+@media (min-width: 1280px) and (max-width: 1366px) {
+    .text-container {
+        margin-top: 60px;
+        margin-left: -350px;
+    }
+    
+    .info-text {
+        font-size: 1.6rem;
+    }
+    
+    .heracles-shadow,
+    .heracles-white {
+        font-size: 3.5rem;
+        letter-spacing: 4px;
+    }
+    
+    .description-text {
+        font-size: 0.9rem;
+        width: 450px;
+    }
+}
+
+/* 1366px - 1440px (стандартные ноутбуки) */
+@media (min-width: 1366px) and (max-width: 1440px) {
+    .text-container {
+        margin-top: 80px;
+        margin-left: -400px;
+    }
+    
+    .info-text {
+        font-size: 1.8rem;
+    }
+    
+    .heracles-shadow,
+    .heracles-white {
+        font-size: 4rem;
+        letter-spacing: 5px;
+    }
+}
+
+/* 1440px - 1600px (большие ноутбуки) */
+@media (min-width: 1440px) and (max-width: 1600px) {
+    .text-container {
+        margin-top: 100px;
+        margin-left: -430px;
+    }
+    
+    .info-text {
+        font-size: 2rem;
+    }
+    
+    .heracles-shadow,
+    .heracles-white {
+        font-size: 4.5rem;
+        letter-spacing: 6px;
+    }
+}
+
+/* 1600px - 1920px (мониторы) */
+@media (min-width: 1600px) and (max-width: 1920px) {
+    .text-container {
+        margin-top: 130px;
+        margin-left: -480px;
+    }
+    
+    .info-text {
+        font-size: 2.4rem;
+    }
+    
+    .heracles-shadow,
+    .heracles-white {
+        font-size: 5.2rem;
+        letter-spacing: 7px;
+    }
+}
+
+/* 1920px и выше */
+@media (min-width: 1920px) {
+    .text-container {
+        margin-top: 180px;
+        margin-left: -550px;
+    }
+    
+    .info-text {
+        font-size: 2.8rem;
+    }
+    
+    .heracles-shadow,
+    .heracles-white {
+        font-size: 6rem;
+        letter-spacing: 8px;
+    }
+    
+    .description-text {
+        font-size: 1.2rem;
+        width: 650px;
+    }
+}

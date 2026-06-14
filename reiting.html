@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Рейтинг - Геракл</title>
+    <link rel="stylesheet" href="reiting.css">
+</head>
+<body>
+
+    <!-- КИБЕРПАНК ШАПКА -->
+    <header class="cyber-header">
+        <div class="nav-container">
+            <div class="logo">ГЕРАКЛ</div>
+            <div class="nav-links">
+                <a href="main.html" class="nav-link">Главная</a>
+                <a href="reg.html" class="nav-link">Регистрация</a>
+                <a href="urovni.html" class="nav-link">Этапы</a>
+                <a href="profil.html" class="nav-link">Профиль</a>
+                <a href="reiting.html" class="nav-link active">Рейтинг</a>
+            </div>
+        </div>
+        <div class="neon-line"></div>
+    </header>
+
+    <!-- КИБЕРПАНК ПОДВАЛ -->
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <div class="footer-line"></div>
+            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
+            <div class="footer-line"></div>
+        </div>
+        <div class="footer-neon"></div>
+    </footer>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="layer-container">
+        <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
+        
+        <!-- Киберпанк декоративные элементы -->
+        <div class="cyber-grid"></div>
+        
+        <!-- ПАРЯЩИЕ ЧАСТИЦЫ -->
+        <div class="particles" id="particles"></div>
+        
+        <!-- МЕРЦАЮЩИЕ ЗВЁЗДЫ -->
+        <div class="twinkling-stars" id="twinklingStars"></div>
+        
+        <!-- ГОЛОГРАФИЧЕСКИЙ КРУГ -->
+        <div class="holo-circle"></div>
+        
+        <!-- БЕГУЩИЕ ОГНИ -->
+        <div class="running-lights">
+            <div class="running-light top"></div>
+            <div class="running-light bottom"></div>
+            <div class="running-light left"></div>
+            <div class="running-light right"></div>
+        </div>
+        
+        <!-- НЕОНОВЫЕ УГЛЫ -->
+        <div class="neon-corner corner-tl"></div>
+        <div class="neon-corner corner-tr"></div>
+        <div class="neon-corner corner-bl"></div>
+        <div class="neon-corner corner-br"></div>
+
+        <div class="layer-1-wrapper">
+            <img class="layer-1-img" src="kartinki/fon_3_1.png" alt="Первый слой с отступами">
+        </div>
+
+        <div class="layer-2-wrapper">
+            <img class="layer-2-img" src="kartinki/fon_3_2.png" alt="Второй слой с отступами">
+            
+            <img class="toshka-1" src="kartinki/toshka.png" alt="Тошка 1">
+            <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
+        </div>
+
+        <a href="urovni.html">
+            <button class="home-btn">
+                <span>К ЭТАПАМ</span>
+            </button>
+        </a>
+        
+        <div class="foreground">
+            <div class="rating-container">
+                <div class="rating-title-wrapper">
+                    <h1 class="rating-title glitch-title" data-text="ТАБЛИЦА ЛИДЕРОВ">ТАБЛИЦА ЛИДЕРОВ</h1>
+                </div>
+                <div class="rating-subtitle">ТОП-10 КОМАНД ПО ИТОГАМ ИСПЫТАНИЙ</div>
+                
+                <div class="rating-table">
+                    <div class="rating-header">
+                        <div class="col-place">МЕСТО</div>
+                        <div class="col-name">КОМАНДА</div>
+                        <div class="col-score">ОЧКИ</div>
+                    </div>
+                    
+                    <div class="rating-row first">
+                        <div class="col-place">🏆 1</div>
+                        <div class="col-name">⭐ ЗВЕЗДНЫЙ ФЕНИКС ⭐</div>
+                        <div class="col-score">3150</div>
+                    </div>
+                    
+                    <div class="rating-row second">
+                        <div class="col-place">2</div>
+                        <div class="col-name">🔥 КИБЕР-ТИТАНЫ 🔥</div>
+                        <div class="col-score">2980</div>
+                    </div>
+                    
+                    <div class="rating-row third">
+                        <div class="col-place">3</div>
+                        <div class="col-name">💀 НЕКРОМАНТЫ 💀</div>
+                        <div class="col-score">2750</div>
+                    </div>
+                    
+                    <div class="rating-row">
+                        <div class="col-place">4</div>
+                        <div class="col-name">🎮 ВИРТУАЛЬНЫЕ ВОИНЫ 🎮</div>
+                        <div class="col-score">2510</div>
+                    </div>
+                    
+                    <div class="rating-row">
+                        <div class="col-place">5</div>
+                        <div class="col-name">🤖 МЕХА-ДРАКОНЫ 🤖</div>
+                        <div class="col-score">2340</div>
+                    </div>
+                    
+                    <div class="rating-row">
+                        <div class="col-place">6</div>
+                        <div class="col-name">⚔️ КОДЕКС-ВОИНЫ ⚔️</div>
+                        <div class="col-score">2180</div>
+                    </div>
+                    
+                    <div class="rating-row">
+                        <div class="col-place">7</div>
+                        <div class="col-name">🌀 ЦИФРОВОЙ ХАОС 🌀</div>
+                        <div class="col-score">1950</div>
+                    </div>
+                    
+                    <div class="rating-row">
+                        <div class="col-place">8</div>
+                        <div class="col-name">🌟 АТОМНЫЕ ЗВЕЗДЫ 🌟</div>
+                        <div class="col-score">1720</div>
+                    </div>
+                    
+                    <div class="rating-row">
+                        <div class="col-place">9</div>
+                        <div class="col-name">🔮 ХРАНИТЕЛИ СВЕТА 🔮</div>
+                        <div class="col-score">1480</div>
+                    </div>
+                    
+                    <div class="rating-row">
+                        <div class="col-place">10</div>
+                        <div class="col-name">💎 БИТОВЫЕ РЫЦАРИ 💎</div>
+                        <div class="col-score">1250</div>
+                    </div>
+                </div>
+
+                <div class="rating-footer">
+                    <div class="update-date">🏆 ОБНОВЛЕНО: 14.06.2026 🏆</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Анимация появления строк
+        const rows = document.querySelectorAll('.rating-row');
+        rows.forEach((row, index) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(-20px)';
+            row.style.transition = `all 0.3s ease ${index * 0.05}s`;
+            setTimeout(() => {
+                row.style.opacity = '1';
+                row.style.transform = 'translateX(0)';
+            }, 100);
+        });
+
+        // Генерация парящих частиц
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+
+        // Генерация звёзд
+        function createStars() {
+            const container = document.getElementById('twinklingStars');
+            if (!container) return;
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = 2 + Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        // Глитч-эффект для заголовка
+        const glitchElements = document.querySelectorAll('.glitch-title');
+        glitchElements.forEach(el => {
+            setInterval(() => {
+                el.style.transform = `skew(${Math.random() * 2 - 1}deg, ${Math.random() * 2 - 1}deg)`;
+                setTimeout(() => {
+                    el.style.transform = 'skew(0deg, 0deg)';
+                }, 100);
+            }, 3000);
+        });
+
+        createParticles();
+        createStars();
+    </script>
+</body>
+</html>

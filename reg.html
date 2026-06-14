@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Регистрация - Геракл</title>
+    <link rel="stylesheet" href="reg.css">
+</head>
+<body>
+
+    <!-- КИБЕРПАНК ШАПКА -->
+    <header class="cyber-header">
+        <div class="nav-container">
+            <div class="logo">ГЕРАКЛ</div>
+            <div class="nav-links">
+                <a href="main.html" class="nav-link">Главная</a>
+                <a href="reg.html" class="nav-link active">Регистрация</a>
+                <a href="urovni.html" class="nav-link">Этапы</a>
+                <a href="profil.html" class="nav-link">Профиль</a>
+                <a href="reiting.html" class="nav-link">Рейтинг</a>
+            </div>
+        </div>
+        <div class="neon-line"></div>
+    </header>
+
+    <!-- КИБЕРПАНК ПОДВАЛ -->
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <div class="footer-line"></div>
+            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
+            <div class="footer-line"></div>
+        </div>
+        <div class="footer-neon"></div>
+    </footer>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="layer-container">
+        <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
+        
+        <!-- Киберпанк декоративные элементы -->
+        <div class="cyber-grid"></div>
+        
+        <!-- ПАРЯЩИЕ ЧАСТИЦЫ -->
+        <div class="particles" id="particles"></div>
+        
+        <!-- МЕРЦАЮЩИЕ ЗВЁЗДЫ -->
+        <div class="twinkling-stars" id="twinklingStars"></div>
+        
+        <!-- ГОЛОГРАФИЧЕСКИЙ КРУГ -->
+        <div class="holo-circle"></div>
+        
+        <!-- БЕГУЩИЕ ОГНИ -->
+        <div class="running-lights">
+            <div class="running-light top"></div>
+            <div class="running-light bottom"></div>
+            <div class="running-light left"></div>
+            <div class="running-light right"></div>
+        </div>
+        
+        <!-- НЕОНОВЫЕ УГЛЫ -->
+        <div class="neon-corner corner-tl"></div>
+        <div class="neon-corner corner-tr"></div>
+        <div class="neon-corner corner-bl"></div>
+        <div class="neon-corner corner-br"></div>
+
+        <div class="layer-1-wrapper">
+            <img class="layer-1-img" src="kartinki/fon_2_1.png" alt="Первый слой с отступами">
+        </div>
+
+        <div class="layer-2-wrapper">
+            <img class="layer-2-img" src="kartinki/fon_2_2.png" alt="Второй слой с отступами">
+        </div>
+
+        <button class="submit-btn" id="submitBtn">
+            <span>ОТПРАВИТЬ</span>
+        </button>
+
+        <div class="foreground">
+            <img class="toshka-1" src="kartinki/toshka.png" alt="Тошка 1">
+            <div class="registration-container">
+                <div class="registration-title-wrapper">
+                    <h1 class="registration-title">РЕГИСТРАЦИЯ</h1>
+                </div>
+                <div class="underline-lines">
+                    <div class="line-first"></div>
+                </div>
+
+                <div class="form-container">
+                    <div class="input-group">
+                        <input type="text" id="team-name" class="input-field input-medium_0" placeholder="Название команды">
+                        <div class="error-message" id="team-name-error"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" id="email" class="input-field input-medium_3" placeholder="Электронная почта">
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+
+                    <div class="input-group password-group">
+                        <input type="password" id="password" class="input-field input-medium_2" placeholder="Пароль">
+                        <button type="button" class="toggle-password" data-target="password">ПОКАЗАТЬ</button>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+
+                    <div class="input-group password-group">
+                        <input type="password" id="confirm-password" class="input-field input-medium_2" placeholder="Подтверждение пароля">
+                        <button type="button" class="toggle-password" data-target="confirm-password">ПОКАЗАТЬ</button>
+                        <div class="error-message" id="confirm-password-error"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" id="city" class="input-field input-medium_1" placeholder="Город">
+                        <div class="error-message" id="city-error"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" id="school" class="input-field input-medium_2" placeholder="Название школы">
+                        <div class="error-message" id="school-error"></div>
+                    </div>
+                </div>
+                <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомления (изначально скрыты) -->
+    <div id="successNotification" class="notification success">✅ Вы успешно зарегистрировались!</div>
+    <div id="errorNotification" class="notification error">⚠️ Ошибка!</div>
+
+    <script>
+        const teamNameInput = document.getElementById('team-name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const cityInput = document.getElementById('city');
+        const schoolInput = document.getElementById('school');
+        const submitBtn = document.getElementById('submitBtn');
+        const successNotification = document.getElementById('successNotification');
+        const errorNotification = document.getElementById('errorNotification');
+
+        const teamNameError = document.getElementById('team-name-error');
+        const emailError = document.getElementById('email-error');
+        const passwordError = document.getElementById('password-error');
+        const confirmPasswordError = document.getElementById('confirm-password-error');
+        const cityError = document.getElementById('city-error');
+        const schoolError = document.getElementById('school-error');
+
+        // Скрываем уведомления при загрузке
+        successNotification.style.display = 'none';
+        errorNotification.style.display = 'none';
+        successNotification.style.opacity = '0';
+        errorNotification.style.opacity = '0';
+        successNotification.style.transform = 'translateX(450px)';
+        errorNotification.style.transform = 'translateX(450px)';
+
+        // Кнопки показа/скрытия пароля
+        const toggleButtons = document.querySelectorAll('.toggle-password');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetInput = document.getElementById(targetId);
+                if (targetInput.type === 'password') {
+                    targetInput.type = 'text';
+                    this.textContent = 'СКРЫТЬ';
+                    this.classList.add('active');
+                } else {
+                    targetInput.type = 'password';
+                    this.textContent = 'ПОКАЗАТЬ';
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        function showSuccess(message) {
+            successNotification.textContent = `✅ ${message}`;
+            successNotification.style.display = 'flex';
+            setTimeout(() => {
+                successNotification.style.opacity = '1';
+                successNotification.style.transform = 'translateX(0)';
+            }, 10);
+            setTimeout(() => {
+                successNotification.style.opacity = '0';
+                successNotification.style.transform = 'translateX(450px)';
+                setTimeout(() => {
+                    successNotification.style.display = 'none';
+                }, 400);
+            }, 4000);
+        }
+
+        function showErrorPopup(message) {
+            errorNotification.textContent = `⚠️ ${message}`;
+            errorNotification.style.display = 'flex';
+            setTimeout(() => {
+                errorNotification.style.opacity = '1';
+                errorNotification.style.transform = 'translateX(0)';
+            }, 10);
+            setTimeout(() => {
+                errorNotification.style.opacity = '0';
+                errorNotification.style.transform = 'translateX(450px)';
+                setTimeout(() => {
+                    errorNotification.style.display = 'none';
+                }, 400);
+            }, 4000);
+        }
+
+        function clearFieldErrors() {
+            teamNameError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            confirmPasswordError.textContent = '';
+            cityError.textContent = '';
+            schoolError.textContent = '';
+            
+            teamNameInput.classList.remove('error-border');
+            emailInput.classList.remove('error-border');
+            passwordInput.classList.remove('error-border');
+            confirmPasswordInput.classList.remove('error-border');
+            cityInput.classList.remove('error-border');
+            schoolInput.classList.remove('error-border');
+        }
+
+        function setFieldError(field, errorElement, message) {
+            errorElement.textContent = message;
+            field.classList.add('error-border');
+        }
+
+        function validateTeamName(name) {
+            if (!name || name.trim() === '') {
+                return { isValid: false, message: 'Введите название команды' };
+            }
+            if (name.trim().length < 2) {
+                return { isValid: false, message: 'Название команды должно содержать минимум 2 символа' };
+            }
+            if (name.trim().length > 50) {
+                return { isValid: false, message: 'Название команды не должно превышать 50 символов' };
+            }
+            return { isValid: true, message: '' };
+        }
+
+        function validateEmail(email) {
+            if (!email || email.trim() === '') {
+                return { isValid: false, message: 'Введите электронную почту' };
+            }
+            if (!email.includes('@')) {
+                return { isValid: false, message: 'Email должен содержать символ @' };
+            }
+            const parts = email.split('@');
+            if (parts.length !== 2 || parts[0].length === 0 || !parts[1].includes('.')) {
+                return { isValid: false, message: 'Некорректный формат email' };
+            }
+            return { isValid: true, message: '' };
+        }
+
+        function validatePassword(password) {
+            if (!password) {
+                return { isValid: false, message: 'Введите пароль' };
+            }
+            if (password.length < 6) {
+                return { isValid: false, message: 'Пароль должен содержать минимум 6 символов' };
+            }
+            if (password.length > 30) {
+                return { isValid: false, message: 'Пароль не должен превышать 30 символов' };
+            }
+            return { isValid: true, message: '' };
+        }
+
+        function validateConfirmPassword(password, confirmPassword) {
+            if (!confirmPassword) {
+                return { isValid: false, message: 'Подтвердите пароль' };
+            }
+            if (password !== confirmPassword) {
+                return { isValid: false, message: 'Пароли не совпадают' };
+            }
+            return { isValid: true, message: '' };
+        }
+
+        function validateCity(city) {
+            if (!city || city.trim() === '') {
+                return { isValid: false, message: 'Введите город' };
+            }
+            const trimmed = city.trim();
+            const firstChar = trimmed.charAt(0);
+            if (firstChar !== firstChar.toUpperCase() || firstChar === firstChar.toLowerCase()) {
+                return { isValid: false, message: 'Город должен начинаться с заглавной буквы' };
+            }
+            if (trimmed.length < 2) {
+                return { isValid: false, message: 'Название города слишком короткое' };
+            }
+            return { isValid: true, message: '' };
+        }
+
+        function validateSchool(school) {
+            if (!school || school.trim() === '') {
+                return { isValid: false, message: 'Введите название школы' };
+            }
+            if (school.trim().length < 2) {
+                return { isValid: false, message: 'Название школы слишком короткое' };
+            }
+            if (school.trim().length > 100) {
+                return { isValid: false, message: 'Название школы не должно превышать 100 символов' };
+            }
+            return { isValid: true, message: '' };
+        }
+
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            clearFieldErrors();
+            
+            const teamName = teamNameInput.value;
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const city = cityInput.value;
+            const school = schoolInput.value;
+            
+            const teamNameValidation = validateTeamName(teamName);
+            const emailValidation = validateEmail(email);
+            const passwordValidation = validatePassword(password);
+            const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword);
+            const cityValidation = validateCity(city);
+            const schoolValidation = validateSchool(school);
+            
+            let hasError = false;
+            
+            if (!teamNameValidation.isValid) {
+                setFieldError(teamNameInput, teamNameError, teamNameValidation.message);
+                hasError = true;
+            }
+            if (!emailValidation.isValid) {
+                setFieldError(emailInput, emailError, emailValidation.message);
+                hasError = true;
+            }
+            if (!passwordValidation.isValid) {
+                setFieldError(passwordInput, passwordError, passwordValidation.message);
+                hasError = true;
+            }
+            if (!confirmPasswordValidation.isValid) {
+                setFieldError(confirmPasswordInput, confirmPasswordError, confirmPasswordValidation.message);
+                hasError = true;
+            }
+            if (!cityValidation.isValid) {
+                setFieldError(cityInput, cityError, cityValidation.message);
+                hasError = true;
+            }
+            if (!schoolValidation.isValid) {
+                setFieldError(schoolInput, schoolError, schoolValidation.message);
+                hasError = true;
+            }
+            
+            if (hasError) {
+                showErrorPopup('Заполните все поля правильно!');
+                return;
+            }
+            
+            const userData = {
+                teamName: teamName.trim(),
+                email: email.trim(),
+                password: password,
+                city: city.trim(),
+                school: school.trim(),
+                registeredAt: new Date().toISOString()
+            };
+            localStorage.setItem('registeredUser', JSON.stringify(userData));
+            
+            showSuccess(`Вы успешно зарегистрировались, ${teamName.trim()}! Теперь вы можете войти в свой аккаунт.`);
+        });
+
+        const inputs = [teamNameInput, emailInput, passwordInput, confirmPasswordInput, cityInput, schoolInput];
+        inputs.forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    submitBtn.click();
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                const fieldId = this.id;
+                if (fieldId === 'team-name') {
+                    teamNameError.textContent = '';
+                    this.classList.remove('error-border');
+                } else if (fieldId === 'email') {
+                    emailError.textContent = '';
+                    this.classList.remove('error-border');
+                } else if (fieldId === 'password') {
+                    passwordError.textContent = '';
+                    this.classList.remove('error-border');
+                } else if (fieldId === 'confirm-password') {
+                    confirmPasswordError.textContent = '';
+                    this.classList.remove('error-border');
+                } else if (fieldId === 'city') {
+                    cityError.textContent = '';
+                    this.classList.remove('error-border');
+                } else if (fieldId === 'school') {
+                    schoolError.textContent = '';
+                    this.classList.remove('error-border');
+                }
+            });
+        });
+
+        // Генерация парящих частиц
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+
+        // Генерация звёзд
+        function createStars() {
+            const container = document.getElementById('twinklingStars');
+            if (!container) return;
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = 2 + Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        createParticles();
+        createStars();
+    </script>
+</body>
+</html>

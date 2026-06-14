@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Финалы - Геракл</title>
+    <link rel="stylesheet" href="final.css">
+</head>
+<body>
+
+    <!-- КИБЕРПАНК ШАПКА -->
+    <header class="cyber-header">
+        <div class="nav-container">
+            <div class="logo">ГЕРАКЛ</div>
+            <div class="nav-links">
+                <a href="main.html" class="nav-link">Главная</a>
+                <a href="reg.html" class="nav-link">Регистрация</a>
+                <a href="urovni.html" class="nav-link active">Этапы</a>
+                <a href="profil.html" class="nav-link">Профиль</a>
+                <a href="reiting.html" class="nav-link">Рейтинг</a>
+            </div>
+        </div>
+        <div class="neon-line"></div>
+    </header>
+
+    <!-- КИБЕРПАНК ПОДВАЛ -->
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <div class="footer-line"></div>
+            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
+            <div class="footer-line"></div>
+        </div>
+        <div class="footer-neon"></div>
+    </footer>
+
+    <div class="layer-container">
+        <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
+        
+        <div class="cyber-grid"></div>
+        <div class="particles" id="particles"></div>
+        <div class="twinkling-stars" id="twinklingStars"></div>
+        <div class="holo-circle"></div>
+        <div class="running-lights">
+            <div class="running-light top"></div>
+            <div class="running-light bottom"></div>
+            <div class="running-light left"></div>
+            <div class="running-light right"></div>
+        </div>
+        <div class="neon-corner corner-tl"></div>
+        <div class="neon-corner corner-tr"></div>
+        <div class="neon-corner corner-bl"></div>
+        <div class="neon-corner corner-br"></div>
+
+        <div class="content-wrapper">
+            <div class="hero-section">
+                <h1 class="main-title glitch" data-text="ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ">ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ</h1>
+                <p class="subtitle">Три финальных испытания перед лицом Олимпийских богов</p>
+                <div class="progress-bar-container">
+                    <div class="progress-label">ПРОГРЕСС ПРОХОЖДЕНИЯ ФИНАЛОВ</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="globalProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span id="completedCount">0</span> / <span id="totalCount">3</span> ФИНАЛОВ
+                    </div>
+                </div>
+            </div>
+
+            <div class="finals-grid" id="finalsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для финала -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle">ФИНАЛ 1: Клубок бога смерти Танатоса</h2>
+                <button class="modal-close" id="closeModalBtn">✖</button>
+            </div>
+            <div class="hero-images" id="heroImages">
+                <div class="hero-left"><div class="hero-icon">💀</div><div class="hero-name">Танатос</div></div>
+                <div class="hero-center"><div class="hero-icon-large">🏆⚡🏆</div></div>
+                <div class="hero-right"><div class="hero-icon">🏛️</div><div class="hero-name">Олимп</div></div>
+            </div>
+            <div class="modal-body">
+                <div class="story-box">
+                    <div class="story-icon">📜</div>
+                    <div class="story-text" id="storyText"></div>
+                </div>
+                <div class="task-box">
+                    <div class="task-icon">⚔️</div>
+                    <div class="task-text" id="taskText"></div>
+                </div>
+                <div class="data-box" id="dataBox">
+                    <div class="data-icon">📊</div>
+                    <div class="data-text" id="dataText"></div>
+                </div>
+                <div class="answer-box">
+                    <div class="answer-icon">💡</div>
+                    <div class="answer-input-area">
+                        <input type="text" id="answerInput" class="answer-input" placeholder="Введите ответ...">
+                        <button class="answer-submit" id="answerSubmitBtn">ПРОВЕРИТЬ</button>
+                    </div>
+                    <div class="hint-text" id="hintText"></div>
+                </div>
+                <div class="modal-result" id="modalResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные о финалах
+        const finals = [
+            { id: 1, name: "Клубок бога смерти Танатоса", points: 250, answer: "Геракл 3", type: "text",
+              story: "Танатос ведет учет душ в подземном царстве. Из-за бага некоторые записи повреждены или продублированы.",
+              task: "Напишите программу, которая:\n1. Удалит все полные дубликаты строк.\n2. Отфильтрует только те души, у которых Грехи строго больше, чем Добродетели.\n3. Отсортирует оставшихся по Возрасту (от самых старых к самым молодым).\n\nВ качестве ответа выведите Имя самой старой грешной души и общее количество отфильтрованных душ через пробел.",
+              data: `souls.txt (пример данных):
+["Ахилл", 25, 5, 3]
+["Гектор", 30, 7, 2]
+["Ахилл", 25, 5, 3]
+["Парис", 22, 4, 4]
+["Одиссей", 35, 6, 5]
+["Аякс", 28, 8, 1]
+["Нестор", 45, 3, 6]
+["Гектор", 30, 7, 2]`,
+              hint: "После удаления дубликатов и фильтрации (Грехи > Добродетели) останутся: Гектор (30 лет, грехи 7 > добродетели 2), Аякс (28 лет, грехи 8 > добродетели 1). Самая старая — Гектор. Всего 2 души. Ответ: Гектор 2",
+              hero: "💀", heroName: "Танатос" },
+            { id: 2, name: "Гиперкуб титана Атланта", points: 250, answer: "SAFE", type: "text",
+              story: "Атлант держит небосвод, представленный в виде квадратной матрицы чисел. Если сумма весов превышает K, небо рушится.",
+              task: "Считайте матрицу N×N и число K. Поверните матрицу на 90 градусов по часовой стрелке. Найдите строку с максимальной суммой элементов в повернутой матрице. Если эта сумма больше K, выведите CRASH и номер строки. Если небо устояло, выведите SAFE.",
+              data: `N = 3, K = 15
+Исходная матрица:
+1 2 3
+4 5 6
+7 8 9
+После поворота на 90°:
+7 4 1
+8 5 2
+9 6 3
+Суммы строк: 12, 15, 18
+Максимальная сумма = 18 > K = 15 → CRASH 3`,
+              hint: "После поворота найдите строку с максимальной суммой. Если она > K → CRASH [номер], иначе SAFE",
+              hero: "🌍", heroName: "Атлант" },
+            { id: 3, name: "Колесница Гелиоса", points: 250, answer: "2", type: "number",
+              story: "Гелиос должен пролететь на колеснице от Олимпа до Заката. На пути расположены облака-заправки.",
+              task: "От точки 0 до точки X. Есть 10 облаков-заправок с координатами x_i и энергией f_i. Колесница тратит 1 энергии на 1 путь. Стартовый запас S. Нужно выбрать минимальное количество остановок, чтобы долететь до X. Если невозможно → -1.",
+              data: `X = 100, S = 20
+Облака (координата, энергия):
+[(20, 15), (35, 10), (50, 5), (65, 20), (80, 10), (90, 15), (95, 5), (100, 0), (110, 0), (120, 0)]`,
+              hint: "Жадный алгоритм: на каждой остановке выбираем облако с максимальной энергией среди достижимых. Минимальное количество остановок = 2",
+              hero: "☀️", heroName: "Гелиос" }
+        ];
+
+        let completed = JSON.parse(localStorage.getItem('finals_completed') || '{}');
+        let userAnswers = JSON.parse(localStorage.getItem('finals_answers') || '{}');
+        let currentFinal = null;
+
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const heroImages = document.getElementById('heroImages');
+        const storyText = document.getElementById('storyText');
+        const taskText = document.getElementById('taskText');
+        const dataText = document.getElementById('dataText');
+        const answerInput = document.getElementById('answerInput');
+        const hintText = document.getElementById('hintText');
+        const modalResult = document.getElementById('modalResult');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const answerSubmitBtn = document.getElementById('answerSubmitBtn');
+
+        function updateProgress() {
+            const total = finals.length;
+            const completedCount = Object.values(completed).filter(v => v === true).length;
+            const percent = (completedCount / total) * 100;
+            document.getElementById('globalProgress').style.width = `${percent}%`;
+            document.getElementById('completedCount').textContent = completedCount;
+            localStorage.setItem('finals_progress', JSON.stringify({ completed: completedCount, total: total }));
+        }
+
+        function checkAnswer(final, userAnswer) {
+            if (final.type === 'number') {
+                return parseFloat(userAnswer) === parseFloat(final.answer);
+            } else {
+                return userAnswer.trim().toUpperCase() === final.answer.toUpperCase();
+            }
+        }
+
+        function openModal(finalId) {
+            currentFinal = finals.find(f => f.id === finalId);
+            if (!currentFinal) return;
+
+            modalTitle.textContent = `ФИНАЛ ${currentFinal.id}: ${currentFinal.name}`;
+            
+            heroImages.innerHTML = `
+                <div class="hero-left"><div class="hero-icon">${currentFinal.hero}</div><div class="hero-name">${currentFinal.heroName}</div></div>
+                <div class="hero-center"><div class="hero-icon-large">🏆⚡🏆</div></div>
+                <div class="hero-right"><div class="hero-icon">🏛️</div><div class="hero-name">Олимп</div></div>
+            `;
+            
+            storyText.textContent = currentFinal.story;
+            taskText.textContent = currentFinal.task;
+            dataText.textContent = currentFinal.data;
+            hintText.textContent = `💡 Подсказка: ${currentFinal.hint}`;
+            answerInput.value = userAnswers[currentFinal.id] || '';
+            modalResult.innerHTML = '';
+            answerInput.disabled = completed[currentFinal.id] || false;
+            
+            if (completed[currentFinal.id]) {
+                modalResult.innerHTML = `<div class="result-success">✅ ФИНАЛ УЖЕ ПРОЙДЕН! Получено +${currentFinal.points} очков</div>`;
+                answerSubmitBtn.textContent = 'УЖЕ ВЫПОЛНЕНО';
+                answerSubmitBtn.disabled = true;
+            } else {
+                answerSubmitBtn.textContent = '⚡ ПРОВЕРИТЬ';
+                answerSubmitBtn.disabled = false;
+            }
+            
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            currentFinal = null;
+        }
+
+        function submitAnswer() {
+            if (!currentFinal) return;
+            if (completed[currentFinal.id]) {
+                showNotification('Этот финал уже пройден!', 'error');
+                return;
+            }
+            
+            const userAnswer = answerInput.value.trim();
+            if (!userAnswer) {
+                showNotification('Введите ответ!', 'error');
+                return;
+            }
+            
+            const isCorrect = checkAnswer(currentFinal, userAnswer);
+            
+            if (isCorrect) {
+                completed[currentFinal.id] = true;
+                userAnswers[currentFinal.id] = userAnswer;
+                localStorage.setItem('finals_completed', JSON.stringify(completed));
+                localStorage.setItem('finals_answers', JSON.stringify(userAnswers));
+                updateProgress();
+                
+                const currentUser = localStorage.getItem('currentUser');
+                if (currentUser) {
+                    const userData = JSON.parse(currentUser);
+                    const progressKey = `progress_${userData.teamName}`;
+                    const existingProgress = JSON.parse(localStorage.getItem(progressKey) || '{"points":0,"wins":0,"rating":1}');
+                    existingProgress.points = (existingProgress.points || 0) + currentFinal.points;
+                    existingProgress.wins = (existingProgress.wins || 0) + 1;
+                    localStorage.setItem(progressKey, JSON.stringify(existingProgress));
+                }
+                
+                modalResult.innerHTML = `<div class="result-success">✅ ПРАВИЛЬНО! Вы получили +${currentFinal.points} очков!</div>`;
+                answerSubmitBtn.textContent = 'ВЫПОЛНЕНО';
+                answerSubmitBtn.disabled = true;
+                answerInput.disabled = true;
+                showNotification(`✅ ФИНАЛ ${currentFinal.id} ПРОЙДЕН! +${currentFinal.points} очков`, 'success');
+                renderFinals();
+            } else {
+                modalResult.innerHTML = `<div class="result-error">❌ НЕПРАВИЛЬНО! Попробуйте ещё раз.</div>`;
+                answerInput.classList.add('error-shake');
+                setTimeout(() => answerInput.classList.remove('error-shake'), 500);
+                showNotification(`❌ Неправильный ответ для финала ${currentFinal.id}!`, 'error');
+            }
+        }
+
+        function renderFinals() {
+            const container = document.getElementById('finalsGrid');
+            container.innerHTML = '';
+            
+            finals.forEach(final => {
+                const isCompleted = completed[final.id] || false;
+                const card = document.createElement('div');
+                card.className = `final-card ${isCompleted ? 'completed' : ''}`;
+                card.setAttribute('data-id', final.id);
+                card.onclick = () => openModal(final.id);
+                
+                card.innerHTML = `
+                    <div class="final-number">ФИНАЛ ${final.id}</div>
+                    <div class="final-hero">${final.hero}</div>
+                    <h3 class="final-name">${final.name}</h3>
+                    <p class="final-description">${final.story.substring(0, 100)}...</p>
+                    <div class="final-points">🏆 +${final.points} очков</div>
+                    ${isCompleted ? '<div class="completed-mark">✔ ЗАВЕРШЕНО</div>' : '<div class="pending-mark">⚡ НЕ ПРОЙДЕН</div>'}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification-popup ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 10);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('twinklingStars');
+            if (!container) return;
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        answerSubmitBtn.addEventListener('click', submitAnswer);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        answerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitAnswer(); });
+
+        createParticles();
+        createStars();
+        renderFinals();
+        updateProgress();
+    </script>
+</body>
+</html>

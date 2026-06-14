@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Этапы - Геракл</title>
+    <link rel="stylesheet" href="urovni.css">
+</head>
+<body>
+
+    <header class="cyber-header">
+        <div class="nav-container">
+            <div class="logo">ГЕРАКЛ</div>
+            <div class="nav-links">
+                <a href="main.html" class="nav-link">Главная</a>
+                <a href="reg.html" class="nav-link">Регистрация</a>
+                <a href="urovni.html" class="nav-link active">Этапы</a>
+                <a href="profil.html" class="nav-link">Профиль</a>
+                <a href="reiting.html" class="nav-link">Рейтинг</a>
+            </div>
+        </div>
+        <div class="neon-line"></div>
+    </header>
+
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <div class="footer-line"></div>
+            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
+            <div class="footer-line"></div>
+        </div>
+        <div class="footer-neon"></div>
+    </footer>
+
+    <div class="layer-container">
+        <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
+        
+        <div class="cyber-grid"></div>
+        <div class="particles" id="particles"></div>
+        <div class="twinkling-stars" id="twinklingStars"></div>
+        <div class="holo-circle"></div>
+        
+        <div class="running-lights">
+            <div class="running-light top"></div>
+            <div class="running-light bottom"></div>
+            <div class="running-light left"></div>
+            <div class="running-light right"></div>
+        </div>
+        
+        <div class="neon-corner corner-tl"></div>
+        <div class="neon-corner corner-tr"></div>
+        <div class="neon-corner corner-bl"></div>
+        <div class="neon-corner corner-br"></div>
+
+        <div class="layer-1-wrapper">
+            <img class="layer-1-img" src="kartinki/fon_3_1.png" alt="Первый слой с отступами">
+        </div>
+
+        <div class="layer-2-wrapper">
+            <img class="layer-2-img" src="kartinki/fon_3_2.png" alt="Второй слой с отступами">
+        </div>
+
+        <img class="toshka-1" src="kartinki/toshka.png" alt="Тошка 1">
+        <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
+
+        <!-- КНОПКИ ВХОДА/ВЫХОДА -->
+        <button class="login-toggle-btn" id="showLoginBtn">👤 ВОЙТИ</button>
+        <button class="logout-toggle-btn" id="logoutBtn" style="display: none;">🚪 ВЫЙТИ</button>
+
+        <!-- ФОРМА ВХОДА -->
+        <div class="login-overlay" id="loginOverlay">
+            <div class="login-card">
+                <div class="login-header">
+                    <span class="login-icon">🔓</span>
+                    <h2>ВХОД В АККАУНТ</h2>
+                    <button class="close-login" id="closeLoginBtn">✖</button>
+                </div>
+                <div class="login-body">
+                    <div class="login-input-group">
+                        <label>НАЗВАНИЕ КОМАНДЫ</label>
+                        <input type="text" id="loginTeamName" placeholder="Введите название команды">
+                    </div>
+                    <div class="login-input-group">
+                        <label>ПАРОЛЬ</label>
+                        <input type="password" id="loginPassword" placeholder="Введите пароль">
+                    </div>
+                    <div class="login-error" id="loginError"></div>
+                    <button class="login-submit" id="loginSubmitBtn">ВОЙТИ</button>
+                </div>
+                <div class="login-footer">
+                    <span>Нет аккаунта? <a href="reg.html">Зарегистрируйтесь</a></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- БОКОВЫЕ КНОПКИ -->
+        <div class="left-buttons">
+            <div class="side-btn" id="profileBtn">
+                <img src="kartinki/gerakl.png" alt="Профиль">
+                <span class="btn-label">ПРОФИЛЬ</span>
+            </div>
+            <div class="side-btn" id="ratingBtn">
+                <img src="kartinki/kubok.png" alt="Рейтинг">
+                <span class="btn-label">РЕЙТИНГ</span>
+            </div>
+        </div>
+
+        <div class="foreground">
+            <div class="stages-container clean-split">
+                <h1 class="stages-title">ЭТАПЫ ТУРНИРА</h1>
+                <div class="stages-subtitle">⚡ ВЫБЕРИТЕ ЭТАП ДЛЯ УЧАСТИЯ ⚡</div>
+                
+                <div class="main-stages-split">
+                    <!-- ОТБОРОЧНЫЙ ЭТАП -->
+                    <div class="main-stage-card qualification" id="qualifyingCard">
+                        <div class="stage-tag">ЭТАП 1</div>
+                        <div class="stage-huge-num" id="qualifyingLock">🔒</div>
+                        <h2 class="stage-main-title">ОТБОРОЧНЫЙ ЭТАП</h2>
+                        <p class="stage-desc">Пройдите отборочный этап, чтобы получить доступ к финалу</p>
+                        <div class="stage-status" id="qualifyingStatus">ДОСТУП ЗАКРЫТ</div>
+                        <a href="otbor.html" id="qualifyingLink">
+                            <button class="stage-main-btn" id="qualifyingBtn" disabled>НЕ ДОСТУПНО</button>
+                        </a>
+                        <div class="card-glow"></div>
+                    </div>
+
+                    <!-- ФИНАЛ (всегда закрыт) -->
+                    <div class="main-stage-card final locked-stage">
+                        <div class="stage-tag">ЭТАП 2</div>
+                        <div class="stage-huge-num">🔒</div>
+                        <h2 class="stage-main-title">ФИНАЛЬНАЯ БИТВА</h2>
+                        <p class="stage-desc">Финальный этап. Доступ откроется после успешного прохождения отбора</p>
+                        <div class="stage-status final-status">ЗАКРЫТО</div>
+                        <button class="stage-main-btn disabled-btn" disabled>НЕ ДОСТУПНО</button>
+                        <div class="card-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Уведомления -->
+        <div id="successNotification" class="notification success">✅ Успешно!</div>
+        <div id="errorNotification" class="notification error">⚠️ Ошибка!</div>
+    </div>
+
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('twinklingStars');
+            if (!container) return;
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = 2 + Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        createParticles();
+        createStars();
+
+        // Элементы
+        const loginOverlay = document.getElementById('loginOverlay');
+        const showLoginBtn = document.getElementById('showLoginBtn');
+        const closeLoginBtn = document.getElementById('closeLoginBtn');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+        const loginTeamName = document.getElementById('loginTeamName');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        const qualifyingBtn = document.getElementById('qualifyingBtn');
+        const qualifyingLock = document.getElementById('qualifyingLock');
+        const qualifyingStatus = document.getElementById('qualifyingStatus');
+        const qualifyingLink = document.getElementById('qualifyingLink');
+        const qualifyingCard = document.getElementById('qualifyingCard');
+
+        const profileBtn = document.getElementById('profileBtn');
+        const ratingBtn = document.getElementById('ratingBtn');
+
+        function updateStagesAccess() {
+            const savedUser = localStorage.getItem('currentUser');
+            
+            if (savedUser) {
+                // Доступ открыт
+                qualifyingBtn.disabled = false;
+                qualifyingLock.textContent = '🔓';
+                qualifyingLock.style.color = '#00ff88';
+                qualifyingLock.style.textShadow = '0 0 10px #00ff88';
+                qualifyingStatus.textContent = 'ДОСТУП ОТКРЫТ';
+                qualifyingStatus.style.color = '#00ff88';
+                qualifyingBtn.textContent = 'ПЕРЕЙТИ К ЭТАПУ';
+                qualifyingBtn.style.background = '#00f0ff';
+                qualifyingBtn.style.color = '#000';
+                
+                qualifyingCard.classList.add('access-granted');
+                showLoginBtn.style.display = 'none';
+                logoutBtn.style.display = 'flex';
+            } else {
+                // Доступ закрыт
+                qualifyingBtn.disabled = true;
+                qualifyingLock.textContent = '🔒';
+                qualifyingLock.style.color = '#ff4757';
+                qualifyingLock.style.textShadow = 'none';
+                qualifyingStatus.textContent = 'ДОСТУП ЗАКРЫТ';
+                qualifyingStatus.style.color = '#ff4757';
+                qualifyingBtn.textContent = 'НЕ ДОСТУПНО';
+                qualifyingBtn.style.background = '#1a0015';
+                qualifyingBtn.style.color = '#ff00cc';
+                
+                qualifyingCard.classList.remove('access-granted');
+                showLoginBtn.style.display = 'flex';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = type === 'success' ? 
+                document.getElementById('successNotification') : 
+                document.getElementById('errorNotification');
+            
+            if (!notification) return;
+            
+            notification.textContent = type === 'success' ? `✅ ${message}` : `⚠️ ${message}`;
+            notification.style.display = 'flex';
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(450px)';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 400);
+            }, 4000);
+        }
+
+        function performLogin() {
+            const teamName = loginTeamName.value.trim();
+            const password = loginPassword.value.trim();
+            
+            if (!teamName || !password) {
+                loginError.textContent = 'Заполните все поля!';
+                return;
+            }
+            
+            const registeredUser = localStorage.getItem('registeredUser');
+            if (!registeredUser) {
+                loginError.textContent = 'Аккаунт не найден! Зарегистрируйтесь.';
+                return;
+            }
+            
+            const userData = JSON.parse(registeredUser);
+            
+            if (userData.teamName === teamName && userData.password === password) {
+                localStorage.setItem('currentUser', JSON.stringify(userData));
+                loginOverlay.style.display = 'none';
+                loginTeamName.value = '';
+                loginPassword.value = '';
+                loginError.textContent = '';
+                showNotification(`Добро пожаловать, ${teamName}! Доступ к отборочному этапу открыт.`, 'success');
+                updateStagesAccess();
+            } else {
+                loginError.textContent = 'Неверное название команды или пароль!';
+            }
+        }
+
+        function performLogout() {
+            localStorage.removeItem('currentUser');
+            showNotification('Вы вышли из аккаунта. Доступ к этапу закрыт.', 'success');
+            updateStagesAccess();
+        }
+
+        // Обработчики
+        showLoginBtn.addEventListener('click', () => {
+            loginOverlay.style.display = 'flex';
+        });
+        
+        logoutBtn.addEventListener('click', performLogout);
+        
+        closeLoginBtn.addEventListener('click', () => {
+            loginOverlay.style.display = 'none';
+            loginError.textContent = '';
+            loginTeamName.value = '';
+            loginPassword.value = '';
+        });
+        
+        loginSubmitBtn.addEventListener('click', performLogin);
+        
+        loginOverlay.addEventListener('click', (e) => {
+            if (e.target === loginOverlay) {
+                loginOverlay.style.display = 'none';
+                loginError.textContent = '';
+                loginTeamName.value = '';
+                loginPassword.value = '';
+            }
+        });
+        
+        qualifyingBtn.addEventListener('click', (e) => {
+            const savedUser = localStorage.getItem('currentUser');
+            if (!savedUser) {
+                e.preventDefault();
+                showNotification('Необходимо авторизоваться для доступа к этапу!', 'error');
+                loginOverlay.style.display = 'flex';
+                return false;
+            }
+            window.location.href = 'otbor.html';
+        });
+        
+        if (profileBtn) {
+            profileBtn.addEventListener('click', () => {
+                window.location.href = 'profil.html';
+            });
+        }
+        
+        if (ratingBtn) {
+            ratingBtn.addEventListener('click', () => {
+                window.location.href = 'reiting.html';
+            });
+        }
+        
+        updateStagesAccess();
+    </script>
+</body>
+</html>
