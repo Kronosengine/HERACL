@@ -14,13 +14,12 @@
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="reg.html" class="nav-link">Регистрация</a>
-                <a href="urovni.html" class="nav-link active">Этапы</a>
+                <a href="otbor.html" class="nav-link active">Отбор</a>
                 <a href="profil.html" class="nav-link">Профиль</a>
             </div>
         </div>
     </header>
 
-    <!-- Окно авторизации/регистрации перед началом -->
     <div class="auth-overlay" id="authOverlay">
         <div class="auth-card">
             <h2>АВТОРИЗАЦИЯ КОМАНДЫ</h2>
@@ -52,13 +51,11 @@
                 </div>
 
                 <div class="labirints-grid" id="laborsGrid">
-                    <!-- Карточки будут генерироваться через JS -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно подвигов (УВЕЛИЧЕННОЕ) -->
     <div class="modal-overlay" id="laborModal">
         <div class="modal-container modal-large">
             <button class="modal-close-btn" id="closeModalBtn">✕</button>
@@ -87,36 +84,28 @@
     </footer>
 
     <script>
-        // Данные о подвигах
         const laborsData = [
-            { id: 1, name: "Немейский лев", hero: "🦁", desc: "Взлом бронированного ядра сервера NEMEAN_LION.EXE.", answer: "1", story: "Система логирования Немейского ухода зафиксировала аномалию. Перед вами 5 серверов с флагами валидации. Ровно три утверждения истинны. Но на сервере, где скрыт Лев, надпись ГАРАНТИРОВАННО ЛЖЕТ. Вычислите ID этого сервера.\n\n1: «Лев скрывается в сервере 3»\n2: «Лев точно не в сервере 4»\n3: «Лев находится в сервере 1 или 5»\n4: «Лев в одном из серверов: 2, 3 или 4»\n5: «Лев точно не в сервере 2»" },
-            { id: 2, name: "Лернейская гидра", hero: "🐍", desc: "Остановка рекурсивной Fork-бомбы HYDRA_RECURSION.SH.", answer: "21", story: "Гидра выполняет рекурсивный алгоритм. Функция вычисляется как F(n). Чему будет равно значение переменной после выполнения вызова F(5), если алгоритм устроен следующим образом:\n\nint F(int n) {\n  if (n <= 1) return 1;\n  return F(n-1) + 2 * F(n-2);\n}" },
-            { id: 3, name: "Стимфалийские птицы", hero: "🦅", desc: "Дешифровка хэш-сигналов акустического спама.", answer: "27", story: "Дроны-птицы транслируют массив байт. Скрипт обрабатывает их побитовыми операциями. Вычислите итоговое число в десятичной системе счисления после выполнения операции: (Байт_1 XOR Байт_2) | (Байт_3 AND Байт_4).\n\nДанные: Байт_1 = 42, Байт_2 = 60, Байт_3 = 31, Байт_4 = 75" },
-            { id: 4, name: "Керинейская лань", hero: "🦌", desc: "Обход бинарного дерева поиска CERYNEIAN_SEARCH.LNK.", answer: "50,70,80,73", story: "Лань движется по бинарному дереву поиска. В корне лежит элемент 50. Лань ищет ключ 73. Выпишите последовательность вершин (через запятую без пробелов), которые посетит алгоритм обхода, если правое поддерево содержит элементы больше корня, а левое — меньше.\n\nСтруктура: Корень(50) -> Лево(30, 40), Право(70 -> Лево(65), Право(80 -> Лево(73)))" },
-            { id: 5, name: "Эриманфский вепрь", hero: "🐗", desc: "Переполнение статического буфера и затирание EIP.", answer: "68", story: "Вепрь ломает стек вызовов. Программа выделила статический буфер char buffer[64] под ввод данных функции gets(buffer). Сколько байт данных (включая мусор для заполнения буфера и сам 4-байтовый адрес возврата EIP) нужно отправить, чтобы перезаписать EIP?" },
-            { id: 6, name: "Авгиевы конюшни", hero: "🧹", desc: "Мгновенная очистка таблиц гигантской БД СУБД.", answer: "TRUNCATE", story: "Напишите название SQL-команды (одним словом, капсом), которая удаляет ВСЕ строки из таблицы логов, но делает это мгновенно на уровне дисковых страниц, не записывая каждую строчку в журнал транзакций." },
-            { id: 7, name: "Критский бык", hero: "🐂", desc: "Парсинг и валидация поврежденной структуры JSON.", answer: "400", story: "Бык прислал поврежденную структуру JSON. Посчитайте суммарное значение всех ключей с именем 'weight', которые находятся строго внутри массива 'nodes'.\n\n{\n  \"status\": \"active\",\n  \"weight\": 500,\n  \"config\": {\n    \"nodes\": [\n      {\"id\": 1, \"weight\": 120},\n      {\"id\": 2, \"weight\": 230},\n      {\"id\": 3, \"type\": \"sub\", \"weight\": 50}\n    ]\n  }\n}" },
-            { id: 8, name: "Кони Диомеда", hero: "🐎", desc: "Разрешение взаимной блокировки потоков Deadlock.", answer: "2", story: "Кони заблокировали друг друга в многопоточном приложении (Deadlock). Поток А держит Мутекс 1 и ждет Мутекс 2. Поток Б держит Мутекс 2 и ждет Мутекс 1. Какое архитектурное решение решает эту проблему?\n\nВарианты: 1) Увеличение памяти, 2) Иерархия захвата ресурсов (Resource Ordering), 3) sleep(100)" },
-            { id: 9, name: "Пояс Ипполиты", hero: "👑", desc: "Дешифровка символов ASCII после XOR-модификации.", answer: "L", story: "Пояс зашифрован модифицированным алгоритмом. Каждому символу строки сопоставляется его ASCII-код, к которому применяется операция XOR с маской 0x0F. Дешифруйте символ, если на входе получилось число 75." },
-            { id: 10, name: "Коровы Гериона", hero: "🧌", desc: "Поиск кратчайшего пути по связанному плотному графу.", answer: "7", story: "Вычислите длину кратчайшего пути от вершины А до вершины Е на ненаправленном графе коров Гериона:\n\nA -> B (вес 2), A -> C (вес 5), B -> C (вес 2), B -> D (вес 4), C -> E (вес 3), D -> E (вес 1)." },
-            { id: 11, name: "Яблоки Гесперид", hero: "🍏", desc: "Обход уровней дерева в ширину через очередь FIFO.", answer: "BFS", story: "Напишите название стандартного метода обхода графа (аббревиатуру из 3 букв на английском), который использует ОЧЕРЕДЬ (FIFO) и обходит структуру строго по уровням (в ширину)." },
-            { id: 12, name: "Цербер", hero: "🐕", desc: "Внедрение вредоносного SQL-кода в обход ядра авторизации.", answer: "sql injection", story: "Вы наткнулись на суперядро Цербера. Защита требует указать тип атаки, при которой злоумышленник внедряет вредоносный SQL-код в поле ввода, заставляя сервер выдать токен администратора. Напишите название уязвимости (два слова на английском)." }
+            { id: 1, name: "Немейский лев", hero: "kartinki/лев.png", desc: "Взлом ядра NEMEAN_LION.EXE.", answer: "1", story: "Загадка про серверы: 1-5. Условие: ровно 3 истинны. Надпись на сервере с Львом лжет." },
+            { id: 2, name: "Лернейская гидра", hero: "kartinki/гидра.png", desc: "Остановка Fork-бомбы HYDRA.SH.", answer: "21", story: "Вычислите F(5) для алгоритма: F(n) = F(n-1) + 2*F(n-2), F(1)=1." },
+            { id: 3, name: "Стимфалийские птицы", hero: "kartinki/птица_иконка.png", desc: "Дешифровка сигналов.", answer: "27", story: "Вычислите (42 XOR 60) | (31 AND 75)." },
+            { id: 4, name: "Керинейская лань", hero: "kartinki/лань_иконка.png", desc: "Обход дерева поиска.", answer: "50,70,80,73", story: "Путь обхода дерева к ключу 73." },
+            { id: 5, name: "Эриманфский вепрь", hero: "kartinki/вепрь_иконка.png", desc: "Переполнение буфера.", answer: "68", story: "Сколько байт нужно для перезаписи EIP в буфере 64?" },
+            { id: 6, name: "Авгиевы конюшни", hero: "kartinki/конюшни.png", desc: "Очистка БД.", answer: "TRUNCATE", story: "SQL-команда для мгновенной очистки таблиц?" },
+            { id: 7, name: "Критский бык", hero: "kartinki/бык.png", desc: "Парсинг JSON.", answer: "400", story: "Сумма значений 'weight' внутри массива 'nodes'." },
+            { id: 8, name: "Кони Диомеда", hero: "kartinki/кони.png", desc: "Deadlock.", answer: "2", story: "Иерархия захвата ресурсов (Resource Ordering)." },
+            { id: 9, name: "Пояс Ипполиты", hero: "kartinki/пояс.png", desc: "XOR-дешифровка.", answer: "L", story: "Дешифруйте ASCII код 75 с маской 0x0F." },
+            { id: 10, name: "Коровы Гериона", hero: "kartinki/коровы.png", desc: "Кратчайший путь.", answer: "7", story: "Длина кратчайшего пути от А до Е." },
+            { id: 11, name: "Яблоки Гесперид", hero: "kartinki/яблоки.png", desc: "Обход в ширину.", answer: "BFS", story: "Аббревиатура метода обхода графа через очередь (FIFO)." },
+            { id: 12, name: "Цербер", hero: "kartinki/цербер.png", desc: "SQL-инъекция.", answer: "sql injection", story: "Как называется атака через поля ввода?" }
         ];
-
-        // Загрузка сохранённого прогресса для текущей команды
         function loadProgress() {
             const savedUser = localStorage.getItem('currentUser');
             if (!savedUser) return { completed: {}, failed: {} };
-            
             const userData = JSON.parse(savedUser);
             const saved = localStorage.getItem(`otbor_progress_${userData.teamName}`);
-            if (saved) {
-                return JSON.parse(saved);
-            }
-            return { completed: {}, failed: {} };
+            return saved ? JSON.parse(saved) : { completed: {}, failed: {} };
         }
 
-        // Сохранение прогресса
         function saveProgress(progress) {
             const savedUser = localStorage.getItem('currentUser');
             if (!savedUser) return;
@@ -131,127 +120,82 @@
         const authOverlay = document.getElementById('authOverlay');
         const laborsGrid = document.getElementById('laborsGrid');
 
-        // Генерация карточек
         function renderCards() {
             laborsGrid.innerHTML = '';
             laborsData.forEach(labor => {
                 const card = document.createElement('div');
                 card.className = 'labor-card';
-                
-                // Определяем статус карточки
-                if (progress.completed[labor.id]) {
-                    card.classList.add('completed');
-                } else if (progress.failed[labor.id]) {
-                    card.classList.add('failed');
-                } else {
-                    card.classList.add('active');
-                }
+                if (progress.completed[labor.id]) card.classList.add('completed');
+                else if (progress.failed[labor.id]) card.classList.add('failed');
+                else card.classList.add('active');
                 
                 card.innerHTML = `
                     <div class="labor-status">${progress.completed[labor.id] ? 'ПРОЙДЕНО' : (progress.failed[labor.id] ? 'ПРОВАЛ' : 'КВЕСТ')}</div>
-                    <div class="labor-hero">${labor.hero}</div>
+                    <div class="labor-hero"><img src="${labor.hero}" alt="${labor.name}" class="hero-img"></div>
                     <div class="labor-number">${labor.id < 10 ? '0' + labor.id : labor.id}</div>
                     <h3 class="labor-name">${labor.name}</h3>
                     <p class="labor-description">${labor.desc}</p>
                 `;
-                
-                // Если карточка не пройдена и не провалена — можно кликать
                 if (!progress.completed[labor.id] && !progress.failed[labor.id]) {
                     card.onclick = () => openLabor(labor.id);
-                } else {
-                    card.onclick = null;
                 }
-                
                 laborsGrid.appendChild(card);
             });
         }
 
-        // Логика авторизации
         document.getElementById('authSubmitBtn').addEventListener('click', function() {
             const team = document.getElementById('authTeamName').value.trim();
             const pass = document.getElementById('authPassword').value.trim();
             const registered = localStorage.getItem('registeredUser');
-
-            if (!registered) {
-                document.getElementById('authError').innerText = "Команда не найдена в системе!";
-                return;
-            }
-
+            if (!registered) { document.getElementById('authError').innerText = "Команда не найдена!"; return; }
             const userData = JSON.parse(registered);
             if (userData.teamName === team && userData.password === pass) {
                 authOverlay.style.display = 'none';
                 localStorage.setItem('currentUser', JSON.stringify(userData));
-                // Перезагружаем прогресс для новой команды
                 progress = loadProgress();
                 renderCards();
             } else {
-                document.getElementById('authError').innerText = "Неверное имя или пароль!";
+                document.getElementById('authError').innerText = "Неверно!";
             }
         });
 
-        // Проверка при загрузке
         if (localStorage.getItem('currentUser')) {
             authOverlay.style.display = 'none';
-            progress = loadProgress();
         }
 
         function openLabor(id) {
-            // Проверяем, не пройдено ли уже задание и не провалено ли
-            if (progress.completed[id] || progress.failed[id]) {
-                return;
-            }
-            
+            if (progress.completed[id] || progress.failed[id]) return;
             currentLaborId = id;
             const labor = laborsData.find(l => l.id === id);
-            
             document.getElementById('modalNumber').innerText = id < 10 ? '0' + id : id;
             document.getElementById('modalTitle').innerText = labor.name;
             document.getElementById('modalStory').innerText = labor.story;
-            document.getElementById('answerInput').value = "";
-            document.getElementById('feedbackMsg').innerText = "";
-            document.getElementById('feedbackMsg').className = "feedback-msg";
             modal.classList.add('visible');
         }
 
-        function closeModal() { 
-            modal.classList.remove('visible');
-            currentLaborId = null;
-        }
+        function closeModal() { modal.classList.remove('visible'); }
 
         function submitAnswer() {
             if (!currentLaborId) return;
-            
             const ans = document.getElementById('answerInput').value.trim();
             const labor = laborsData.find(l => l.id === currentLaborId);
-            const isCorrect = ans.toLowerCase() === labor.answer.toLowerCase();
-            
-            if (isCorrect) {
-                document.getElementById('feedbackMsg').innerText = "⚡ КОД ВЕРЕН! ПОДВИГ ЗАСЧИТАН ⚡";
-                document.getElementById('feedbackMsg').className = "feedback-msg success";
-                
+            if (ans.toLowerCase() === labor.answer.toLowerCase()) {
                 progress.completed[currentLaborId] = true;
-                delete progress.failed[currentLaborId];
+                document.getElementById('feedbackMsg').innerText = "ВЕРНО!";
                 saveProgress(progress);
                 renderCards();
-                
                 setTimeout(closeModal, 1000);
             } else {
-                document.getElementById('feedbackMsg').innerText = "❌ ОШИБКА! ПОДВИГ ПРОВАЛЕН. ДОСТУП ЗАКРЫТ ❌";
-                document.getElementById('feedbackMsg').className = "feedback-msg error";
-                
                 progress.failed[currentLaborId] = true;
-                delete progress.completed[currentLaborId];
+                document.getElementById('feedbackMsg').innerText = "ПРОВАЛ!";
                 saveProgress(progress);
                 renderCards();
-                
                 setTimeout(closeModal, 1500);
             }
         }
 
         document.getElementById('closeModalBtn').addEventListener('click', closeModal);
         document.getElementById('answerSubmitBtn').addEventListener('click', submitAnswer);
-        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-        
         renderCards();
     </script>
 </body>

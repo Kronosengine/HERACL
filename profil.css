@@ -382,36 +382,51 @@ body {
     pointer-events: none;
 }
 
+/* ========== УМЕНЬШЕННЫЙ БЛОК ПРОФИЛЯ ========== */
 .profile-container {
     pointer-events: auto;
-    width: min(1100px, 85vw);
+    width: min(900px, 80vw);
     max-width: 90%;
-    padding: clamp(20px, 3vh, 35px);
+    padding: clamp(15px, 2vh, 25px);
     background: rgba(0, 10, 25, 0.4);
     backdrop-filter: blur(2px);
     border-radius: 30px;
-    margin-top: clamp(20px, 5vh, 60px);
+    margin-top: clamp(10px, 3vh, 40px);
 }
 
 .profile-two-columns {
     display: flex;
-    gap: clamp(20px, 3vw, 50px);
-    margin-bottom: 25px;
+    gap: clamp(15px, 2vw, 30px);
+    margin-bottom: 20px;
     flex-wrap: wrap;
 }
 
 .profile-left {
     flex: 1;
-    min-width: clamp(200px, 20vw, 280px);
+    min-width: clamp(180px, 18vw, 220px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 4px;
+}
+
+.avatar-upload {
+    text-align: center;
+    margin-bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar-label {
+    cursor: pointer;
+    display: block;
 }
 
 .avatar-frame {
-    width: clamp(160px, 18vw, 260px);
-    height: clamp(160px, 18vw, 260px);
+    width: clamp(140px, 15vw, 200px);
+    height: clamp(140px, 15vw, 200px);
     border-radius: 20px;
     background: linear-gradient(135deg, #00b4ff, #003366);
     padding: 3px;
@@ -431,101 +446,140 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(2rem, 8vw, 4rem);
+    font-size: clamp(1.8rem, 6vw, 3rem);
     color: #00e5ff;
     text-shadow: 0 0 10px #00b4ff;
     background-size: cover;
     background-position: center;
 }
 
+/* ПОДПИСЬ - ТАКОЙ ЖЕ ШИРИНЫ, КАК РАМКА */
 .avatar-hint {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.55rem, 1vw, 0.7rem);
+    font-size: clamp(0.45rem, 0.7vw, 0.55rem);
     color: #00b4ff;
     letter-spacing: 1px;
-    margin-top: 8px;
+    margin-top: 6px;
+    margin-bottom: 0;
     text-transform: uppercase;
+    text-align: center;
+    line-height: 1.3;
+    width: clamp(140px, 15vw, 200px);  /* точно такая же ширина, как у рамки */
+    word-wrap: break-word;
 }
 
+/* БЕЙДЖ - ТОЖЕ ТАКОЙ ЖЕ ШИРИНЫ */
 .level-badge {
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 6px;
     background: rgba(0, 50, 100, 0.5);
-    padding: clamp(5px, 1vh, 8px) clamp(10px, 2vw, 16px);
+    padding: 4px 8px;
     border-radius: 30px;
     border: 1px solid #00e5ff;
+    width: clamp(140px, 15vw, 200px);  /* точно такая же ширина, как у рамки */
+    margin: 4px auto 0;
+    box-sizing: border-box;
 }
 
-.level-icon { font-size: clamp(1rem, 2vw, 1.2rem); }
+.level-icon {
+    font-size: clamp(0.7rem, 1.3vw, 0.85rem);
+}
+
 .level-text {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+    font-size: clamp(0.45rem, 0.8vw, 0.6rem);
     color: #00e5ff;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
 }
 
 .profile-right {
     flex: 2;
-    min-width: clamp(260px, 30vw, 350px);
+    min-width: clamp(240px, 28vw, 300px);
 }
 
-.team-name-section { margin-bottom: 20px; }
+.team-name-section {
+    margin-bottom: 15px;
+}
+
 .team-name {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(1.3rem, 3vw, 2.5rem);
+    font-size: clamp(0.9rem, 2vw, 1.6rem);
     color: #00e5ff;
     font-weight: bold;
-    letter-spacing: clamp(2px, 0.3vw, 4px);
+    letter-spacing: clamp(1.5px, 0.3vw, 3px);
     text-shadow: 0 0 10px #00b4ff;
     position: relative;
     display: inline-block;
 }
+
 .team-tag {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.55rem, 1vw, 0.7rem);
+    font-size: clamp(0.5rem, 0.8vw, 0.6rem);
     color: #ff00ff;
     letter-spacing: 2px;
-    margin-top: 6px;
+    margin-top: 4px;
     opacity: 0.8;
 }
+
 .name-underline {
     height: 2px;
     background: linear-gradient(90deg, #00b4ff, #00e5ff, #00b4ff);
     width: 100%;
-    margin-top: 8px;
+    margin-top: 6px;
     border-radius: 2px;
 }
 
-.profile-info { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
 .info-card {
     background: rgba(0, 30, 50, 0.4);
     border-left: 3px solid #00e5ff;
-    padding: clamp(8px, 1.5vh, 12px) clamp(12px, 2vw, 20px);
+    padding: clamp(6px, 1vh, 10px) clamp(10px, 1.5vw, 16px);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
+
 .info-card:hover {
     background: rgba(0, 50, 80, 0.6);
     transform: translateX(8px);
     border-left-color: #ff00ff;
 }
-.info-label { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-.label-icon { font-size: clamp(0.8rem, 1.5vw, 1rem); color: #00e5ff; }
+
+.info-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 3px;
+}
+
+.label-icon {
+    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    color: #00e5ff;
+}
+
 .label-text {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.6rem, 1vw, 0.7rem);
+    font-size: clamp(0.55rem, 0.8vw, 0.65rem);
     color: #00b4ff;
     letter-spacing: 2px;
 }
+
 .info-value {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+    font-size: clamp(0.65rem, 1vw, 0.8rem);
     color: white;
     letter-spacing: 1px;
-    padding-left: 24px;
+    padding-left: 20px;
 }
+
 .info-line {
     position: absolute;
     bottom: 0;
@@ -535,62 +589,72 @@ body {
     background: linear-gradient(90deg, #00e5ff, transparent);
     transition: width 0.5s ease;
 }
-.info-card:hover .info-line { width: 100%; }
+
+.info-card:hover .info-line {
+    width: 100%;
+}
 
 .profile-stats {
     display: flex;
-    gap: clamp(8px, 1.5vw, 15px);
-    margin-bottom: 20px;
+    gap: clamp(6px, 1vw, 12px);
+    margin-bottom: 15px;
     flex-wrap: wrap;
 }
+
 .stat-item {
     flex: 1;
     text-align: center;
-    padding: clamp(8px, 1.5vh, 12px);
+    padding: clamp(6px, 1vh, 10px);
     background: rgba(0, 40, 70, 0.4);
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid #00b4ff;
     transition: all 0.3s ease;
 }
+
 .stat-item:hover {
     transform: translateY(-3px);
     border-color: #00e5ff;
     background: rgba(0, 60, 100, 0.6);
 }
+
 .stat-value {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-size: clamp(1rem, 2vw, 1.4rem);
     font-weight: bold;
     color: #00e5ff;
     text-shadow: 0 0 8px #00b4ff;
 }
+
 .stat-label {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.55rem, 1vw, 0.7rem);
+    font-size: clamp(0.5rem, 0.8vw, 0.6rem);
     color: #00b4ff;
     letter-spacing: 2px;
-    margin-top: 3px;
+    margin-top: 2px;
 }
 
 .rating-bar-container {
     background: rgba(0, 20, 40, 0.5);
-    padding: clamp(8px, 1.5vh, 12px);
-    border-radius: 10px;
+    padding: clamp(6px, 1vh, 10px);
+    border-radius: 8px;
     border: 1px solid rgba(0, 180, 255, 0.3);
 }
+
 .rating-label {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.55rem, 1vw, 0.65rem);
+    font-size: clamp(0.5rem, 0.8vw, 0.6rem);
     color: #00b4ff;
     letter-spacing: 2px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
+
 .rating-bar {
-    height: 6px;
+    height: 5px;
     background: rgba(0, 50, 100, 0.5);
     border-radius: 4px;
     overflow: hidden;
 }
+
 .rating-fill {
     height: 100%;
     background: linear-gradient(90deg, #00b4ff, #00e5ff);
@@ -598,28 +662,31 @@ body {
     position: relative;
     animation: pulse 2s infinite;
 }
+
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
 }
+
 .rating-values {
     display: flex;
     justify-content: space-between;
-    margin-top: 6px;
+    margin-top: 4px;
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.5rem, 0.8vw, 0.6rem);
+    font-size: clamp(0.45rem, 0.7vw, 0.55rem);
     color: #00b4ff;
 }
 
 .profile-footer {
     display: flex;
     justify-content: center;
-    margin-top: clamp(15px, 3vh, 25px);
+    margin-top: clamp(12px, 2vh, 20px);
 }
+
 .main-btn {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
-    padding: clamp(6px, 1vh, 10px) clamp(25px, 4vw, 40px);
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    padding: clamp(5px, 0.8vh, 8px) clamp(20px, 3vw, 30px);
     background-color: white;
     color: black;
     border: 2px solid #00e5ff;
@@ -629,9 +696,13 @@ body {
     font-weight: bold;
     text-align: center;
     position: relative;
-    min-width: clamp(140px, 20vw, 200px);
+    min-width: clamp(120px, 15vw, 160px);
 }
-.main-btn span { display: inline-block; }
+
+.main-btn span {
+    display: inline-block;
+}
+
 .main-btn::before {
     content: '';
     position: absolute;
@@ -641,6 +712,7 @@ body {
     height: 1.5px;
     background-color: black;
 }
+
 .main-btn::after {
     content: '';
     position: absolute;
@@ -650,11 +722,13 @@ body {
     height: 1.5px;
     background-color: black;
 }
+
 .main-btn:hover {
     background-color: #00b4ff;
     color: white;
     border-color: white;
 }
+
 .main-btn:hover::before,
 .main-btn:hover::after {
     background-color: white;
@@ -716,6 +790,7 @@ img {
     pointer-events: none;
     overflow: hidden;
 }
+
 .particle {
     position: absolute;
     width: 2px;
@@ -726,6 +801,7 @@ img {
     animation: floatParticle linear infinite;
     box-shadow: 0 0 4px #00f0ff;
 }
+
 @keyframes floatParticle {
     0% { opacity: 0; transform: translateY(100vh) translateX(0); }
     10% { opacity: 0.8; }
@@ -742,6 +818,7 @@ img {
     z-index: 3;
     pointer-events: none;
 }
+
 .star {
     position: absolute;
     width: 2px;
@@ -751,6 +828,7 @@ img {
     opacity: 0;
     animation: twinkle ease-in-out infinite;
 }
+
 @keyframes twinkle {
     0%, 100% { opacity: 0; }
     50% { opacity: 0.8; box-shadow: 0 0 5px #00f0ff; }
@@ -769,6 +847,7 @@ img {
     background: radial-gradient(circle, rgba(0, 240, 255, 0.04), transparent);
     animation: holoPulse 4s ease-in-out infinite;
 }
+
 .holo-circle::before {
     content: '';
     position: absolute;
@@ -780,6 +859,7 @@ img {
     border-radius: 50%;
     animation: holoRotate 8s linear infinite;
 }
+
 .holo-circle::after {
     content: '';
     position: absolute;
@@ -791,10 +871,12 @@ img {
     border-radius: 50%;
     animation: holoRotateReverse 6s linear infinite;
 }
+
 @keyframes holoPulse {
     0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
     50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; }
 }
+
 @keyframes holoRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @keyframes holoRotateReverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
 
@@ -807,6 +889,7 @@ img {
     z-index: 25;
     pointer-events: none;
 }
+
 .running-light {
     position: absolute;
     width: min(120px, 10vw);
@@ -814,6 +897,7 @@ img {
     background: linear-gradient(90deg, transparent, #00f0ff, #ff00cc, transparent);
     animation: runLight 4s linear infinite;
 }
+
 .running-light.top { top: 0; left: min(-120px, -10vw); animation-delay: 0s; }
 .running-light.bottom { bottom: 0; left: min(-120px, -10vw); animation-delay: 2s; }
 .running-light.left {
@@ -830,12 +914,14 @@ img {
     animation: runLightVertical 4s linear infinite;
     animation-delay: 3s;
 }
+
 @keyframes runLight {
     0% { left: min(-120px, -10vw); opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
     100% { left: 100%; opacity: 0; }
 }
+
 @keyframes runLightVertical {
     0% { top: min(-120px, -10vw); opacity: 0; }
     10% { opacity: 1; }
@@ -850,6 +936,7 @@ img {
     z-index: 25;
     pointer-events: none;
 }
+
 .corner-tl { top: clamp(60px, 8vh, 80px); left: clamp(15px, 2vw, 30px);
     border-top: 3px solid #00f0ff; border-left: 3px solid #00f0ff; box-shadow: 0 0 10px #00f0ff; }
 .corner-tr { top: clamp(60px, 8vh, 80px); right: clamp(15px, 2vw, 30px);
@@ -863,11 +950,13 @@ img {
     position: relative;
     animation: glitchText 3s infinite;
 }
+
 @keyframes glitchText {
     0%, 100% { text-shadow: 0 0 10px #00b4ff, 0 0 20px #0066ff; }
     95% { text-shadow: 0 0 10px #00b4ff, 0 0 20px #0066ff; }
     97% { text-shadow: -2px 0 #ff00cc, 2px 0 #00f0ff; }
 }
+
 .glitch-text::before {
     content: attr(data-text);
     position: absolute;
@@ -881,6 +970,7 @@ img {
     clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
     animation: glitchShift 2s infinite;
 }
+
 @keyframes glitchShift {
     0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
     50% { clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); }

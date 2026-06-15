@@ -98,13 +98,13 @@
 
                     <div class="input-group password-group">
                         <input type="password" id="password" class="input-field input-medium_2" placeholder="Пароль">
-                        <button type="button" class="toggle-password" data-target="password">ПОКАЗАТЬ</button>
+                        <button type="button" class="toggle-password" data-target="password">⦿</button>
                         <div class="error-message" id="password-error"></div>
                     </div>
 
                     <div class="input-group password-group">
                         <input type="password" id="confirm-password" class="input-field input-medium_2" placeholder="Подтверждение пароля">
-                        <button type="button" class="toggle-password" data-target="confirm-password">ПОКАЗАТЬ</button>
+                        <button type="button" class="toggle-password" data-target="confirm-password">⦿</button>
                         <div class="error-message" id="confirm-password-error"></div>
                     </div>
 
@@ -153,7 +153,7 @@
         successNotification.style.transform = 'translateX(450px)';
         errorNotification.style.transform = 'translateX(450px)';
 
-        // Кнопки показа/скрытия пароля
+        // Кнопки показа/скрытия пароля с символами ⦿ (заполненный) и ⊙ (круг с точкой)
         const toggleButtons = document.querySelectorAll('.toggle-password');
         toggleButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -161,11 +161,11 @@
                 const targetInput = document.getElementById(targetId);
                 if (targetInput.type === 'password') {
                     targetInput.type = 'text';
-                    this.textContent = 'СКРЫТЬ';
+                    this.textContent = '⊙';
                     this.classList.add('active');
                 } else {
                     targetInput.type = 'password';
-                    this.textContent = 'ПОКАЗАТЬ';
+                    this.textContent = '⦿';
                     this.classList.remove('active');
                 }
             });

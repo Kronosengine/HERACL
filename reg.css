@@ -494,7 +494,7 @@ body {
     pointer-events: none;
 }
 
-/* ========== ФОРМА РЕГИСТРАЦИИ (УВЕЛИЧЕННЫЕ ПОЛЯ) ========== */
+/* ========== ФОРМА РЕГИСТРАЦИИ (опущена ниже) ========== */
 .registration-container {
     text-align: left;
     pointer-events: auto;
@@ -502,7 +502,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: clamp(60px, 10vh, 120px);
+    margin-top: clamp(130px, 18vh, 200px);
     margin-left: clamp(30px, 8vw, 150px);
     z-index: 30;
 }
@@ -514,7 +514,7 @@ body {
 
 .registration-title {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(2rem, 5vw, 6rem);
+    font-size: clamp(1rem, 4vw, 5rem);
     color: #00e5ff;
     letter-spacing: clamp(3px, 1vw, 8px);
     margin: 0;
@@ -547,21 +547,26 @@ body {
     top: 0;
 }
 
+/* Уменьшено расстояние между полями */
 .form-container {
     margin-top: 15px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: clamp(30px, 12vw, 250px);
-    gap: 8px;
+    gap: 2px;
     width: auto;
     min-width: auto;
 }
 
 .input-group {
     width: auto;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .input-field {
@@ -604,30 +609,25 @@ body {
     margin-left: 5px;
     letter-spacing: 0.5px;
     min-height: 14px;
+    width: 100%;
 }
 
-.password-group {
-    position: relative;
-}
-
+/* Кнопки показа/скрытия пароля - символы ⦿ / ⊙ */
 .toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid #00f0ff;
-    font-family: 'DS Sofachrome', monospace;
-    font-size: 0.65rem;
+    font-family: monospace;
+    font-size: 1.2rem;
     font-weight: bold;
-    letter-spacing: 1px;
-    padding: 5px 12px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     transition: all 0.3s ease;
-    z-index: 5;
     color: #00f0ff;
     border-radius: 4px;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .toggle-password:hover {
@@ -642,10 +642,17 @@ body {
     border-color: #fff;
 }
 
+.password-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 .toshka-1 {
     position: absolute;
-    top: clamp(10px, 2vh, 40px);
-    left: clamp(80px, 8vw, 200px);
+    top: 70px;
+    left: 220px;
     z-index: 4;
     width: clamp(15%, 18vw, 25%);
     height: auto;
@@ -655,8 +662,8 @@ body {
 
 .toshka-2 {
     position: absolute;
-    bottom: clamp(-60px, -5vh, -20px);
-    right: clamp(150px, 15vw, 350px);
+    bottom: -40px;
+    right: 40px;
     z-index: 8;
     width: clamp(25%, 28vw, 38%);
     height: auto;
@@ -665,16 +672,16 @@ body {
     filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.3));
 }
 
+/* Кнопка ОТПРАВИТЬ - размер 450x100, параллелограмм, наклон 30° */
 .submit-btn {
-    height: clamp(80px, 12vh, 120px);
     position: absolute;
-     position: absolute;
-    top: clamp(100px, 12vh, 140px);    /* увеличил значение - чуть ниже */
-    right: clamp(80px, 10vw, 150px);   /* увеличил значение - чуть левее */
+    top: calc(clamp(100px, 12vh, 140px) - 20px);
+    right: calc(clamp(80px, 10vw, 150px) - 20px);
     z-index: 1100;
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.9rem, 1.8vw, 1.5rem);
-    padding: clamp(8px, 1vh, 15px) clamp(20px, 3vw, 45px);
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    width: 450px;
+    height: 100px;
     background-color: white;
     color: black;
     border: none;
@@ -682,20 +689,21 @@ body {
     transition: all 0.3s ease;
     letter-spacing: clamp(2px, 0.3vw, 4px);
     font-weight: bold;
-    transform: skewX(clamp(20deg, 3vw, 33deg));
+    transform: skewX(35deg);
 }
 
 .submit-btn span {
     display: inline-block;
-    transform: skewX(clamp(-20deg, -3vw, -33deg));
+    transform: skewX(-30deg);
+    line-height: 100px;
 }
 
 .submit-btn::before {
     content: '';
     position: absolute;
-    top: 5px;
-    left: 10px;
-    right: 10px;
+    top: 6px;
+    left: 12px;
+    right: 12px;
     height: 2px;
     background-color: black;
 }
@@ -703,9 +711,9 @@ body {
 .submit-btn::after {
     content: '';
     position: absolute;
-    bottom: 5px;
-    left: 10px;
-    right: 10px;
+    bottom: 6px;
+    left: 12px;
+    right: 12px;
     height: 2px;
     background-color: black;
 }
@@ -757,24 +765,37 @@ img {
 }
 
 /* ========== АДАПТИВ ========== */
+@media (max-width: 1400px) {
+    .submit-btn {
+        width: 400px;
+        height: 90px;
+        font-size: 1.2rem;
+    }
+    .submit-btn span {
+        line-height: 90px;
+    }
+}
+
 @media (max-width: 1200px) {
     .input-field {
         width: 300px;
     }
-    #email, #school {
-        width: 360px;
-    }
     .form-container {
         margin-left: 80px;
+    }
+    .submit-btn {
+        width: 350px;
+        height: 80px;
+        font-size: 1.1rem;
+    }
+    .submit-btn span {
+        line-height: 80px;
     }
 }
 
 @media (max-width: 1000px) {
     .input-field {
         width: 260px;
-    }
-    #email, #school {
-        width: 300px;
     }
     .form-container {
         margin-left: 60px;
@@ -790,14 +811,19 @@ img {
         width: 22%;
         right: 120px;
     }
+    .submit-btn {
+        width: 300px;
+        height: 70px;
+        font-size: 1rem;
+    }
+    .submit-btn span {
+        line-height: 70px;
+    }
 }
 
 @media (max-width: 800px) {
     .input-field {
         width: 230px;
-    }
-    #email, #school {
-        width: 260px;
     }
     .form-container {
         margin-left: 40px;
@@ -813,18 +839,24 @@ img {
         width: 18%;
         right: 80px;
     }
+    .submit-btn {
+        width: 260px;
+        height: 60px;
+        font-size: 0.9rem;
+    }
+    .submit-btn span {
+        line-height: 60px;
+    }
     .toggle-password {
-        font-size: 0.55rem;
-        padding: 3px 8px;
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 650px) {
     .input-field {
         width: 200px;
-    }
-    #email, #school {
-        width: 230px;
     }
     .form-container {
         margin-left: 20px;
@@ -843,38 +875,53 @@ img {
         bottom: 70px;
         top: auto;
         right: 20px;
-        height: auto;
-        transform: skewX(0deg);
-        padding: 8px 20px;
+        transform: skewX(20deg);
+        width: 200px;
+        height: 50px;
         font-size: 0.8rem;
     }
     .submit-btn span {
-        transform: skewX(0deg);
+        transform: skewX(-20deg);
+        line-height: 50px;
     }
     .toggle-password {
-        font-size: 0.5rem;
-        padding: 2px 6px;
-        right: 5px;
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 500px) {
     .input-field {
         width: 180px;
-        font-size: 0.75rem;
-    }
-    #email, #school {
-        width: 200px;
+        font-size: 0.7rem;
     }
     .form-container {
         margin-left: 15px;
     }
     .registration-container {
         margin-left: 15px;
-        margin-top: 40px;
+        margin-top: 160px;
     }
     .registration-title {
         font-size: 1.1rem;
         white-space: normal;
+    }
+    .input-group {
+        gap: 5px;
+    }
+    .toggle-password {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+    }
+    .submit-btn {
+        width: 160px;
+        height: 45px;
+        font-size: 0.7rem;
+        bottom: 60px;
+    }
+    .submit-btn span {
+        line-height: 45px;
     }
 }

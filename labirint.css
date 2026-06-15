@@ -231,3 +231,19 @@ img {
 
 /* Декорации (отключены для стабильности) */
 .cyber-grid, .particles, .twinkling-stars, .neon-line, .footer-neon, .neon-corner, .glitch-title { display: none; }
+.hero-img {
+    width: 60px; /* Размер картинки, подгони под свой дизайн */
+    height: 60px;
+    object-fit: contain; /* Чтобы картинка не деформировалась */
+    margin: 10px auto;
+    display: block;
+    pointer-events: none; /* Чтобы не мешало кликам */
+    filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5)); /* Легкое свечение */
+}
+
+/* На случай, если картинка не загрузилась */
+.hero-img::before {
+    content: "⚠️";
+    display: block;
+    text-align: center;
+}

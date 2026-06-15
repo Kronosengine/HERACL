@@ -240,25 +240,25 @@ img {
     pointer-events: none;
 }
 
-/* БОКОВЫЕ КНОПКИ */
+/* БОКОВЫЕ КНОПКИ (УВЕЛИЧЕННЫЕ И СДВИНУТЫЕ НА 100px ВПРАВО) */
 .left-buttons {
     position: absolute;
-    left: clamp(50px, 6vw, 90px);
+    left: clamp(150px, 15vw, 190px);  /* сдвинуты на 100px вправо (было 50-90px) */
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     z-index: 30;
     pointer-events: auto;
 }
 
 .side-btn {
-    width: clamp(50px, 4.5vw, 75px);
-    height: clamp(50px, 4.5vw, 75px);
+    width: clamp(90px, 8vw, 130px);    /* увеличены (было 50-75px) */
+    height: clamp(90px, 8vw, 130px);   /* увеличены */
     background: rgba(1, 10, 32, 0.85);
-    border: 1px solid #00f0ff;
-    border-radius: 10px;
+    border: 2px solid #00f0ff;
+    border-radius: 20px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -270,50 +270,51 @@ img {
 }
 
 .side-btn img {
-    width: 55%;
+    width: 65%;                       /* увеличены */
     height: auto;
-    margin-bottom: 3px;
-    filter: drop-shadow(0 0 5px #00f0ff);
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 8px #00f0ff);
 }
 
 .side-btn .btn-label {
-    font-size: 0.45rem;
+    font-size: 0.65rem;               /* увеличен шрифт */
     color: #00f0ff;
     font-family: 'DS Sofachrome', monospace;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.5px;
 }
 
 .side-btn:hover {
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
     background: #00f0ff;
+    transform: scale(1.05);
 }
 
 .side-btn:hover img {
-    filter: invert(1) drop-shadow(0 0 2px #000);
+    filter: invert(1) drop-shadow(0 0 3px #000);
 }
 
 .side-btn:hover .btn-label {
     color: #000;
 }
 
-/* СЕТКА С КАРТОЧКАМИ */
+/* СЕТКА С КАРТОЧКАМИ (УМЕНЬШЕННЫЙ БЛОК) */
 .stages-container.clean-split {
     text-align: center;
     pointer-events: auto;
-    width: min(900px, 70vw);
+    width: min(750px, 60vw);
     background: rgba(0, 10, 30, 0.82);
     backdrop-filter: blur(8px);
     border-radius: 20px;
-    padding: clamp(25px, 4vh, 40px) clamp(30px, 4vw, 50px);
+    padding: clamp(20px, 3vh, 35px) clamp(25px, 3vw, 40px);
     border: 1px solid rgba(0, 240, 255, 0.35);
     box-shadow: 0 0 35px rgba(0, 240, 255, 0.15);
-    margin-top: clamp(20px, 3vh, 40px);
+    margin-top: clamp(70px, 10vh, 90px);  /* увеличено на 50px (было 20px, 3vh, 40px) */
     margin-left: 80px;
 }
 
 .stages-title {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(1.1rem, 2.3vw, 2rem);
+    font-size: clamp(1rem, 2vw, 1.8rem);
     color: #00f0ff;
     font-weight: bold;
     letter-spacing: clamp(2px, 0.4vw, 4px);
@@ -328,14 +329,14 @@ img {
     color: #00b4ff;
     letter-spacing: 1.5px;
     margin-top: 5px;
-    margin-bottom: clamp(20px, 4vh, 35px);
+    margin-bottom: clamp(15px, 3vh, 25px);
     text-transform: uppercase;
 }
 
 .main-stages-split {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(20px, 3vw, 40px);
+    gap: clamp(20px, 3vw, 35px);
     width: 100%;
 }
 
@@ -343,7 +344,7 @@ img {
     background: linear-gradient(135deg, rgba(4, 24, 56, 0.85) 0%, rgba(2, 12, 30, 0.95) 100%);
     border: 2px solid rgba(0, 240, 255, 0.25);
     border-radius: 16px;
-    padding: clamp(20px, 3.5vh, 35px);
+    padding: clamp(18px, 3vh, 30px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -351,7 +352,7 @@ img {
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    min-height: 420px;
+    min-height: 380px;
 }
 
 .stage-tag {
@@ -359,59 +360,57 @@ img {
     letter-spacing: 2px;
     padding: 4px 14px;
     border-radius: 4px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     font-family: 'Courier New', monospace;
     font-weight: bold;
 }
 
 .stage-huge-num {
-    font-size: clamp(3rem, 5.5vw, 4.5rem);
+    font-size: clamp(2.5rem, 4.5vw, 3.8rem);
     font-weight: bold;
     font-family: 'Courier New', monospace;
     line-height: 1;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .stage-main-title {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.75rem, 1.1vw, 1rem);
+    font-size: clamp(0.7rem, 1vw, 0.9rem);
     letter-spacing: 1.5px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: #fff;
     text-transform: uppercase;
 }
 
 .stage-desc {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: clamp(0.75rem, 0.85vw, 0.95rem);
+    font-size: clamp(0.7rem, 0.8vw, 0.85rem);
     color: #8fa3bf;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     max-width: 92%;
 }
 
-/* ========== СТАТУСЫ ДЛЯ КАРТОЧЕК (ВЫРАВНЕННЫЕ) ========== */
 .stage-status {
     font-family: 'DS Sofachrome', sans-serif;
     font-size: clamp(0.55rem, 0.8vw, 0.7rem);
-    padding: 6px 14px;
+    padding: 5px 12px;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     display: inline-block;
     letter-spacing: 1.5px;
     margin-top: 0;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .final-status {
     color: #ff00cc !important;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
-/* КНОПКИ НА ОБЕИХ КАРТОЧКАХ НА ОДНОМ УРОВНЕ */
 .stage-main-btn {
     width: 100%;
-    padding: clamp(12px, 1.8vh, 16px) 0;
+    padding: clamp(10px, 1.5vh, 14px) 0;
     font-family: 'DS Sofachrome', sans-serif;
     font-size: clamp(0.55rem, 0.7vw, 0.65rem);
     border: none;
@@ -476,7 +475,7 @@ img {
     box-shadow: 0 0 25px #ff00cc;
 }
 
-/* Заблокированный финал (без hover-эффектов) */
+/* Заблокированный финал */
 .main-stage-card.final.locked-stage:hover {
     transform: none !important;
     box-shadow: none !important;
@@ -488,12 +487,6 @@ img {
     color: #ff00cc !important;
     border: 1px solid #ff00cc !important;
     cursor: not-allowed !important;
-    box-shadow: none !important;
-}
-
-.main-stage-card.final.locked-stage:hover .disabled-btn {
-    background: #1a0015 !important;
-    color: #ff00cc !important;
     box-shadow: none !important;
 }
 
@@ -559,17 +552,34 @@ img {
 /* АДАПТИВ */
 @media (max-width: 950px) {
     .main-stages-split { grid-template-columns: 1fr; gap: 20px; }
-    .stages-container.clean-split { max-height: 72vh; overflow-y: auto; padding: 20px; margin-left: 0; width: min(500px, 85vw); }
-    .left-buttons { position: fixed; bottom: 80px; top: auto; left: 20px; transform: none; flex-direction: row; }
+    .stages-container.clean-split {
+        max-height: 72vh;
+        overflow-y: auto;
+        padding: 20px;
+        margin-left: 0;
+        width: min(500px, 85vw);
+        margin-top: 80px;  /* добавлен отступ для мобильных */
+    }
+    .left-buttons { position: fixed; bottom: 80px; top: auto; left: 20px; transform: none; flex-direction: row; gap: 15px; }
+    .side-btn { width: 70px; height: 70px; }
+    .side-btn img { width: 55%; }
+    .side-btn .btn-label { font-size: 0.5rem; }
     .main-stage-card { min-height: auto; }
 }
 
 @media (min-width: 1920px) {
-    .stages-container.clean-split { width: min(1100px, 75vw); padding: 45px 60px; margin-top: 80px; }
-    .main-stages-split { gap: 50px; }
-    .main-stage-card { padding: 45px; border-radius: 20px; min-height: 480px; }
-    .stage-huge-num { font-size: 5.5rem; }
-    .stage-main-title { font-size: 1.2rem; }
-    .stage-desc { font-size: 1.05rem; margin-bottom: 25px; }
-    .stages-title { font-size: 2.3rem; }
+    .stages-container.clean-split {
+        width: min(900px, 65vw);
+        padding: 40px 50px;
+        margin-top: 100px;  /* увеличен отступ для больших экранов */
+    }
+    .main-stages-split { gap: 40px; }
+    .main-stage-card { padding: 35px; border-radius: 20px; min-height: 420px; }
+    .stage-huge-num { font-size: 4.5rem; }
+    .stage-main-title { font-size: 1rem; }
+    .stage-desc { font-size: 0.95rem; margin-bottom: 20px; }
+    .stages-title { font-size: 2rem; }
+    .side-btn { width: 110px; height: 110px; }
+    .side-btn .btn-label { font-size: 0.6rem; }
+    .left-buttons { left: 180px; }
 }
