@@ -8,22 +8,24 @@
 </head>
 <body>
 
-    <!-- КИБЕРПАНК ШАПКА -->
     <header class="cyber-header">
         <div class="nav-container">
-            <div class="logo">ГЕРАКЛ</div>
+            <div class="logo">
+                <span class="logo-text">ГЕРАКЛ</span>
+                <span class="logo-glow"></span>
+            </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="reg.html" class="nav-link">Регистрация</a>
                 <a href="urovni.html" class="nav-link">Этапы</a>
                 <a href="profil.html" class="nav-link">Профиль</a>
                 <a href="reiting.html" class="nav-link active">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link">Подсказка</a>
             </div>
         </div>
         <div class="neon-line"></div>
     </header>
 
-    <!-- КИБЕРПАНК ПОДВАЛ -->
     <footer class="cyber-footer">
         <div class="footer-content">
             <div class="footer-line"></div>
@@ -33,31 +35,19 @@
         <div class="footer-neon"></div>
     </footer>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="layer-container">
         <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
         
-        <!-- Киберпанк декоративные элементы -->
         <div class="cyber-grid"></div>
-        
-        <!-- ПАРЯЩИЕ ЧАСТИЦЫ -->
         <div class="particles" id="particles"></div>
-        
-        <!-- МЕРЦАЮЩИЕ ЗВЁЗДЫ -->
         <div class="twinkling-stars" id="twinklingStars"></div>
-        
-        <!-- ГОЛОГРАФИЧЕСКИЙ КРУГ -->
         <div class="holo-circle"></div>
-        
-        <!-- БЕГУЩИЕ ОГНИ -->
         <div class="running-lights">
             <div class="running-light top"></div>
             <div class="running-light bottom"></div>
             <div class="running-light left"></div>
             <div class="running-light right"></div>
         </div>
-        
-        <!-- НЕОНОВЫЕ УГЛЫ -->
         <div class="neon-corner corner-tl"></div>
         <div class="neon-corner corner-tr"></div>
         <div class="neon-corner corner-bl"></div>
@@ -69,7 +59,6 @@
 
         <div class="layer-2-wrapper">
             <img class="layer-2-img" src="kartinki/fon_3_2.png" alt="Второй слой с отступами">
-            
             <img class="toshka-1" src="kartinki/toshka.png" alt="Тошка 1">
             <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
         </div>
@@ -93,89 +82,63 @@
                         <div class="col-name">КОМАНДА</div>
                         <div class="col-score">ОЧКИ</div>
                     </div>
-                    
-                    <div class="rating-row first">
-                        <div class="col-place">🏆 1</div>
-                        <div class="col-name">⭐ ЗВЕЗДНЫЙ ФЕНИКС ⭐</div>
-                        <div class="col-score">3150</div>
-                    </div>
-                    
-                    <div class="rating-row second">
-                        <div class="col-place">2</div>
-                        <div class="col-name">🔥 КИБЕР-ТИТАНЫ 🔥</div>
-                        <div class="col-score">2980</div>
-                    </div>
-                    
-                    <div class="rating-row third">
-                        <div class="col-place">3</div>
-                        <div class="col-name">💀 НЕКРОМАНТЫ 💀</div>
-                        <div class="col-score">2750</div>
-                    </div>
-                    
-                    <div class="rating-row">
-                        <div class="col-place">4</div>
-                        <div class="col-name">🎮 ВИРТУАЛЬНЫЕ ВОИНЫ 🎮</div>
-                        <div class="col-score">2510</div>
-                    </div>
-                    
-                    <div class="rating-row">
-                        <div class="col-place">5</div>
-                        <div class="col-name">🤖 МЕХА-ДРАКОНЫ 🤖</div>
-                        <div class="col-score">2340</div>
-                    </div>
-                    
-                    <div class="rating-row">
-                        <div class="col-place">6</div>
-                        <div class="col-name">⚔️ КОДЕКС-ВОИНЫ ⚔️</div>
-                        <div class="col-score">2180</div>
-                    </div>
-                    
-                    <div class="rating-row">
-                        <div class="col-place">7</div>
-                        <div class="col-name">🌀 ЦИФРОВОЙ ХАОС 🌀</div>
-                        <div class="col-score">1950</div>
-                    </div>
-                    
-                    <div class="rating-row">
-                        <div class="col-place">8</div>
-                        <div class="col-name">🌟 АТОМНЫЕ ЗВЕЗДЫ 🌟</div>
-                        <div class="col-score">1720</div>
-                    </div>
-                    
-                    <div class="rating-row">
-                        <div class="col-place">9</div>
-                        <div class="col-name">🔮 ХРАНИТЕЛИ СВЕТА 🔮</div>
-                        <div class="col-score">1480</div>
-                    </div>
-                    
-                    <div class="rating-row">
-                        <div class="col-place">10</div>
-                        <div class="col-name">💎 БИТОВЫЕ РЫЦАРИ 💎</div>
-                        <div class="col-score">1250</div>
-                    </div>
+                    <div id="leaderboardBody"></div>
                 </div>
 
                 <div class="rating-footer">
-                    <div class="update-date">🏆 ОБНОВЛЕНО: 14.06.2026 🏆</div>
+                    <div class="update-date" id="updateDate">🏆 ЗАГРУЗКА...</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Анимация появления строк
-        const rows = document.querySelectorAll('.rating-row');
-        rows.forEach((row, index) => {
-            row.style.opacity = '0';
-            row.style.transform = 'translateX(-20px)';
-            row.style.transition = `all 0.3s ease ${index * 0.05}s`;
-            setTimeout(() => {
-                row.style.opacity = '1';
-                row.style.transform = 'translateX(0)';
-            }, 100);
-        });
+        const API_URL = 'http://localhost:5000/api';
 
-        // Генерация парящих частиц
+        async function loadLeaderboard() {
+            try {
+                const response = await fetch(`${API_URL}/auth/leaderboard`);
+                const data = await response.json();
+
+                const container = document.getElementById('leaderboardBody');
+                container.innerHTML = '';
+
+                if (data.leaders && data.leaders.length > 0) {
+                    data.leaders.forEach((user, index) => {
+                        const row = document.createElement('div');
+                        const place = index + 1;
+                        let placeClass = '';
+                        if (place === 1) placeClass = 'first';
+                        else if (place === 2) placeClass = 'second';
+                        else if (place === 3) placeClass = 'third';
+                        
+                        row.className = `rating-row ${placeClass}`;
+                        row.innerHTML = `
+                            <div class="col-place">${place === 1 ? '🏆 ' : ''}${place}</div>
+                            <div class="col-name">${user.team_name}</div>
+                            <div class="col-score">${user.points || 0}</div>
+                        `;
+                        container.appendChild(row);
+                    });
+
+                    document.getElementById('updateDate').textContent = `🏆 ОБНОВЛЕНО: ${new Date().toLocaleDateString('ru-RU')} 🏆`;
+                } else {
+                    container.innerHTML = `
+                        <div class="rating-row" style="text-align:center;color:#a0aaff;">
+                            <div class="col-place" style="width:100%;">Пока нет зарегистрированных команд</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки таблицы лидеров:', error);
+                document.getElementById('leaderboardBody').innerHTML = `
+                    <div class="rating-row" style="text-align:center;color:#ff4757;">
+                        <div class="col-place" style="width:100%;">Ошибка загрузки данных</div>
+                    </div>
+                `;
+            }
+        }
+
         function createParticles() {
             const container = document.getElementById('particles');
             if (!container) return;
@@ -191,7 +154,6 @@
             }
         }
 
-        // Генерация звёзд
         function createStars() {
             const container = document.getElementById('twinklingStars');
             if (!container) return;
@@ -206,7 +168,6 @@
             }
         }
 
-        // Глитч-эффект для заголовка
         const glitchElements = document.querySelectorAll('.glitch-title');
         glitchElements.forEach(el => {
             setInterval(() => {
@@ -219,6 +180,7 @@
 
         createParticles();
         createStars();
+        loadLeaderboard();
     </script>
 </body>
 </html>

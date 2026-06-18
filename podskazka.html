@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Подсказка / Правила - Геракл</title>
+    <link rel="stylesheet" href="podskazka.css">
+</head>
+<body>
+
+    <!-- КИБЕРПАНК ШАПКА -->
+    <header class="cyber-header">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">ГЕРАКЛ</span>
+                <span class="logo-glow"></span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="reg.html" class="nav-link">Регистрация</a>
+                <a href="urovni.html" class="nav-link">Этапы</a>
+                <a href="profil.html" class="nav-link">Профиль</a>
+                <a href="reiting.html" class="nav-link">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link active">Подсказка</a>
+            </div>
+        </div>
+        <div class="neon-line"></div>
+    </header>
+
+    <!-- КИБЕРПАНК ПОДВАЛ -->
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <div class="footer-line"></div>
+            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
+            <div class="footer-line"></div>
+        </div>
+        <div class="footer-neon"></div>
+    </footer>
+
+    <div class="layer-container">
+        <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
+        
+        <div class="cyber-grid"></div>
+        <div class="particles" id="particles"></div>
+        <div class="twinkling-stars" id="twinklingStars"></div>
+        <div class="holo-circle"></div>
+        <div class="running-lights">
+            <div class="running-light top"></div>
+            <div class="running-light bottom"></div>
+            <div class="running-light left"></div>
+            <div class="running-light right"></div>
+        </div>
+        <div class="neon-corner corner-tl"></div>
+        <div class="neon-corner corner-tr"></div>
+        <div class="neon-corner corner-bl"></div>
+        <div class="neon-corner corner-br"></div>
+
+        <div class="content-wrapper">
+            <div class="hero-section">
+                <h1 class="main-title glitch" data-text="ПОДСКАЗКИ К ПОДВИГАМ">ПОДСКАЗКИ К ПОДВИГАМ</h1>
+                <p class="subtitle">12 ОТБОРОЧНЫХ ПОДВИГОВ</p>
+            </div>
+
+            <div class="hints-grid" id="hintsGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        const labors = [
+            { id: 1, name: "Немейский лев", desc: "Вычислить пещеру, где залёг лев, по логическим утверждениям.", icon: "kartinki/icon/1.png", time: "≈ 10 мин" },
+            { id: 2, name: "Лернейская гидра", desc: "Найти бессмертную голову по длине имени в двоичной системе.", icon: "kartinki/icon/2.png", time: "≈ 10 мин" },
+            { id: 3, name: "Стимфалийские птицы", desc: "Рассчитать частоту звука через побитовые операции.", icon: "kartinki/icon/3.png", time: "≈ 10 мин" },
+            { id: 4, name: "Керинейская лань", desc: "Баллистика стрел с учётом ветра и углов.", icon: "kartinki/icon/4.png", time: "≈ 15 мин" },
+            { id: 5, name: "Эриманфский вепрь", desc: "Кратчайший путь в лабиринте со сбором предметов.", icon: "kartinki/icon/5.png", time: "≈ 20 мин" },
+            { id: 6, name: "Авгиевы конюшни", desc: "Нахождение ошибок в коде.", icon: "kartinki/icon/6.png", time: "≈ 15 мин" },
+            { id: 7, name: "Критский бык", desc: "Рекурсивный поиск путей в лабиринте (DFS).", icon: "kartinki/icon/7.png", time: "≈ 10 мин" },
+            { id: 8, name: "Кони Диомеда", desc: "Поиск имени в лог-файле и подсчёт слов.", icon: "kartinki/icon/8.png", time: "≈ 10 мин" },
+            { id: 9, name: "Пояс Ипполиты", desc: "Расшифровка сообщения шифром.", icon: "kartinki/icon/9.png", time: "≈ 10 мин" },
+            { id: 10, name: "Коровы Гериона", desc: "Рекурсивная функция.", icon: "kartinki/icon/10.png", time: "≈ 15 мин" },
+            { id: 11, name: "Яблоки Гесперид", desc: "Взвешивание с погрешностью, минимальное число операций.", icon: "kartinki/icon/11.png", time: "≈ 15 мин" },
+            { id: 12, name: "Цербер", desc: "Сумма числовых литералов в Python-коде.", icon: "kartinki/icon/12.png", time: "≈ 15 мин" }
+        ];
+
+        function renderHints() {
+            const container = document.getElementById('hintsGrid');
+            container.innerHTML = '';
+            labors.forEach(labor => {
+                const card = document.createElement('div');
+                card.className = 'hint-card';
+                card.innerHTML = `
+                    <div class="hint-icon">
+                        <img src="${labor.icon}" alt="${labor.name}" class="hint-img">
+                    </div>
+                    <div class="hint-info">
+                        <div class="hint-number">ПОДВИГ ${labor.id}</div>
+                        <h3 class="hint-name">${labor.name}</h3>
+                        <p class="hint-desc">${labor.desc}</p>
+                        <div class="hint-time">⏱️ ${labor.time}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('twinklingStars');
+            if (!container) return;
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = 2 + Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        createParticles();
+        createStars();
+        renderHints();
+    </script>
+</body>
+</html>

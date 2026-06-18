@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- КИБЕРПАНК ШАПКА -->
     <header class="cyber-header">
         <div class="nav-container">
             <div class="logo">ГЕРАКЛ</div>
@@ -18,12 +17,12 @@
                 <a href="urovni.html" class="nav-link">Этапы</a>
                 <a href="profil.html" class="nav-link">Профиль</a>
                 <a href="reiting.html" class="nav-link">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link">Подсказка</a>
             </div>
         </div>
         <div class="neon-line"></div>
     </header>
 
-    <!-- КИБЕРПАНК ПОДВАЛ -->
     <footer class="cyber-footer">
         <div class="footer-content">
             <div class="footer-line"></div>
@@ -33,23 +32,14 @@
         <div class="footer-neon"></div>
     </footer>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="layer-container">
         <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
         
-        <!-- Киберпанк декоративные элементы -->
         <div class="cyber-grid"></div>
-        
-        <!-- ПАРЯЩИЕ ЧАСТИЦЫ -->
         <div class="particles" id="particles"></div>
-        
-        <!-- МЕРЦАЮЩИЕ ЗВЁЗДЫ -->
         <div class="twinkling-stars" id="twinklingStars"></div>
-        
-        <!-- ГОЛОГРАФИЧЕСКИЙ КРУГ -->
         <div class="holo-circle"></div>
         
-        <!-- БЕГУЩИЕ ОГНИ -->
         <div class="running-lights">
             <div class="running-light top"></div>
             <div class="running-light bottom"></div>
@@ -57,7 +47,6 @@
             <div class="running-light right"></div>
         </div>
         
-        <!-- НЕОНОВЫЕ УГЛЫ -->
         <div class="neon-corner corner-tl"></div>
         <div class="neon-corner corner-tr"></div>
         <div class="neon-corner corner-bl"></div>
@@ -85,45 +74,47 @@
                     <div class="line-first"></div>
                 </div>
 
-                <div class="form-container">
-                    <div class="input-group">
-                        <input type="text" id="team-name" class="input-field input-medium_0" placeholder="Название команды">
-                        <div class="error-message" id="team-name-error"></div>
-                    </div>
+                <form id="registerForm" autocomplete="off">
+                    <div class="form-container">
+                        <div class="input-group">
+                            <input type="text" id="team-name" class="input-field" placeholder="Название команды" autocomplete="off">
+                            <div class="error-message" id="team-name-error"></div>
+                        </div>
 
-                    <div class="input-group">
-                        <input type="email" id="email" class="input-field input-medium_3" placeholder="Электронная почта">
-                        <div class="error-message" id="email-error"></div>
-                    </div>
+                        <div class="input-group">
+                            <input type="email" id="email" class="input-field" placeholder="Электронная почта" autocomplete="off">
+                            <div class="error-message" id="email-error"></div>
+                        </div>
 
-                    <div class="input-group password-group">
-                        <input type="password" id="password" class="input-field input-medium_2" placeholder="Пароль">
-                        <button type="button" class="toggle-password" data-target="password">⦿</button>
-                        <div class="error-message" id="password-error"></div>
-                    </div>
+                        <div class="input-group password-group">
+                            <input type="password" id="password" class="input-field" placeholder="Пароль" autocomplete="new-password">
+                            <button type="button" class="toggle-password" data-target="password">ПОКАЗАТЬ</button>
+                            <div class="error-message" id="password-error"></div>
+                        </div>
 
-                    <div class="input-group password-group">
-                        <input type="password" id="confirm-password" class="input-field input-medium_2" placeholder="Подтверждение пароля">
-                        <button type="button" class="toggle-password" data-target="confirm-password">⦿</button>
-                        <div class="error-message" id="confirm-password-error"></div>
-                    </div>
+                        <div class="input-group password-group">
+                            <input type="password" id="confirm-password" class="input-field" placeholder="Подтверждение пароля" autocomplete="new-password">
+                            <button type="button" class="toggle-password" data-target="confirm-password">ПОКАЗАТЬ</button>
+                            <div class="error-message" id="confirm-password-error"></div>
+                        </div>
 
-                    <div class="input-group">
-                        <input type="text" id="city" class="input-field input-medium_1" placeholder="Город">
-                        <div class="error-message" id="city-error"></div>
-                    </div>
+                        <div class="input-group">
+                            <input type="text" id="city" class="input-field" placeholder="Город" autocomplete="off">
+                            <div class="error-message" id="city-error"></div>
+                        </div>
 
-                    <div class="input-group">
-                        <input type="text" id="school" class="input-field input-medium_2" placeholder="Название школы">
-                        <div class="error-message" id="school-error"></div>
+                        <div class="input-group">
+                            <input type="text" id="school" class="input-field" placeholder="Название школы" autocomplete="off">
+                            <div class="error-message" id="school-error"></div>
+                        </div>
                     </div>
-                </div>
+                </form>
+
                 <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
             </div>
         </div>
     </div>
 
-    <!-- Уведомления (изначально скрыты) -->
     <div id="successNotification" class="notification success">✅ Вы успешно зарегистрировались!</div>
     <div id="errorNotification" class="notification error">⚠️ Ошибка!</div>
 
@@ -145,7 +136,8 @@
         const cityError = document.getElementById('city-error');
         const schoolError = document.getElementById('school-error');
 
-        // Скрываем уведомления при загрузке
+        const API_URL = 'http://localhost:5000/api';
+
         successNotification.style.display = 'none';
         errorNotification.style.display = 'none';
         successNotification.style.opacity = '0';
@@ -153,7 +145,6 @@
         successNotification.style.transform = 'translateX(450px)';
         errorNotification.style.transform = 'translateX(450px)';
 
-        // Кнопки показа/скрытия пароля с символами ⦿ (заполненный) и ⊙ (круг с точкой)
         const toggleButtons = document.querySelectorAll('.toggle-password');
         toggleButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -161,11 +152,11 @@
                 const targetInput = document.getElementById(targetId);
                 if (targetInput.type === 'password') {
                     targetInput.type = 'text';
-                    this.textContent = '⊙';
+                    this.textContent = 'СКРЫТЬ';
                     this.classList.add('active');
                 } else {
                     targetInput.type = 'password';
-                    this.textContent = '⦿';
+                    this.textContent = 'ПОКАЗАТЬ';
                     this.classList.remove('active');
                 }
             });
@@ -225,103 +216,73 @@
         }
 
         function validateTeamName(name) {
-            if (!name || name.trim() === '') {
-                return { isValid: false, message: 'Введите название команды' };
-            }
-            if (name.trim().length < 2) {
-                return { isValid: false, message: 'Название команды должно содержать минимум 2 символа' };
-            }
-            if (name.trim().length > 50) {
-                return { isValid: false, message: 'Название команды не должно превышать 50 символов' };
-            }
+            if (!name || name.trim() === '') return { isValid: false, message: 'Введите название команды' };
+            if (name.trim().length < 2) return { isValid: false, message: 'Минимум 2 символа' };
+            if (name.trim().length > 50) return { isValid: false, message: 'Не более 50 символов' };
             return { isValid: true, message: '' };
         }
 
         function validateEmail(email) {
-            if (!email || email.trim() === '') {
-                return { isValid: false, message: 'Введите электронную почту' };
-            }
-            if (!email.includes('@')) {
-                return { isValid: false, message: 'Email должен содержать символ @' };
-            }
+            if (!email || email.trim() === '') return { isValid: false, message: 'Введите email' };
+            if (!email.includes('@')) return { isValid: false, message: 'Email должен содержать @' };
             const parts = email.split('@');
             if (parts.length !== 2 || parts[0].length === 0 || !parts[1].includes('.')) {
-                return { isValid: false, message: 'Некорректный формат email' };
+                return { isValid: false, message: 'Некорректный email' };
             }
             return { isValid: true, message: '' };
         }
 
         function validatePassword(password) {
-            if (!password) {
-                return { isValid: false, message: 'Введите пароль' };
-            }
-            if (password.length < 6) {
-                return { isValid: false, message: 'Пароль должен содержать минимум 6 символов' };
-            }
-            if (password.length > 30) {
-                return { isValid: false, message: 'Пароль не должен превышать 30 символов' };
-            }
+            if (!password) return { isValid: false, message: 'Введите пароль' };
+            if (password.length < 6) return { isValid: false, message: 'Минимум 6 символов' };
+            if (password.length > 30) return { isValid: false, message: 'Не более 30 символов' };
             return { isValid: true, message: '' };
         }
 
         function validateConfirmPassword(password, confirmPassword) {
-            if (!confirmPassword) {
-                return { isValid: false, message: 'Подтвердите пароль' };
-            }
-            if (password !== confirmPassword) {
-                return { isValid: false, message: 'Пароли не совпадают' };
-            }
+            if (!confirmPassword) return { isValid: false, message: 'Подтвердите пароль' };
+            if (password !== confirmPassword) return { isValid: false, message: 'Пароли не совпадают' };
             return { isValid: true, message: '' };
         }
 
         function validateCity(city) {
-            if (!city || city.trim() === '') {
-                return { isValid: false, message: 'Введите город' };
-            }
+            if (!city || city.trim() === '') return { isValid: false, message: 'Введите город' };
             const trimmed = city.trim();
             const firstChar = trimmed.charAt(0);
             if (firstChar !== firstChar.toUpperCase() || firstChar === firstChar.toLowerCase()) {
-                return { isValid: false, message: 'Город должен начинаться с заглавной буквы' };
+                return { isValid: false, message: 'С заглавной буквы' };
             }
-            if (trimmed.length < 2) {
-                return { isValid: false, message: 'Название города слишком короткое' };
-            }
+            if (trimmed.length < 2) return { isValid: false, message: 'Название слишком короткое' };
             return { isValid: true, message: '' };
         }
 
         function validateSchool(school) {
-            if (!school || school.trim() === '') {
-                return { isValid: false, message: 'Введите название школы' };
-            }
-            if (school.trim().length < 2) {
-                return { isValid: false, message: 'Название школы слишком короткое' };
-            }
-            if (school.trim().length > 100) {
-                return { isValid: false, message: 'Название школы не должно превышать 100 символов' };
-            }
+            if (!school || school.trim() === '') return { isValid: false, message: 'Введите школу' };
+            if (school.trim().length < 2) return { isValid: false, message: 'Слишком короткое' };
+            if (school.trim().length > 100) return { isValid: false, message: 'Не более 100 символов' };
             return { isValid: true, message: '' };
         }
 
-        submitBtn.addEventListener('click', function(e) {
+        submitBtn.addEventListener('click', async function(e) {
             e.preventDefault();
             clearFieldErrors();
-            
-            const teamName = teamNameInput.value;
-            const email = emailInput.value;
+
+            const teamName = teamNameInput.value.trim();
+            const email = emailInput.value.trim();
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
-            const city = cityInput.value;
-            const school = schoolInput.value;
-            
+            const city = cityInput.value.trim();
+            const school = schoolInput.value.trim();
+
             const teamNameValidation = validateTeamName(teamName);
             const emailValidation = validateEmail(email);
             const passwordValidation = validatePassword(password);
             const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword);
             const cityValidation = validateCity(city);
             const schoolValidation = validateSchool(school);
-            
+
             let hasError = false;
-            
+
             if (!teamNameValidation.isValid) {
                 setFieldError(teamNameInput, teamNameError, teamNameValidation.message);
                 hasError = true;
@@ -346,23 +307,35 @@
                 setFieldError(schoolInput, schoolError, schoolValidation.message);
                 hasError = true;
             }
-            
+
             if (hasError) {
                 showErrorPopup('Заполните все поля правильно!');
                 return;
             }
-            
-            const userData = {
-                teamName: teamName.trim(),
-                email: email.trim(),
-                password: password,
-                city: city.trim(),
-                school: school.trim(),
-                registeredAt: new Date().toISOString()
-            };
-            localStorage.setItem('registeredUser', JSON.stringify(userData));
-            
-            showSuccess(`Вы успешно зарегистрировались, ${teamName.trim()}! Теперь вы можете войти в свой аккаунт.`);
+
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ teamName, email, password, city, school })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showSuccess(`Вы успешно зарегистрировались, ${teamName}!`);
+                    setTimeout(() => {
+                        window.location.href = 'profil.html';
+                    }, 1500);
+                } else {
+                    showErrorPopup(data.error || 'Ошибка регистрации');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showErrorPopup('Ошибка подключения к серверу. Убедитесь, что сервер запущен.');
+            }
         });
 
         const inputs = [teamNameInput, emailInput, passwordInput, confirmPasswordInput, cityInput, schoolInput];
@@ -398,7 +371,6 @@
             });
         });
 
-        // Генерация парящих частиц
         function createParticles() {
             const container = document.getElementById('particles');
             if (!container) return;
@@ -414,7 +386,6 @@
             }
         }
 
-        // Генерация звёзд
         function createStars() {
             const container = document.getElementById('twinklingStars');
             if (!container) return;

@@ -11,13 +11,17 @@
     <!-- КИБЕРПАНК ШАПКА -->
     <header class="cyber-header">
         <div class="nav-container">
-            <div class="logo">ГЕРАКЛ</div>
+            <div class="logo">
+                <span class="logo-text">ГЕРАКЛ</span>
+                <span class="logo-glow"></span>
+            </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="reg.html" class="nav-link">Регистрация</a>
                 <a href="urovni.html" class="nav-link active">Этапы</a>
                 <a href="profil.html" class="nav-link">Профиль</a>
                 <a href="reiting.html" class="nav-link">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link">Подсказка</a>
             </div>
         </div>
         <div class="neon-line"></div>
@@ -33,9 +37,21 @@
         <div class="footer-neon"></div>
     </footer>
 
+    <!-- Оверлей блокировки при окончании времени -->
+    <div class="timeout-overlay" id="timeoutOverlay">
+        <div class="timeout-card">
+            <div class="timeout-icon">⏰</div>
+            <h2>ВРЕМЯ ВЫШЛО!</h2>
+            <p>Ваше время на прохождение финалов истекло.</p>
+            <p>Вы можете вернуться на главную страницу.</p>
+            <button class="timeout-btn" onclick="window.location.href='index.html'">ВЕРНУТЬСЯ НА ГЛАВНУЮ</button>
+        </div>
+    </div>
+
     <div class="layer-container">
         <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
-        
+
+        <!-- Декоративные элементы -->
         <div class="cyber-grid"></div>
         <div class="particles" id="particles"></div>
         <div class="twinkling-stars" id="twinklingStars"></div>
@@ -52,16 +68,35 @@
         <div class="neon-corner corner-br"></div>
 
         <div class="content-wrapper">
+            <!-- HERO СЕКЦИЯ: ПРОГРЕСС СЛЕВА, ЗАГОЛОВОК ПО ЦЕНТРУ, ТАЙМЕР СПРАВА -->
             <div class="hero-section">
-                <h1 class="main-title glitch" data-text="ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ">ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ</h1>
-                <p class="subtitle">Три финальных испытания перед лицом Олимпийских богов</p>
-                <div class="progress-bar-container">
-                    <div class="progress-label">ПРОГРЕСС ПРОХОЖДЕНИЯ ФИНАЛОВ</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="globalProgress" style="width: 0%"></div>
+                <!-- ПРОГРЕСС-БАР СЛЕВА -->
+                <div class="hero-left">
+                    <div class="progress-bar-container">
+                        <div class="progress-label">ПРОГРЕСС ПРОХОЖДЕНИЯ ФИНАЛОВ</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="globalProgress" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span id="completedCount">0</span> / <span id="totalCount">3</span> ФИНАЛОВ
+                        </div>
                     </div>
-                    <div class="progress-stats">
-                        <span id="completedCount">0</span> / <span id="totalCount">3</span> ФИНАЛОВ
+                </div>
+
+                <!-- ЗАГОЛОВОК ПО ЦЕНТРУ -->
+                <div class="hero-center">
+                    <h1 class="main-title glitch" data-text="ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ">ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ</h1>
+                    <p class="subtitle">ТРИ ФИНАЛЬНЫХ ИСПЫТАНИЯ ПЕРЕД ЛИЦОМ ОЛИМПИЙСКИХ БОГОВ</p>
+                </div>
+
+                <!-- ТАЙМЕР СПРАВА (часть hero-section) -->
+                <div class="hero-right">
+                    <div class="timer-container" id="timerContainer">
+                        <div class="timer-card">
+                            <div class="timer-label">⏱️ ОСТАВШЕЕСЯ ВРЕМЯ ⏱️</div>
+                            <div class="timer-display" id="timerDisplay">01:30:00</div>
+                            <div class="timer-warning" id="timerWarning"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,6 +111,11 @@
             <div class="modal-header">
                 <h2 id="modalTitle">ФИНАЛ 1: Клубок бога смерти Танатоса</h2>
                 <button class="modal-close" id="closeModalBtn">✖</button>
+            </div>
+            <!-- МИНИ-ТАЙМЕР ВНУТРИ МОДАЛКИ -->
+            <div class="modal-timer">
+                <div class="modal-timer-label">⏱️ ОСТАЛОСЬ ВРЕМЕНИ</div>
+                <div class="modal-timer-display" id="modalTimerDisplay">01:30:00</div>
             </div>
             <div class="hero-images" id="heroImages">
                 <div class="hero-left"><div class="hero-icon">💀</div><div class="hero-name">Танатос</div></div>
@@ -109,9 +149,171 @@
     </div>
 
     <script>
-        // Данные о финалах
+        // ============================================
+        // API КОНСТАНТЫ
+        // ============================================
+        const API_URL = 'http://localhost:5000/api';
+
+        // ============================================
+        // ТАЙМЕР (90 минут = 5400 секунд)
+        // ============================================
+        const TIME_LIMIT_SECONDS = 90 * 60;
+        let timeRemaining = TIME_LIMIT_SECONDS;
+        let timerInterval = null;
+        let isTimeExpired = false;
+
+        function getTimerStorageKey() {
+            const savedUser = localStorage.getItem('user');
+            if (!savedUser) return null;
+            const userData = JSON.parse(savedUser);
+            return `finals_timer_${userData.teamName}`;
+        }
+
+        function formatTimerTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            if (hours > 0) {
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimerDisplay() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            const modalTimerDisplay = document.getElementById('modalTimerDisplay');
+            const timerWarning = document.getElementById('timerWarning');
+            const timerCard = document.querySelector('.timer-card');
+            
+            const timeStr = formatTimerTime(timeRemaining);
+            
+            if (timerDisplay) {
+                timerDisplay.textContent = timeStr;
+                
+                if (timerCard) {
+                    timerCard.classList.remove('warning-mode', 'critical-mode');
+                }
+                
+                if (timeRemaining <= 300) {
+                    if (timerCard) timerCard.classList.add('warning-mode');
+                    if (timerWarning) {
+                        timerWarning.textContent = '⚠️ ОСТАЛОСЬ МЕНЕЕ 5 МИНУТ! ⚠️';
+                        timerWarning.style.color = '#ff4757';
+                    }
+                } else if (timeRemaining <= 600) {
+                    if (timerCard) timerCard.classList.add('critical-mode');
+                    if (timerWarning) {
+                        timerWarning.textContent = '⏰ ОСТАЛОСЬ МЕНЕЕ 10 МИНУТ ⏰';
+                        timerWarning.style.color = '#ffa502';
+                    }
+                } else {
+                    if (timerWarning) timerWarning.textContent = '';
+                }
+            }
+            
+            if (modalTimerDisplay) {
+                modalTimerDisplay.textContent = timeStr;
+                modalTimerDisplay.classList.remove('warning', 'critical');
+                if (timeRemaining <= 300) {
+                    modalTimerDisplay.classList.add('warning');
+                } else if (timeRemaining <= 600) {
+                    modalTimerDisplay.classList.add('critical');
+                }
+            }
+        }
+
+        function lockFinalsPage() {
+            if (isTimeExpired) return;
+            isTimeExpired = true;
+            
+            const timeoutOverlay = document.getElementById('timeoutOverlay');
+            if (timeoutOverlay) timeoutOverlay.classList.add('active');
+            
+            const cards = document.querySelectorAll('.final-card');
+            cards.forEach(card => {
+                card.style.pointerEvents = 'none';
+                card.style.opacity = '0.5';
+                card.style.filter = 'grayscale(0.5)';
+            });
+            
+            const modalOverlay = document.getElementById('modalOverlay');
+            if (modalOverlay && modalOverlay.classList.contains('active')) {
+                modalOverlay.classList.remove('active');
+            }
+            
+            showNotification('⏰ ВРЕМЯ ВЫШЛО! Финалы заблокированы.', 'error');
+        }
+
+        function startFinalsTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeRemaining <= 1) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    timeRemaining = 0;
+                    updateTimerDisplay();
+                    lockFinalsPage();
+                } else {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    if (timeRemaining % 10 === 0) {
+                        const key = getTimerStorageKey();
+                        if (key && !isTimeExpired) {
+                            const currentStartTime = Date.now() - ((TIME_LIMIT_SECONDS - timeRemaining) * 1000);
+                            localStorage.setItem(key, JSON.stringify({ startTime: currentStartTime, expiresAt: currentStartTime + (TIME_LIMIT_SECONDS * 1000) }));
+                        }
+                    }
+                }
+            }, 1000);
+        }
+
+        function loadSavedTimer() {
+            const key = getTimerStorageKey();
+            if (!key) return null;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.expiresAt && Date.now() < data.expiresAt) {
+                    const elapsed = Math.floor((Date.now() - data.startTime) / 1000);
+                    const remaining = Math.max(0, TIME_LIMIT_SECONDS - elapsed);
+                    return { remaining, startTime: data.startTime, expiresAt: data.expiresAt };
+                } else if (data.expiresAt && Date.now() >= data.expiresAt) {
+                    return { remaining: 0, expired: true };
+                }
+            }
+            return null;
+        }
+
+        function initFinalsTimer() {
+            const saved = loadSavedTimer();
+            if (saved && saved.expired) {
+                timeRemaining = 0;
+                updateTimerDisplay();
+                lockFinalsPage();
+                return;
+            }
+            if (saved && saved.remaining !== undefined) {
+                timeRemaining = saved.remaining;
+                updateTimerDisplay();
+                if (timeRemaining <= 0) lockFinalsPage();
+                else startFinalsTimer();
+            } else {
+                timeRemaining = TIME_LIMIT_SECONDS;
+                updateTimerDisplay();
+                const key = getTimerStorageKey();
+                if (key) {
+                    const startTime = Date.now();
+                    localStorage.setItem(key, JSON.stringify({ startTime, expiresAt: startTime + (TIME_LIMIT_SECONDS * 1000) }));
+                }
+                startFinalsTimer();
+            }
+        }
+
+        // ============================================
+        // ДАННЫЕ О ФИНАЛАХ
+        // ============================================
         const finals = [
-            { id: 1, name: "Клубок бога смерти Танатоса", points: 250, answer: "Геракл 3", type: "text",
+            { id: 1, name: "Клубок бога смерти Танатоса", points: 250, answer: "Гектор 2", type: "text",
               story: "Танатос ведет учет душ в подземном царстве. Из-за бага некоторые записи повреждены или продублированы.",
               task: "Напишите программу, которая:\n1. Удалит все полные дубликаты строк.\n2. Отфильтрует только те души, у которых Грехи строго больше, чем Добродетели.\n3. Отсортирует оставшихся по Возрасту (от самых старых к самым молодым).\n\nВ качестве ответа выведите Имя самой старой грешной души и общее количество отфильтрованных душ через пробел.",
               data: `souls.txt (пример данных):
@@ -167,6 +369,44 @@
         const closeModalBtn = document.getElementById('closeModalBtn');
         const answerSubmitBtn = document.getElementById('answerSubmitBtn');
 
+        // ============================================
+        // СИНХРОНИЗАЦИЯ С СЕРВЕРОМ
+        // ============================================
+        async function syncFinalsProgressToServer() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const completedFinals = Object.keys(completed).filter(k => completed[k]).map(Number);
+
+                const response = await fetch(`${API_URL}/auth/progress`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        points: user.points || 0,
+                        wins: user.wins || 0,
+                        rating: user.rating || 1,
+                        completedLabors: user.completedLabors || [],
+                        failedLabors: user.failedLabors || [],
+                        completedFinals: completedFinals
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.user) {
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка синхронизации финалов:', error);
+            }
+        }
+
         function updateProgress() {
             const total = finals.length;
             const completedCount = Object.values(completed).filter(v => v === true).length;
@@ -185,6 +425,10 @@
         }
 
         function openModal(finalId) {
+            if (isTimeExpired) {
+                showNotification('⏰ ВРЕМЯ ВЫШЛО! Финалы заблокированы.', 'error');
+                return;
+            }
             currentFinal = finals.find(f => f.id === finalId);
             if (!currentFinal) return;
 
@@ -222,6 +466,11 @@
         }
 
         function submitAnswer() {
+            if (isTimeExpired) {
+                showNotification('⏰ ВРЕМЯ ВЫШЛО! Финалы заблокированы.', 'error');
+                closeModal();
+                return;
+            }
             if (!currentFinal) return;
             if (completed[currentFinal.id]) {
                 showNotification('Этот финал уже пройден!', 'error');
@@ -243,7 +492,7 @@
                 localStorage.setItem('finals_answers', JSON.stringify(userAnswers));
                 updateProgress();
                 
-                const currentUser = localStorage.getItem('currentUser');
+                const currentUser = localStorage.getItem('user');
                 if (currentUser) {
                     const userData = JSON.parse(currentUser);
                     const progressKey = `progress_${userData.teamName}`;
@@ -251,12 +500,21 @@
                     existingProgress.points = (existingProgress.points || 0) + currentFinal.points;
                     existingProgress.wins = (existingProgress.wins || 0) + 1;
                     localStorage.setItem(progressKey, JSON.stringify(existingProgress));
+                    
+                    // Обновляем user в localStorage
+                    userData.points = existingProgress.points;
+                    userData.wins = existingProgress.wins;
+                    localStorage.setItem('user', JSON.stringify(userData));
                 }
                 
                 modalResult.innerHTML = `<div class="result-success">✅ ПРАВИЛЬНО! Вы получили +${currentFinal.points} очков!</div>`;
                 answerSubmitBtn.textContent = 'ВЫПОЛНЕНО';
                 answerSubmitBtn.disabled = true;
                 answerInput.disabled = true;
+                
+                // Синхронизация с сервером
+                syncFinalsProgressToServer();
+                
                 showNotification(`✅ ФИНАЛ ${currentFinal.id} ПРОЙДЕН! +${currentFinal.points} очков`, 'success');
                 renderFinals();
             } else {
@@ -271,11 +529,12 @@
             const container = document.getElementById('finalsGrid');
             container.innerHTML = '';
             
-            finals.forEach(final => {
+            finals.forEach((final, index) => {
                 const isCompleted = completed[final.id] || false;
                 const card = document.createElement('div');
                 card.className = `final-card ${isCompleted ? 'completed' : ''}`;
                 card.setAttribute('data-id', final.id);
+                card.style.setProperty('--i', index);
                 card.onclick = () => openModal(final.id);
                 
                 card.innerHTML = `
@@ -311,6 +570,8 @@
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 8 + 's';
                 particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
                 container.appendChild(particle);
             }
         }
@@ -324,6 +585,7 @@
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
                 star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = 2 + Math.random() * 3 + 's';
                 container.appendChild(star);
             }
         }
@@ -337,6 +599,10 @@
         createStars();
         renderFinals();
         updateProgress();
+
+        if (localStorage.getItem('user')) {
+            initFinalsTimer();
+        }
     </script>
 </body>
 </html>

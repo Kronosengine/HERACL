@@ -17,6 +17,7 @@
                 <a href="urovni.html" class="nav-link">Этапы</a>
                 <a href="profil.html" class="nav-link active">Профиль</a>
                 <a href="reiting.html" class="nav-link">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link">Подсказка</a>
             </div>
         </div>
         <div class="neon-line"></div>
@@ -61,8 +62,8 @@
             <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
         </div>
 
-        <button class="login-toggle-btn" id="showLoginBtn">👤 ВОЙТИ</button>
-        <button class="logout-toggle-btn" id="logoutBtn" style="display: none;">🚪 ВЫЙТИ</button>
+        <button class="login-toggle-btn" id="showLoginBtn" style="display: none;">👤 ВОЙТИ</button>
+        <button class="logout-toggle-btn" id="logoutBtn">🚪 ВЫЙТИ</button>
 
         <div class="login-overlay" id="loginOverlay">
             <div class="login-card">
@@ -187,6 +188,8 @@
     </div>
 
     <script>
+        const API_URL = 'http://localhost:5000/api';
+
         const loginOverlay = document.getElementById('loginOverlay');
         const showLoginBtn = document.getElementById('showLoginBtn');
         const closeLoginBtn = document.getElementById('closeLoginBtn');
@@ -212,46 +215,8 @@
         const avatarInput = document.getElementById('avatar-input');
         const avatarPreview = document.getElementById('avatar-preview');
 
-        function updateProfile(userData) {
-            if (userData) {
-                teamNameDisplay.textContent = userData.teamName;
-                teamNameDisplay.setAttribute('data-text', userData.teamName);
-                teamTag.textContent = `#${userData.teamName.toUpperCase().replace(/\s/g, '_')}`;
-                cityDisplay.textContent = userData.city;
-                emailDisplay.textContent = userData.email;
-                schoolDisplay.textContent = userData.school;
-                
-                let points = 1250;
-                let wins = 24;
-                let rating = 1;
-                
-                const savedProgress = localStorage.getItem(`progress_${userData.teamName}`);
-                if (savedProgress) {
-                    const progress = JSON.parse(savedProgress);
-                    points = progress.points || 1250;
-                    wins = progress.wins || 24;
-                    rating = progress.rating || 1;
-                }
-                
-                pointsDisplay.textContent = points;
-                winsDisplay.textContent = wins;
-                ratingDisplay.textContent = `#${rating}`;
-                
-                const nextLevelPoints = 1600;
-                const percent = Math.min(100, (points / nextLevelPoints) * 100);
-                ratingFill.style.width = `${percent}%`;
-                currentPointsSpan.textContent = `${points} / ${nextLevelPoints}`;
-                const needed = nextLevelPoints - points;
-                nextLevelInfo.textContent = `+${needed} ДО ПОВЫШЕНИЯ`;
-                
-                let level = 'НАЧИНАЮЩИЙ';
-                if (points >= 3000) level = 'ЛЕГЕНДА';
-                else if (points >= 2000) level = 'ЭЛИТА';
-                else if (points >= 1200) level = 'МАСТЕР';
-                else if (points >= 600) level = 'ПРОФИ';
-                else level = 'НОВИЧОК';
-                levelText.textContent = level;
-            } else {
+        function updateProfileUI(user) {
+            if (!user) {
                 teamNameDisplay.textContent = '⚡ НЕТ ДАННЫХ ⚡';
                 teamNameDisplay.setAttribute('data-text', '⚡ НЕТ ДАННЫХ ⚡');
                 teamTag.textContent = '#НЕ_АВТОРИЗОВАН';
@@ -267,77 +232,141 @@
                 levelText.textContent = 'НОВИЧОК';
                 avatarPreview.innerHTML = '<span>⚡</span>';
                 avatarPreview.style.backgroundImage = '';
-            }
-        }
-
-        function checkLogin() {
-            const savedUser = localStorage.getItem('currentUser');
-            if (savedUser) {
-                const userData = JSON.parse(savedUser);
-                updateProfile(userData);
-                showLoginBtn.style.display = 'none';
-                logoutBtn.style.display = 'flex';
-            } else {
-                updateProfile(null);
                 showLoginBtn.style.display = 'flex';
                 logoutBtn.style.display = 'none';
+                return;
+            }
+
+            teamNameDisplay.textContent = user.teamName;
+            teamNameDisplay.setAttribute('data-text', user.teamName);
+            teamTag.textContent = `#${user.teamName.toUpperCase().replace(/\s/g, '_')}`;
+            cityDisplay.textContent = user.city || '—';
+            emailDisplay.textContent = user.email || '—';
+            schoolDisplay.textContent = user.school || '—';
+
+            const points = user.points || 0;
+            const wins = user.wins || 0;
+            const rating = user.rating || 1;
+
+            pointsDisplay.textContent = points;
+            winsDisplay.textContent = wins;
+            ratingDisplay.textContent = `#${rating}`;
+
+            const nextLevelPoints = 1600;
+            const percent = Math.min(100, (points / nextLevelPoints) * 100);
+            ratingFill.style.width = `${percent}%`;
+            currentPointsSpan.textContent = `${points} / ${nextLevelPoints}`;
+            const needed = nextLevelPoints - points;
+            nextLevelInfo.textContent = `+${needed} ДО ПОВЫШЕНИЯ`;
+
+            let level = 'НАЧИНАЮЩИЙ';
+            if (points >= 3000) level = 'ЛЕГЕНДА';
+            else if (points >= 2000) level = 'ЭЛИТА';
+            else if (points >= 1200) level = 'МАСТЕР';
+            else if (points >= 600) level = 'ПРОФИ';
+            else level = 'НОВИЧОК';
+            levelText.textContent = level;
+
+            showLoginBtn.style.display = 'none';
+            logoutBtn.style.display = 'flex';
+        }
+
+        async function loadProfile() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                updateProfileUI(null);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/auth/profile`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    updateProfileUI(data.user);
+                } else {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    updateProfileUI(null);
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки профиля:', error);
+                updateProfileUI(null);
             }
         }
 
-        loginSubmitBtn.addEventListener('click', function() {
+        async function performLogin() {
             const teamName = loginTeamName.value.trim();
             const password = loginPassword.value.trim();
-            
+
             if (!teamName || !password) {
                 loginError.textContent = 'Заполните все поля!';
                 return;
             }
-            
-            const registeredUser = localStorage.getItem('registeredUser');
-            if (!registeredUser) {
-                loginError.textContent = 'Аккаунт не найден!';
-                return;
-            }
-            
-            const userData = JSON.parse(registeredUser);
-            
-            if (userData.teamName === teamName && userData.password === password) {
-                localStorage.setItem('currentUser', JSON.stringify(userData));
-                updateProfile(userData);
-                loginOverlay.style.display = 'none';
-                showLoginBtn.style.display = 'none';
-                logoutBtn.style.display = 'flex';
-                loginTeamName.value = '';
-                loginPassword.value = '';
-                loginError.textContent = '';
-            } else {
-                loginError.textContent = 'Неверные данные!';
-            }
-        });
 
-        logoutBtn.addEventListener('click', function() {
-            localStorage.removeItem('currentUser');
-            checkLogin();
-        });
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ teamName, password })
+                });
+                const data = await response.json();
 
-        showLoginBtn.addEventListener('click', function() {
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    loginOverlay.style.display = 'none';
+                    loginTeamName.value = '';
+                    loginPassword.value = '';
+                    loginError.textContent = '';
+                    loadProfile();
+                } else {
+                    loginError.textContent = data.error || 'Неверные данные!';
+                }
+            } catch (error) {
+                loginError.textContent = 'Ошибка подключения к серверу!';
+            }
+        }
+
+        function performLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            updateProfileUI(null);
+        }
+
+        showLoginBtn.addEventListener('click', () => {
             loginOverlay.style.display = 'flex';
         });
 
-        closeLoginBtn.addEventListener('click', function() {
+        logoutBtn.addEventListener('click', performLogout);
+
+        closeLoginBtn.addEventListener('click', () => {
             loginOverlay.style.display = 'none';
             loginError.textContent = '';
             loginTeamName.value = '';
             loginPassword.value = '';
         });
 
-        loginOverlay.addEventListener('click', function(e) {
+        loginSubmitBtn.addEventListener('click', performLogin);
+
+        loginOverlay.addEventListener('click', (e) => {
             if (e.target === loginOverlay) {
                 loginOverlay.style.display = 'none';
                 loginError.textContent = '';
                 loginTeamName.value = '';
                 loginPassword.value = '';
             }
+        });
+
+        loginPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performLogin();
+        });
+
+        loginTeamName.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performLogin();
         });
 
         avatarInput.addEventListener('change', function(event) {
@@ -385,7 +414,7 @@
 
         createParticles();
         createStars();
-        checkLogin();
+        loadProfile();
     </script>
 </body>
 </html>

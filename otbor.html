@@ -8,18 +8,36 @@
 </head>
 <body>
 
+    <!-- КИБЕРПАНК ШАПКА -->
     <header class="cyber-header">
         <div class="nav-container">
-            <div class="logo">ГЕРАКЛ</div>
+            <div class="logo">
+                <span class="logo-text">ГЕРАКЛ</span>
+                <span class="logo-glow"></span>
+            </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="reg.html" class="nav-link">Регистрация</a>
-                <a href="otbor.html" class="nav-link active">Отбор</a>
+                <a href="urovni.html" class="nav-link active">Этапы</a>
                 <a href="profil.html" class="nav-link">Профиль</a>
+                <a href="reiting.html" class="nav-link">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link">Подсказка</a>
             </div>
         </div>
+        <div class="neon-line"></div>
     </header>
 
+    <!-- КИБЕРПАНК ПОДВАЛ -->
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <div class="footer-line"></div>
+            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
+            <div class="footer-line"></div>
+        </div>
+        <div class="footer-neon"></div>
+    </footer>
+
+    <!-- Окно авторизации -->
     <div class="auth-overlay" id="authOverlay">
         <div class="auth-card">
             <h2>АВТОРИЗАЦИЯ КОМАНДЫ</h2>
@@ -33,170 +51,737 @@
         </div>
     </div>
 
+    <!-- Оверлей блокировки при окончании времени -->
+    <div class="timeout-overlay" id="timeoutOverlay">
+        <div class="timeout-card">
+            <div class="timeout-icon">⏰</div>
+            <h2>ВРЕМЯ ВЫШЛО!</h2>
+            <p>Ваше время на прохождение этапа истекло.</p>
+            <p>Вы можете вернуться на главную страницу.</p>
+            <button class="timeout-btn" onclick="window.location.href='index.html'">ВЕРНУТЬСЯ НА ГЛАВНУЮ</button>
+        </div>
+    </div>
+
     <div class="layer-container">
-        <img class="bg-full" src="kartinki/fon.jpg" alt="Фон">
-        
-        <div class="layer-1-wrapper"><img class="layer-1-img" src="kartinki/fon_3_1.png" alt="Слой 1"></div>
-        <div class="layer-2-wrapper">
-            <img class="layer-2-img" src="kartinki/fon_3_2.png" alt="Слой 2">
-            <img class="toshka-1" src="kartinki/toshka.png" alt="Тошка 1">
-            <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
+        <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
+
+        <!-- Декоративные элементы -->
+        <div class="cyber-grid"></div>
+        <div class="particles" id="particles"></div>
+        <div class="twinkling-stars" id="twinklingStars"></div>
+        <div class="holo-circle"></div>
+        <div class="running-lights">
+            <div class="running-light top"></div>
+            <div class="running-light bottom"></div>
+            <div class="running-light left"></div>
+            <div class="running-light right"></div>
         </div>
+        <div class="neon-corner corner-tl"></div>
+        <div class="neon-corner corner-tr"></div>
+        <div class="neon-corner corner-bl"></div>
+        <div class="neon-corner corner-br"></div>
 
-        <div class="foreground">
-            <div class="labirints-container">
-                <div class="header-section">
-                    <h1 class="main-title">ОТБОРОЧНЫЙ ТУР</h1>
-                    <div class="subtitle">12 ИСПЫТАНИЙ ГЕРАКЛА • КИБЕР-ВЕРСИЯ</div>
-                </div>
-
-                <div class="labirints-grid" id="laborsGrid">
+        <div class="content-wrapper">
+            <!-- HERO СЕКЦИЯ -->
+            <div class="hero-section">
+                <div class="hero-left">
+                    <div class="progress-bar-container">
+                        <div class="progress-label">ПРОГРЕСС ПРОХОЖДЕНИЯ ПОДВИГОВ</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="globalProgress" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span id="completedCount">0</span> / <span id="totalCount">12</span> ПОДВИГОВ
+                        </div>
                     </div>
+                </div>
+
+                <div class="hero-center">
+                    <h1 class="main-title glitch" data-text="12 ПОДВИГОВ ГЕРАКЛА">12 ПОДВИГОВ ГЕРАКЛА</h1>
+                    <p class="subtitle">КИБЕР-ВЕРСИЯ • ОТБОРОЧНЫЙ ТУР</p>
+                </div>
+
+                <div class="hero-right">
+                    <div class="timer-container" id="timerContainer">
+                        <div class="timer-card">
+                            <div class="timer-label">⏱️ ОСТАВШЕЕСЯ ВРЕМЯ ⏱️</div>
+                            <div class="timer-display" id="timerDisplay">01:30:00</div>
+                            <div class="timer-warning" id="timerWarning"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="finals-grid" id="laborsGrid"></div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="laborModal">
-        <div class="modal-container modal-large">
-            <button class="modal-close-btn" id="closeModalBtn">✕</button>
-            <div class="modal-content">
-                <div class="modal-badge" id="modalBadge">СТАТУС: АКТИВНО</div>
-                <div class="modal-number" id="modalNumber">00</div>
-                <h2 class="modal-title" id="modalTitle">Название подвига</h2>
-                <div class="modal-story-wrapper">
-                    <p class="modal-story" id="modalStory">Текст задания...</p>
+    <!-- Модальное окно для подвига -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle">ПОДВИГ 1: Немейский лев</h2>
+                <button class="modal-close" id="closeModalBtn">✖</button>
+            </div>
+            <div class="modal-timer">
+                <div class="modal-timer-label">⏱️ ОСТАЛОСЬ ВРЕМЕНИ</div>
+                <div class="modal-timer-display" id="modalTimerDisplay">01:30:00</div>
+            </div>
+            <div class="hero-images" id="heroImages">
+                <div class="hero-left">
+                    <div class="hero-icon">
+                        <img src="" alt="" class="hero-img" id="modalHeroImg">
+                    </div>
+                    <div class="hero-name" id="modalHeroName">Немейский лев</div>
                 </div>
-                
-                <div class="gameplay-area">
-                    <label class="answer-label">⚡ ВАШ ОТВЕТ ⚡</label>
-                    <input type="text" class="answer-input" id="answerInput" placeholder="Введите ваш ответ...">
-                    <button class="answer-submit-btn" id="answerSubmitBtn">ОТПРАВИТЬ РЕШЕНИЕ</button>
-                    <div class="feedback-msg" id="feedbackMsg"></div>
+                <div class="hero-center">
+                    <div class="hero-icon-large">
+                        <img src="kartinki/icon/fight.png" alt="Битва" class="hero-center-img">
+                    </div>
                 </div>
+                <div class="hero-right">
+                    <div class="hero-icon">
+                        <img src="kartinki/icon/olimp.png" alt="Олимп" class="hero-img">
+                    </div>
+                    <div class="hero-name">Олимп</div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="story-box">
+                    <div class="story-text" id="storyText"></div>
+                </div>
+                <div class="answer-box">
+                    <div class="answer-input-area">
+                        <input type="text" id="answerInput" class="answer-input" placeholder="Введите ответ...">
+                        <button class="answer-submit" id="answerSubmitBtn">ПРОВЕРИТЬ</button>
+                    </div>
+                </div>
+                <div class="modal-result" id="modalResult"></div>
             </div>
         </div>
     </div>
-
-    <footer class="cyber-footer">
-        <div class="footer-content">
-            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
-        </div>
-    </footer>
 
     <script>
+        // ============================================
+        // API КОНСТАНТЫ
+        // ============================================
+        const API_URL = 'http://localhost:5000/api';
+
+        // ============================================
+        // ПЕРЕРАБОТАННЫЕ ЗАДАНИЯ (12 ПОДВИГОВ)
+        // ============================================
         const laborsData = [
-            { id: 1, name: "Немейский лев", hero: "kartinki/лев.png", desc: "Взлом ядра NEMEAN_LION.EXE.", answer: "1", story: "Загадка про серверы: 1-5. Условие: ровно 3 истинны. Надпись на сервере с Львом лжет." },
-            { id: 2, name: "Лернейская гидра", hero: "kartinki/гидра.png", desc: "Остановка Fork-бомбы HYDRA.SH.", answer: "21", story: "Вычислите F(5) для алгоритма: F(n) = F(n-1) + 2*F(n-2), F(1)=1." },
-            { id: 3, name: "Стимфалийские птицы", hero: "kartinki/птица_иконка.png", desc: "Дешифровка сигналов.", answer: "27", story: "Вычислите (42 XOR 60) | (31 AND 75)." },
-            { id: 4, name: "Керинейская лань", hero: "kartinki/лань_иконка.png", desc: "Обход дерева поиска.", answer: "50,70,80,73", story: "Путь обхода дерева к ключу 73." },
-            { id: 5, name: "Эриманфский вепрь", hero: "kartinki/вепрь_иконка.png", desc: "Переполнение буфера.", answer: "68", story: "Сколько байт нужно для перезаписи EIP в буфере 64?" },
-            { id: 6, name: "Авгиевы конюшни", hero: "kartinki/конюшни.png", desc: "Очистка БД.", answer: "TRUNCATE", story: "SQL-команда для мгновенной очистки таблиц?" },
-            { id: 7, name: "Критский бык", hero: "kartinki/бык.png", desc: "Парсинг JSON.", answer: "400", story: "Сумма значений 'weight' внутри массива 'nodes'." },
-            { id: 8, name: "Кони Диомеда", hero: "kartinki/кони.png", desc: "Deadlock.", answer: "2", story: "Иерархия захвата ресурсов (Resource Ordering)." },
-            { id: 9, name: "Пояс Ипполиты", hero: "kartinki/пояс.png", desc: "XOR-дешифровка.", answer: "L", story: "Дешифруйте ASCII код 75 с маской 0x0F." },
-            { id: 10, name: "Коровы Гериона", hero: "kartinki/коровы.png", desc: "Кратчайший путь.", answer: "7", story: "Длина кратчайшего пути от А до Е." },
-            { id: 11, name: "Яблоки Гесперид", hero: "kartinki/яблоки.png", desc: "Обход в ширину.", answer: "BFS", story: "Аббревиатура метода обхода графа через очередь (FIFO)." },
-            { id: 12, name: "Цербер", hero: "kartinki/цербер.png", desc: "SQL-инъекция.", answer: "sql injection", story: "Как называется атака через поля ввода?" }
+            {
+                id: 1,
+                name: "Немейский лев",
+                icon: "kartinki/icon/1.png",
+                desc: "Логика • 5 пещер, 1 истина",
+                story: "Геракл-антивирус сканирует систему. Первая угроза — Немейский лев, который прячется в одном из 5 серверных отсеков.\n\n«Перед вами 5 пещер-серверов. На каждом — предупреждение. Ровно три из них истинны. Но помните: предупреждение на том сервере, где залёг лев, гарантированно ложно. Вычислите номер сервера».\n\nДанные:\nСервер 1: «Лев в сервере 3»\nСервер 2: «Лев не в сервере 4»\nСервер 3: «Лев в сервере 1 или 5»\nСервер 4: «Лев в сервере 2, 3 или 4»\nСервер 5: «Лев не в сервере 2»",
+                answer: "1"
+            },
+            {
+                id: 2,
+                name: "Лернейская гидра",
+                icon: "kartinki/icon/2.png",
+                desc: "Двоичный код • 10 голов",
+                story: "Геракл-антивирус обнаружил Лернейскую гидру — рекурсивный вирус, отращивающий новые головы-процессы. Нужно найти бессмертную голову.\n\n«У гидры 10 голов-процессов. Бессмертная голова — та, у которой количество единиц в двоичной записи длины её имени нечётно».\n\nВходные данные:\n[\"АРГОС\", \"ФИВА\", \"СПАРТА\", \"АФИНЫ\", \"КОРИНФ\", \"МИКЕНЫ\", \"ТИРИНФ\", \"ОЛИМПИЯ\", \"ДЕЛЬФЫ\", \"РОДОС\"]\n\nФормат ответа: Имя головы (заглавными буквами).",
+                answer: "ФИВА"
+            },
+            {
+                id: 3,
+                name: "Стимфалийские птицы",
+                icon: "kartinki/icon/3.png",
+                desc: "Побитовые операции • 4 байта",
+                story: "Геракл-антивирус перехватил пакет данных от Стимфалийских птиц-дронов. Они атакуют спам-пакетами. Нужно вычислить частоту для глушилки.\n\n«Формула частоты: (Байт_1 XOR Байт_2) + (Байт_3 AND Байт_4)».\n\nВходные данные (шестнадцатеричные): 0x3A, 0x5C, 0x8F, 0x70\n\nФормат ответа: Целое число.",
+                answer: "102"
+            },
+            {
+                id: 4,
+                name: "Керинейская лань",
+                icon: "kartinki/icon/4.png",
+                desc: "Баллистика • 30 выстрелов",
+                story: "Геракл-антивирус отслеживает Керинейскую лань — быстрый процесс, уклоняющийся от сканирования. Нужно рассчитать траекторию.\n\n«Формула: P = (Попаданий / 30) * Среднее Value. Результат округлите до 3 знаков».\n\nВходные данные: 17 попаданий из 30, среднее Value = 12.344\n\nФормат ответа: Число с тремя знаками после запятой (через точку).",
+                answer: "6.995"
+            },
+            {
+                id: 5,
+                name: "Эриманфский вепрь",
+                icon: "kartinki/icon/5.png",
+                desc: "Хэширование • SHA-256",
+                story: "Геракл-антивирус наткнулся на Эриманфского вепря — вредоносный алгоритм, который хэширует данные. Нужно найти исходное слово по его хэшу.\n\n«Известно, что SHA-256 хэш слова равен 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92. Какое из трёх слов было захешировано: «пароль», «password», «qwerty»?»\n\nПодсказка: это одно из самых популярных паролей в мире.\n\nФормат ответа: Слово строчными буквами.",
+                answer: "password"
+            },
+            {
+                id: 6,
+                name: "Авгиевы конюшни",
+                icon: "kartinki/icon/6.png",
+                desc: "SQL-запрос • База данных",
+                story: "Геракл-антивирус чистит базу данных Авгиевых конюшен. Нужно найти ошибки и написать их без дополнительных разделительных знаков и пробелов.\n\nНеправильный код:\nnumbers = [1, 2, 3, 4, 5,]\nsquared = [x**2 for x in numbers]\ntotal = sum(squared\naverage == total / len(squared)\nprint(Сумма= ; total)\nprint(Среднее // average)",
+                answer: ",)=;/"
+            },
+            {
+                id: 7,
+                name: "Критский бык",
+                icon: "kartinki/icon/7.png",
+                desc: "Анализ данных • Excel / CSV",
+                story: "Геракл-антивирус анализирует большой файл данных Критского быка (более 10 000 строк). Нужно найти аномалию.\n\n«В файле data.csv есть колонки: id, timestamp, value, status. Найдите количество записей, у которых value > 1000 И status = 'ERROR' И timestamp за последние 24 часа. В файле 15000 записей, из них: value > 1000 — 3200 записей, status = 'ERROR' — 450 записей, timestamp за последние 24 часа — 1800 записей. Пересечение всех трёх условий — 75 записей».\n\nФормат ответа: Целое число.",
+                answer: "75"
+            },
+            {
+                id: 8,
+                name: "Кони Диомеда",
+                icon: "kartinki/icon/8.png",
+                desc: "Рекурсия • Факториал",
+                story: "Геракл-антивирус вычисляет мощность коней Диомеда. Нужно посчитать рекурсивную функцию.\n\n«Функция F(n) определена рекурсивно:\nF(0) = 1\nF(1) = 2\nF(n) = F(n-1) * F(n-2) + 1\n\nВычислите F(32)».\n\nФормат ответа: Целое число.",
+                answer: "1856751023045509591"
+            },
+            {
+                id: 9,
+                name: "Пояс Ипполиты",
+                icon: "kartinki/icon/9.png",
+                desc: "Шифр • Сдвиг",
+                story: "Геракл-антивирус перехватил зашифрованное сообщение от амазонок.\n\nЗашифрованное сообщение: \n«ьрхзу чцтцшръщж урад лцщцсхгф»\n\nФормат ответа: Текст строчными буквами (без кавычек).",
+                answer: "финал покорится лишь достойным"
+            },
+            {
+                id: 10,
+                name: "Коровы Гериона",
+                icon: "kartinki/icon/10.png",
+                desc: "Массивы • Поиск дубликатов",
+                story: "Геракл-антивирус ищет дублирующиеся данные в массиве коров Гериона. Нужно найти первый повторяющийся элемент.\n\n«Дан массив чисел: [2, 5, 1, 2, 3, 5, 1, 2, 4]. Найдите первый элемент, который повторяется в массиве (встречается во второй раз при обходе слева направо)».\n\nФормат ответа: Целое число.",
+                answer: "2"
+            },
+            {
+                id: 11,
+                name: "Яблоки Гесперид",
+                icon: "kartinki/icon/11.png",
+                desc: "Деревья • Обход",
+                story: "Геракл-антивирус исследует дерево яблок Гесперид. Нужно найти сумму всех узлов на максимальной глубине.\n\n«Дано бинарное дерево:\n        10\n       /  \\\n      5    15\n     / \\   / \\\n    3   7 12  20\n   / \\\n  1   4\n\nНайдите сумму значений всех узлов, находящихся на максимальной глубине (самом нижнем уровне)».\n\nФормат ответа: Целое число.",
+                answer: "5"
+            },
+            {
+                id: 12,
+                name: "Цербер",
+                icon: "kartinki/icon/12.png",
+                desc: "Алгоритмы • Двоичный поиск",
+                story: "Геракл-антивирус ищет уязвимость в системе Цербера. Нужно найти индекс элемента в отсортированном массиве с помощью двоичного поиска.\n\n«В отсортированном массиве [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25] нужно найти число 17. Сколько итераций (сравнений) потребуется для двоичного поиска?»\n\nФормат ответа: Целое число.",
+                answer: "4"
+            }
         ];
+
+        // ============================================
+        // НАСТРОЙКИ ТАЙМЕРА (90 минут = 5400 секунд)
+        // ============================================
+        const TIME_LIMIT_SECONDS = 90 * 60;
+        let timeRemaining = TIME_LIMIT_SECONDS;
+        let timerInterval = null;
+        let isTimeExpired = false;
+
+        function getTimerStorageKey() {
+            const savedUser = localStorage.getItem('user');
+            if (!savedUser) return null;
+            const userData = JSON.parse(savedUser);
+            return `timer_${userData.teamName}`;
+        }
+
+        function loadSavedTime() {
+            const key = getTimerStorageKey();
+            if (!key) return null;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.expiresAt && Date.now() < data.expiresAt) {
+                    const elapsed = Math.floor((Date.now() - data.startTime) / 1000);
+                    const remaining = Math.max(0, TIME_LIMIT_SECONDS - elapsed);
+                    return { remaining, startTime: data.startTime, expiresAt: data.expiresAt };
+                } else if (data.expiresAt && Date.now() >= data.expiresAt) {
+                    return { remaining: 0, expired: true };
+                }
+            }
+            return null;
+        }
+
+        function saveTime(startTime) {
+            const key = getTimerStorageKey();
+            if (!key) return;
+            const expiresAt = startTime + (TIME_LIMIT_SECONDS * 1000);
+            localStorage.setItem(key, JSON.stringify({ startTime, expiresAt }));
+        }
+
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            if (hours > 0) {
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimerDisplay() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            const modalTimerDisplay = document.getElementById('modalTimerDisplay');
+            const timerWarning = document.getElementById('timerWarning');
+            const timerCard = document.querySelector('.timer-card');
+
+            const timeStr = formatTime(timeRemaining);
+
+            if (timerDisplay) {
+                timerDisplay.textContent = timeStr;
+
+                if (timeRemaining <= 300) {
+                    timerDisplay.style.color = '#ff4757';
+                    timerDisplay.style.textShadow = '0 0 10px #ff4757';
+                    timerDisplay.style.animation = 'timerBlink 1s infinite';
+                    if (timerCard) timerCard.classList.add('warning-mode');
+                    if (timerWarning) {
+                        timerWarning.textContent = '⚠️ ОСТАЛОСЬ МЕНЕЕ 5 МИНУТ! ⚠️';
+                        timerWarning.style.color = '#ff4757';
+                    }
+                } else if (timeRemaining <= 600) {
+                    timerDisplay.style.color = '#ffa502';
+                    if (timerWarning) {
+                        timerWarning.textContent = '⏰ ОСТАЛОСЬ МЕНЕЕ 10 МИНУТ ⏰';
+                        timerWarning.style.color = '#ffa502';
+                    }
+                } else {
+                    timerDisplay.style.color = '#00f0ff';
+                    timerDisplay.style.textShadow = '0 0 15px #00f0ff';
+                    timerDisplay.style.animation = 'none';
+                    if (timerCard) timerCard.classList.remove('warning-mode');
+                    if (timerWarning) timerWarning.textContent = '';
+                }
+            }
+
+            if (modalTimerDisplay) {
+                modalTimerDisplay.textContent = timeStr;
+                modalTimerDisplay.classList.remove('warning', 'critical');
+                if (timeRemaining <= 300) {
+                    modalTimerDisplay.classList.add('warning');
+                } else if (timeRemaining <= 600) {
+                    modalTimerDisplay.classList.add('critical');
+                }
+            }
+        }
+
+        function lockPage() {
+            if (isTimeExpired) return;
+            isTimeExpired = true;
+
+            const timeoutOverlay = document.getElementById('timeoutOverlay');
+            if (timeoutOverlay) timeoutOverlay.classList.add('active');
+
+            const cards = document.querySelectorAll('.final-card');
+            cards.forEach(card => {
+                card.style.pointerEvents = 'none';
+                card.style.opacity = '0.5';
+                card.style.filter = 'grayscale(0.5)';
+            });
+
+            const modalOverlay = document.getElementById('modalOverlay');
+            if (modalOverlay && modalOverlay.classList.contains('active')) {
+                modalOverlay.classList.remove('active');
+            }
+
+            showNotification('⏰ ВРЕМЯ ВЫШЛО! Этап заблокирован.', 'error');
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeRemaining <= 1) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    timeRemaining = 0;
+                    updateTimerDisplay();
+                    lockPage();
+                } else {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    if (timeRemaining % 10 === 0) {
+                        const key = getTimerStorageKey();
+                        if (key && !isTimeExpired) {
+                            const currentStartTime = Date.now() - ((TIME_LIMIT_SECONDS - timeRemaining) * 1000);
+                            saveTime(currentStartTime);
+                        }
+                    }
+                }
+            }, 1000);
+        }
+
+        function initTimer() {
+            const saved = loadSavedTime();
+            if (saved && saved.expired) {
+                timeRemaining = 0;
+                updateTimerDisplay();
+                lockPage();
+                return;
+            }
+            if (saved && saved.remaining !== undefined) {
+                timeRemaining = saved.remaining;
+                updateTimerDisplay();
+                if (timeRemaining <= 0) lockPage();
+                else startTimer();
+            } else {
+                timeRemaining = TIME_LIMIT_SECONDS;
+                updateTimerDisplay();
+                saveTime(Date.now());
+                startTimer();
+            }
+        }
+
+        // ============================================
+        // ПРОГРЕСС И ОТВЕТЫ
+        // ============================================
         function loadProgress() {
-            const savedUser = localStorage.getItem('currentUser');
+            const savedUser = localStorage.getItem('user');
             if (!savedUser) return { completed: {}, failed: {} };
             const userData = JSON.parse(savedUser);
             const saved = localStorage.getItem(`otbor_progress_${userData.teamName}`);
-            return saved ? JSON.parse(saved) : { completed: {}, failed: {} };
+            if (saved) return JSON.parse(saved);
+            return { completed: {}, failed: {} };
         }
 
         function saveProgress(progress) {
-            const savedUser = localStorage.getItem('currentUser');
+            const savedUser = localStorage.getItem('user');
             if (!savedUser) return;
             const userData = JSON.parse(savedUser);
             localStorage.setItem(`otbor_progress_${userData.teamName}`, JSON.stringify(progress));
         }
 
+        // ============================================
+        // СИНХРОНИЗАЦИЯ С СЕРВЕРОМ
+        // ============================================
+        async function syncProgressToServer() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const completedLabors = Object.keys(progress.completed).filter(k => progress.completed[k]).map(Number);
+                const failedLabors = Object.keys(progress.failed).filter(k => progress.failed[k]).map(Number);
+
+                const response = await fetch(`${API_URL}/auth/progress`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        points: user.points || 0,
+                        wins: user.wins || 0,
+                        rating: user.rating || 1,
+                        completedLabors: completedLabors,
+                        failedLabors: failedLabors,
+                        completedFinals: []
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.user) {
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка синхронизации прогресса:', error);
+            }
+        }
+
         let progress = loadProgress();
-        let currentLaborId = null;
-        
-        const modal = document.getElementById('laborModal');
+        let currentLabor = null;
+
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const storyText = document.getElementById('storyText');
+        const answerInput = document.getElementById('answerInput');
+        const modalResult = document.getElementById('modalResult');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const answerSubmitBtn = document.getElementById('answerSubmitBtn');
         const authOverlay = document.getElementById('authOverlay');
         const laborsGrid = document.getElementById('laborsGrid');
 
-        function renderCards() {
-            laborsGrid.innerHTML = '';
-            laborsData.forEach(labor => {
-                const card = document.createElement('div');
-                card.className = 'labor-card';
-                if (progress.completed[labor.id]) card.classList.add('completed');
-                else if (progress.failed[labor.id]) card.classList.add('failed');
-                else card.classList.add('active');
-                
-                card.innerHTML = `
-                    <div class="labor-status">${progress.completed[labor.id] ? 'ПРОЙДЕНО' : (progress.failed[labor.id] ? 'ПРОВАЛ' : 'КВЕСТ')}</div>
-                    <div class="labor-hero"><img src="${labor.hero}" alt="${labor.name}" class="hero-img"></div>
-                    <div class="labor-number">${labor.id < 10 ? '0' + labor.id : labor.id}</div>
-                    <h3 class="labor-name">${labor.name}</h3>
-                    <p class="labor-description">${labor.desc}</p>
-                `;
-                if (!progress.completed[labor.id] && !progress.failed[labor.id]) {
-                    card.onclick = () => openLabor(labor.id);
+        function updateProgress() {
+            const total = laborsData.length;
+            const completedCount = Object.values(progress.completed).filter(v => v === true).length;
+            const percent = (completedCount / total) * 100;
+            const progressFill = document.getElementById('globalProgress');
+            if (progressFill) progressFill.style.width = `${percent}%`;
+            const completedSpan = document.getElementById('completedCount');
+            if (completedSpan) completedSpan.textContent = completedCount;
+        }
+
+        function checkAnswer(labor, userAnswer) {
+            const normalizedAnswer = labor.answer.toLowerCase();
+            const normalizedUser = userAnswer.trim().toLowerCase();
+            if (!isNaN(labor.answer) && !isNaN(normalizedUser)) {
+                return parseFloat(normalizedUser) === parseFloat(labor.answer);
+            }
+            return normalizedUser === normalizedAnswer;
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification-popup ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 10);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function openModal(laborId) {
+            if (isTimeExpired) {
+                showNotification('⏰ ВРЕМЯ ВЫШЛО! Этап заблокирован.', 'error');
+                return;
+            }
+            if (progress.completed[laborId] || progress.failed[laborId]) return;
+
+            currentLabor = laborsData.find(l => l.id === laborId);
+            if (!currentLabor) return;
+
+            modalTitle.textContent = `ПОДВИГ ${currentLabor.id}: ${currentLabor.name}`;
+            
+            document.getElementById('modalHeroImg').src = currentLabor.icon;
+            document.getElementById('modalHeroImg').alt = currentLabor.name;
+            document.getElementById('modalHeroName').textContent = currentLabor.name;
+            
+            storyText.textContent = currentLabor.story;
+            answerInput.value = '';
+            modalResult.innerHTML = '';
+            answerInput.disabled = false;
+            answerSubmitBtn.disabled = false;
+            answerSubmitBtn.textContent = '⚡ ПРОВЕРИТЬ';
+
+            const modalTimerDisplay = document.getElementById('modalTimerDisplay');
+            if (modalTimerDisplay) {
+                modalTimerDisplay.textContent = formatTime(timeRemaining);
+            }
+
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            currentLabor = null;
+        }
+
+        function submitAnswer() {
+            if (isTimeExpired) {
+                showNotification('⏰ ВРЕМЯ ВЫШЛО! Этап заблокирован.', 'error');
+                closeModal();
+                return;
+            }
+            if (!currentLabor) return;
+            if (progress.completed[currentLabor.id] || progress.failed[currentLabor.id]) {
+                showNotification('Этот подвиг уже пройден или провален!', 'error');
+                return;
+            }
+
+            const userAnswer = answerInput.value.trim();
+            if (!userAnswer) {
+                showNotification('Введите ответ!', 'error');
+                return;
+            }
+
+            const isCorrect = checkAnswer(currentLabor, userAnswer);
+
+            if (isCorrect) {
+                progress.completed[currentLabor.id] = true;
+                delete progress.failed[currentLabor.id];
+                saveProgress(progress);
+                updateProgress();
+
+                const currentUser = localStorage.getItem('user');
+                if (currentUser) {
+                    const userData = JSON.parse(currentUser);
+                    const pointsKey = `progress_${userData.teamName}`;
+                    const existingProgress = JSON.parse(localStorage.getItem(pointsKey) || '{"points":0,"wins":0,"rating":1}');
+                    existingProgress.points = (existingProgress.points || 0) + 50;
+                    existingProgress.wins = (existingProgress.wins || 0) + 1;
+                    localStorage.setItem(pointsKey, JSON.stringify(existingProgress));
+                    
+                    // Обновляем user в localStorage
+                    userData.points = existingProgress.points;
+                    userData.wins = existingProgress.wins;
+                    localStorage.setItem('user', JSON.stringify(userData));
                 }
+
+                modalResult.innerHTML = `<div class="result-success">✅ ПРАВИЛЬНО! +50 очков</div>`;
+                answerSubmitBtn.disabled = true;
+                answerInput.disabled = true;
+                
+                // Синхронизация с сервером
+                syncProgressToServer();
+                
+                showNotification(`✅ ПОДВИГ ${currentLabor.id} ВЫПОЛНЕН! +50 очков`, 'success');
+                renderLabors();
+                setTimeout(closeModal, 1500);
+            } else {
+                modalResult.innerHTML = `<div class="result-error">❌ НЕПРАВИЛЬНО!</div>`;
+                progress.failed[currentLabor.id] = true;
+                delete progress.completed[currentLabor.id];
+                saveProgress(progress);
+                renderLabors();
+                answerInput.classList.add('error-shake');
+                setTimeout(() => answerInput.classList.remove('error-shake'), 500);
+                
+                // Синхронизация с сервером
+                syncProgressToServer();
+                
+                showNotification(`❌ Подвиг ${currentLabor.id} провален!`, 'error');
+                setTimeout(closeModal, 2000);
+            }
+        }
+
+        function renderLabors() {
+            laborsGrid.innerHTML = '';
+            laborsData.forEach((labor, index) => {
+                const isCompleted = progress.completed[labor.id] || false;
+                const isFailed = progress.failed[labor.id] || false;
+                const card = document.createElement('div');
+                card.className = `final-card ${isCompleted ? 'completed' : ''} ${isFailed ? 'failed' : ''}`;
+                card.style.setProperty('--i', index);
+                if (!isTimeExpired) {
+                    card.onclick = () => openModal(labor.id);
+                } else {
+                    card.style.pointerEvents = 'none';
+                    card.style.opacity = '0.5';
+                }
+
+                let statusMark = '';
+                if (isCompleted) {
+                    statusMark = '<div class="completed-mark">✔ ВЫПОЛНЕНО</div>';
+                } else if (isFailed) {
+                    statusMark = '<div class="failed-mark">❌ ПРОВАЛЕН</div>';
+                } else {
+                    statusMark = '<div class="pending-mark">⚡ НЕ ВЫПОЛНЕН</div>';
+                }
+
+                card.innerHTML = `
+                    <div class="final-number">ПОДВИГ ${labor.id < 10 ? '0' + labor.id : labor.id}</div>
+                    <div class="final-hero">
+                        <img src="${labor.icon}" alt="${labor.name}" class="final-img">
+                    </div>
+                    <h3 class="final-name">${labor.name}</h3>
+                    <p class="final-description">${labor.desc}</p>
+                    <div class="final-points">🏆 +50 очков</div>
+                    ${statusMark}
+                `;
                 laborsGrid.appendChild(card);
             });
         }
 
-        document.getElementById('authSubmitBtn').addEventListener('click', function() {
+        // ============================================
+        // АВТОРИЗАЦИЯ
+        // ============================================
+        async function performAuth() {
             const team = document.getElementById('authTeamName').value.trim();
             const pass = document.getElementById('authPassword').value.trim();
-            const registered = localStorage.getItem('registeredUser');
-            if (!registered) { document.getElementById('authError').innerText = "Команда не найдена!"; return; }
-            const userData = JSON.parse(registered);
-            if (userData.teamName === team && userData.password === pass) {
-                authOverlay.style.display = 'none';
-                localStorage.setItem('currentUser', JSON.stringify(userData));
-                progress = loadProgress();
-                renderCards();
-            } else {
-                document.getElementById('authError').innerText = "Неверно!";
+
+            if (!team || !pass) {
+                document.getElementById('authError').innerText = "Заполните все поля!";
+                return;
             }
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ teamName: team, password: pass })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    authOverlay.style.display = 'none';
+                    progress = loadProgress();
+                    updateProgress();
+                    renderLabors();
+                    initTimer();
+                } else {
+                    document.getElementById('authError').innerText = data.error || "Неверное имя или пароль!";
+                }
+            } catch (error) {
+                document.getElementById('authError').innerText = "Ошибка подключения к серверу!";
+            }
+        }
+
+        document.getElementById('authSubmitBtn').addEventListener('click', performAuth);
+
+        // Проверяем авторизацию при загрузке
+        async function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await fetch(`${API_URL}/auth/profile`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        authOverlay.style.display = 'none';
+                        progress = loadProgress();
+                        updateProgress();
+                        renderLabors();
+                        initTimer();
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Ошибка проверки авторизации:', error);
+                }
+            }
+            // Если не авторизован — показываем окно входа
+            authOverlay.style.display = 'flex';
+        }
+
+        checkAuth();
+
+        // Декоративные элементы
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('twinklingStars');
+            if (!container) return;
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        answerSubmitBtn.addEventListener('click', submitAnswer);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        answerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitAnswer(); });
+
+        // Добавляем поддержку Enter в окне авторизации
+        document.getElementById('authPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performAuth();
+        });
+        document.getElementById('authTeamName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performAuth();
         });
 
-        if (localStorage.getItem('currentUser')) {
-            authOverlay.style.display = 'none';
-        }
-
-        function openLabor(id) {
-            if (progress.completed[id] || progress.failed[id]) return;
-            currentLaborId = id;
-            const labor = laborsData.find(l => l.id === id);
-            document.getElementById('modalNumber').innerText = id < 10 ? '0' + id : id;
-            document.getElementById('modalTitle').innerText = labor.name;
-            document.getElementById('modalStory').innerText = labor.story;
-            modal.classList.add('visible');
-        }
-
-        function closeModal() { modal.classList.remove('visible'); }
-
-        function submitAnswer() {
-            if (!currentLaborId) return;
-            const ans = document.getElementById('answerInput').value.trim();
-            const labor = laborsData.find(l => l.id === currentLaborId);
-            if (ans.toLowerCase() === labor.answer.toLowerCase()) {
-                progress.completed[currentLaborId] = true;
-                document.getElementById('feedbackMsg').innerText = "ВЕРНО!";
-                saveProgress(progress);
-                renderCards();
-                setTimeout(closeModal, 1000);
-            } else {
-                progress.failed[currentLaborId] = true;
-                document.getElementById('feedbackMsg').innerText = "ПРОВАЛ!";
-                saveProgress(progress);
-                renderCards();
-                setTimeout(closeModal, 1500);
-            }
-        }
-
-        document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-        document.getElementById('answerSubmitBtn').addEventListener('click', submitAnswer);
-        renderCards();
+        createParticles();
+        createStars();
     </script>
 </body>
 </html>

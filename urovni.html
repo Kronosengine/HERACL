@@ -10,13 +10,17 @@
 
     <header class="cyber-header">
         <div class="nav-container">
-            <div class="logo">ГЕРАКЛ</div>
+            <div class="logo">
+                <span class="logo-text">ГЕРАКЛ</span>
+                <span class="logo-glow"></span>
+            </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="reg.html" class="nav-link">Регистрация</a>
                 <a href="urovni.html" class="nav-link active">Этапы</a>
                 <a href="profil.html" class="nav-link">Профиль</a>
                 <a href="reiting.html" class="nav-link">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link">Подсказка</a>
             </div>
         </div>
         <div class="neon-line"></div>
@@ -63,7 +67,7 @@
         <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
 
         <!-- КНОПКИ ВХОДА/ВЫХОДА -->
-        <button class="login-toggle-btn" id="showLoginBtn">👤 ВОЙТИ</button>
+        <button class="login-toggle-btn" id="showLoginBtn" style="display: none;">👤 ВОЙТИ</button>
         <button class="logout-toggle-btn" id="logoutBtn" style="display: none;">🚪 ВЫЙТИ</button>
 
         <!-- ФОРМА ВХОДА -->
@@ -115,7 +119,7 @@
                         <div class="stage-tag">ЭТАП 1</div>
                         <div class="stage-huge-num" id="qualifyingLock">🔒</div>
                         <h2 class="stage-main-title">ОТБОРОЧНЫЙ ЭТАП</h2>
-                        <p class="stage-desc">Пройдите отборочный этап, чтобы получить доступ к финалу</p>
+                        <p class="stage-desc">Пройдите отборочный этап и войдите в топ-10, чтобы получить доступ к финальной битве</p>
                         <div class="stage-status" id="qualifyingStatus">ДОСТУП ЗАКРЫТ</div>
                         <a href="otbor.html" id="qualifyingLink">
                             <button class="stage-main-btn" id="qualifyingBtn" disabled>НЕ ДОСТУПНО</button>
@@ -143,6 +147,14 @@
     </div>
 
     <script>
+        // ============================================
+        // API КОНСТАНТЫ
+        // ============================================
+        const API_URL = 'http://localhost:5000/api';
+
+        // ============================================
+        // ДЕКОРАТИВНЫЕ ЭФФЕКТЫ
+        // ============================================
         function createParticles() {
             const container = document.getElementById('particles');
             if (!container) return;
@@ -175,7 +187,9 @@
         createParticles();
         createStars();
 
-        // Элементы
+        // ============================================
+        // ЭЛЕМЕНТЫ
+        // ============================================
         const loginOverlay = document.getElementById('loginOverlay');
         const showLoginBtn = document.getElementById('showLoginBtn');
         const closeLoginBtn = document.getElementById('closeLoginBtn');
@@ -194,10 +208,38 @@
         const profileBtn = document.getElementById('profileBtn');
         const ratingBtn = document.getElementById('ratingBtn');
 
-        function updateStagesAccess() {
-            const savedUser = localStorage.getItem('currentUser');
+        // ============================================
+        // ПРОВЕРКА АВТОРИЗАЦИИ И ДОСТУПА
+        // ============================================
+        async function checkAuthAndUpdateUI() {
+            const token = localStorage.getItem('token');
             
-            if (savedUser) {
+            if (token) {
+                try {
+                    const response = await fetch(`${API_URL}/auth/profile`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        updateUI(true, data.user);
+                        return;
+                    } else {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+                    }
+                } catch (error) {
+                    console.error('Ошибка проверки авторизации:', error);
+                }
+            }
+            
+            // Если не авторизован
+            updateUI(false, null);
+        }
+
+        function updateUI(isAuthorized, userData) {
+            if (isAuthorized && userData) {
                 // Доступ открыт
                 qualifyingBtn.disabled = false;
                 qualifyingLock.textContent = '🔓';
@@ -208,6 +250,7 @@
                 qualifyingBtn.textContent = 'ПЕРЕЙТИ К ЭТАПУ';
                 qualifyingBtn.style.background = '#00f0ff';
                 qualifyingBtn.style.color = '#000';
+                qualifyingBtn.style.cursor = 'pointer';
                 
                 qualifyingCard.classList.add('access-granted');
                 showLoginBtn.style.display = 'none';
@@ -223,6 +266,7 @@
                 qualifyingBtn.textContent = 'НЕ ДОСТУПНО';
                 qualifyingBtn.style.background = '#1a0015';
                 qualifyingBtn.style.color = '#ff00cc';
+                qualifyingBtn.style.cursor = 'not-allowed';
                 
                 qualifyingCard.classList.remove('access-granted');
                 showLoginBtn.style.display = 'flex';
@@ -230,6 +274,9 @@
             }
         }
 
+        // ============================================
+        // ФУНКЦИИ ВХОДА/ВЫХОДА
+        // ============================================
         function showNotification(message, type = 'success') {
             const notification = type === 'success' ? 
                 document.getElementById('successNotification') : 
@@ -252,7 +299,7 @@
             }, 4000);
         }
 
-        function performLogin() {
+        async function performLogin() {
             const teamName = loginTeamName.value.trim();
             const password = loginPassword.value.trim();
             
@@ -260,35 +307,42 @@
                 loginError.textContent = 'Заполните все поля!';
                 return;
             }
-            
-            const registeredUser = localStorage.getItem('registeredUser');
-            if (!registeredUser) {
-                loginError.textContent = 'Аккаунт не найден! Зарегистрируйтесь.';
-                return;
-            }
-            
-            const userData = JSON.parse(registeredUser);
-            
-            if (userData.teamName === teamName && userData.password === password) {
-                localStorage.setItem('currentUser', JSON.stringify(userData));
-                loginOverlay.style.display = 'none';
-                loginTeamName.value = '';
-                loginPassword.value = '';
-                loginError.textContent = '';
-                showNotification(`Добро пожаловать, ${teamName}! Доступ к отборочному этапу открыт.`, 'success');
-                updateStagesAccess();
-            } else {
-                loginError.textContent = 'Неверное название команды или пароль!';
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ teamName, password })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    loginOverlay.style.display = 'none';
+                    loginTeamName.value = '';
+                    loginPassword.value = '';
+                    loginError.textContent = '';
+                    showNotification(`Добро пожаловать, ${teamName}! Доступ к отборочному этапу открыт.`, 'success');
+                    checkAuthAndUpdateUI();
+                } else {
+                    loginError.textContent = data.error || 'Неверные данные!';
+                }
+            } catch (error) {
+                loginError.textContent = 'Ошибка подключения к серверу!';
             }
         }
 
         function performLogout() {
-            localStorage.removeItem('currentUser');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
             showNotification('Вы вышли из аккаунта. Доступ к этапу закрыт.', 'success');
-            updateStagesAccess();
+            checkAuthAndUpdateUI();
         }
 
-        // Обработчики
+        // ============================================
+        // ОБРАБОТЧИКИ
+        // ============================================
         showLoginBtn.addEventListener('click', () => {
             loginOverlay.style.display = 'flex';
         });
@@ -313,9 +367,17 @@
             }
         });
         
+        // Поддержка Enter в окне входа
+        loginPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performLogin();
+        });
+        loginTeamName.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performLogin();
+        });
+        
         qualifyingBtn.addEventListener('click', (e) => {
-            const savedUser = localStorage.getItem('currentUser');
-            if (!savedUser) {
+            const token = localStorage.getItem('token');
+            if (!token) {
                 e.preventDefault();
                 showNotification('Необходимо авторизоваться для доступа к этапу!', 'error');
                 loginOverlay.style.display = 'flex';
@@ -336,7 +398,10 @@
             });
         }
         
-        updateStagesAccess();
+        // ============================================
+        // ЗАПУСК
+        // ============================================
+        checkAuthAndUpdateUI();
     </script>
 </body>
 </html>

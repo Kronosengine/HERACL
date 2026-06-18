@@ -22,27 +22,12 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 200;
     background: rgba(8, 12, 25, 0.92);
     backdrop-filter: blur(12px);
     border-bottom: 2px solid #00f0ff;
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-    padding: 0 clamp(20px, 4vw, 60px);
-}
-
-.neon-line {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #00f0ff, #ff00cc, #00f0ff, transparent);
-    animation: neonPulse 2s infinite;
-}
-
-@keyframes neonPulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+    padding: 0 clamp(15px, 3vw, 40px);
 }
 
 .nav-container {
@@ -51,49 +36,64 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 65px;
+    height: clamp(50px, 5.5vh, 60px);
 }
 
 .logo {
-    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+    position: relative;
+    cursor: pointer;
+}
+
+.logo-text {
+    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
     font-weight: bold;
     letter-spacing: 3px;
     color: #00f0ff;
-    text-shadow: 0 0 8px #00f0ff, 0 0 15px #0066ff;
+    text-shadow: 0 0 8px #00f0ff, 0 0 15px #0066ff, 0 0 25px #00f0ff;
     font-family: 'DS Sofachrome', monospace;
     position: relative;
-    animation: logoGlow 2s ease-in-out infinite;
+    z-index: 2;
+    animation: logoPulse 2s ease-in-out infinite;
     white-space: nowrap;
 }
 
-@keyframes logoGlow {
+@keyframes logoPulse {
     0%, 100% { text-shadow: 0 0 8px #00f0ff, 0 0 15px #0066ff; }
-    50% { text-shadow: 0 0 15px #00f0ff, 0 0 30px #0066ff, 0 0 5px #ff00cc; }
+    50% { text-shadow: 0 0 20px #00f0ff, 0 0 35px #0088ff, 0 0 10px #ff00cc; }
 }
 
-.logo::after {
-    content: '';
+.logo-glow {
     position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 100%;
-    height: 1.5px;
-    background: linear-gradient(90deg, #00f0ff, #ff00cc, transparent);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.15), transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.3; width: 120%; height: 150%; }
+    50% { opacity: 0.8; width: 140%; height: 170%; }
 }
 
 .nav-links {
     display: flex;
-    gap: clamp(15px, 2.5vw, 45px);
+    gap: clamp(12px, 1.8vw, 30px);
     align-items: center;
 }
 
 .nav-link {
     color: #e0e0ff;
     text-decoration: none;
-    font-size: clamp(0.75rem, 1.2vw, 1rem);
-    letter-spacing: 2px;
+    font-size: clamp(0.6rem, 1vw, 0.8rem);
+    letter-spacing: 1.5px;
     font-family: 'DS Sofachrome', monospace;
-    padding: 8px 0;
+    padding: 6px 0;
     position: relative;
     transition: 0.3s;
     text-transform: uppercase;
@@ -494,7 +494,7 @@ body {
     pointer-events: none;
 }
 
-/* ========== ФОРМА РЕГИСТРАЦИИ (опущена ниже) ========== */
+/* ========== ФОРМА РЕГИСТРАЦИИ ========== */
 .registration-container {
     text-align: left;
     pointer-events: auto;
@@ -547,7 +547,6 @@ body {
     top: 0;
 }
 
-/* Уменьшено расстояние между полями */
 .form-container {
     margin-top: 15px;
     display: flex;
@@ -564,9 +563,8 @@ body {
     margin-bottom: 2px;
     position: relative;
     display: flex;
-    align-items: center;
-    gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .input-field {
@@ -612,15 +610,29 @@ body {
     width: 100%;
 }
 
-/* Кнопки показа/скрытия пароля - символы ⦿ / ⊙ */
+/* ========== КНОПКИ ПОКАЗА/СКРЫТИЯ ПАРОЛЯ ========== */
+.password-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.password-group .input-field {
+    flex: 1;
+    min-width: 200px;
+}
+
 .toggle-password {
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid #00f0ff;
-    font-family: monospace;
-    font-size: 1.2rem;
+    font-family: 'DS Sofachrome', monospace;
+    font-size: clamp(0.5rem, 0.7vw, 0.65rem);
     font-weight: bold;
-    width: 40px;
-    height: 40px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    min-width: 75px;
+    height: 36px;
     cursor: pointer;
     transition: all 0.3s ease;
     color: #00f0ff;
@@ -628,6 +640,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .toggle-password:hover {
@@ -642,11 +657,18 @@ body {
     border-color: #fff;
 }
 
-.password-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+/* Убираем жёлтый фон автозаполнения */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
+    -webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-moz-autofill {
+    box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
 }
 
 .toshka-1 {
@@ -672,7 +694,7 @@ body {
     filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.3));
 }
 
-/* Кнопка ОТПРАВИТЬ - размер 450x100, параллелограмм, наклон 30° */
+/* Кнопка ОТПРАВИТЬ */
 .submit-btn {
     position: absolute;
     top: calc(clamp(100px, 12vh, 140px) - 20px);
@@ -848,9 +870,10 @@ img {
         line-height: 60px;
     }
     .toggle-password {
-        width: 32px;
+        min-width: 65px;
         height: 32px;
-        font-size: 1rem;
+        font-size: 0.55rem;
+        padding: 4px 10px;
     }
 }
 
@@ -885,9 +908,10 @@ img {
         line-height: 50px;
     }
     .toggle-password {
-        width: 28px;
+        min-width: 55px;
         height: 28px;
-        font-size: 0.9rem;
+        font-size: 0.5rem;
+        padding: 3px 8px;
     }
 }
 
@@ -907,13 +931,14 @@ img {
         font-size: 1.1rem;
         white-space: normal;
     }
-    .input-group {
+    .password-group {
         gap: 5px;
     }
     .toggle-password {
-        width: 24px;
+        min-width: 48px;
         height: 24px;
-        font-size: 0.8rem;
+        font-size: 0.45rem;
+        padding: 2px 6px;
     }
     .submit-btn {
         width: 160px;
