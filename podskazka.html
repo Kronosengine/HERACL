@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Подсказка / Правила - Геракл</title>
+    <link rel="stylesheet" href="podskazka.css">
+</head>
+<body>
+
+    <!-- КИБЕРПАНК ШАПКА (как на всех страницах) -->
+    <header class="cyber-header">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">ГЕРАКЛ</span>
+                <span class="logo-glow"></span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="reg.html" class="nav-link">Регистрация</a>
+                <a href="urovni.html" class="nav-link">Этапы</a>
+                <a href="profil.html" class="nav-link">Профиль</a>
+                <a href="reiting.html" class="nav-link">Рейтинг</a>
+                <a href="podskazka.html" class="nav-link active">Подсказка</a>
+            </div>
+        </div>
+        <div class="neon-line"></div>
+    </header>
+
+    <!-- КИБЕРПАНК ПОДВАЛ -->
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <div class="footer-line"></div>
+            <span class="footer-text">⚡ ВЫПОЛНЕНО КОМАНДОЙ 6 ⚡</span>
+            <div class="footer-line"></div>
+        </div>
+        <div class="footer-neon"></div>
+    </footer>
+
+    <div class="layer-container">
+        <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
+        
+        <!-- Декоративные элементы -->
+        <div class="cyber-grid"></div>
+        <div class="particles" id="particles"></div>
+        <div class="twinkling-stars" id="twinklingStars"></div>
+        <div class="holo-circle"></div>
+        <div class="running-lights">
+            <div class="running-light top"></div>
+            <div class="running-light bottom"></div>
+            <div class="running-light left"></div>
+            <div class="running-light right"></div>
+        </div>
+        <div class="neon-corner corner-tl"></div>
+        <div class="neon-corner corner-tr"></div>
+        <div class="neon-corner corner-bl"></div>
+        <div class="neon-corner corner-br"></div>
+
+        <div class="content-wrapper">
+            <div class="hero-section">
+                <h1 class="main-title glitch" data-text="ПРАВИЛА ИГРЫ: ПОДВИГИ ГЕРАКЛА">ПРАВИЛА ИГРЫ: ПОДВИГИ ГЕРАКЛА</h1>
+                <p class="subtitle">12 отборочных подвигов + 3 финальных испытания богов</p>
+                <div class="time-info">
+                    <span class="time-badge">⏱️ ОТБОРОЧНЫЕ: 1.5 ЧАСА</span>
+                    <span class="time-badge">🏆 ФИНАЛ: 1.5 ЧАСА</span>
+                </div>
+            </div>
+
+            <!-- Секция отборочных подвигов -->
+            <div class="rules-section">
+                <h2 class="section-title">📜 ОТБОРОЧНЫЕ ПОДВИГИ (12)</h2>
+                <div class="rules-grid" id="qualifyingGrid"></div>
+            </div>
+
+            <!-- Секция финалов -->
+            <div class="rules-section">
+                <h2 class="section-title">⚡ ФИНАЛЬНЫЕ ИСПЫТАНИЯ БОГОВ (3)</h2>
+                <div class="rules-grid finals-grid" id="finalsGrid"></div>
+            </div>
+
+            <div class="info-footer">
+                <div class="cyber-line"></div>
+                <p class="footer-note">Каждый подвиг приносит очки. Финалы дают повышенную награду. Удачи, герой!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные о 12 подвигах (краткое описание)
+        const labors = [
+            { id: 1, name: "Немейский лев", desc: "Вычислить пещеру, где залёг лев, по логическим утверждениям.", icon: "🦁", time: "≈ 10 мин" },
+            { id: 2, name: "Лернейская гидра", desc: "Найти бессмертную голову по длине имени в двоичной системе.", icon: "🐍", time: "≈ 10 мин" },
+            { id: 3, name: "Стимфалийские птицы", desc: "Рассчитать частоту звука через побитовые операции.", icon: "🐦", time: "≈ 10 мин" },
+            { id: 4, name: "Керинейская лань", desc: "Баллистика стрел с учётом ветра и углов.", icon: "🦌", time: "≈ 15 мин" },
+            { id: 5, name: "Эриманфский вепрь", desc: "Кратчайший путь в лабиринте со сбором предметов.", icon: "🐗", time: "≈ 20 мин" },
+            { id: 6, name: "Авгиевы конюшни", desc: "Исправление ошибок в legacy-коде.", icon: "🏚️", time: "≈ 15 мин" },
+            { id: 7, name: "Критский бык", desc: "Рекурсивный поиск путей в лабиринте (DFS).", icon: "🐂", time: "≈ 10 мин" },
+            { id: 8, name: "Кони Диомеда", desc: "Поиск имени в лог-файле и подсчёт слов.", icon: "🐎", time: "≈ 10 мин" },
+            { id: 9, name: "Пояс Ипполиты", desc: "Расшифровка сообщения шифром Цезаря.", icon: "👸", time: "≈ 10 мин" },
+            { id: 10, name: "Коровы Гериона", desc: "Перебор коэффициентов итерационной функции.", icon: "🐮", time: "≈ 15 мин" },
+            { id: 11, name: "Яблоки Гесперид", desc: "Взвешивание с погрешностью, минимальное число операций.", icon: "🍎", time: "≈ 15 мин" },
+            { id: 12, name: "Цербер", desc: "Сумма числовых литералов в Python-коде.", icon: "🐕‍🦺", time: "≈ 15 мин" }
+        ];
+
+        const finals = [
+            { id: 1, name: "Клубок бога смерти Танатоса", desc: "Обработка списка душ: удаление дубликатов, фильтрация, сортировка.", icon: "💀", points: "250" },
+            { id: 2, name: "Гиперкуб титана Атланта", desc: "Поворот матрицы, поиск строки с максимальной суммой, проверка критического значения.", icon: "🌍", points: "250" },
+            { id: 3, name: "Колесница Гелиоса", desc: "Жадный алгоритм выбора облаков-заправок с минимальным числом остановок.", icon: "☀️", points: "250" }
+        ];
+
+        function renderQualifying() {
+            const container = document.getElementById('qualifyingGrid');
+            container.innerHTML = '';
+            labors.forEach(labor => {
+                const card = document.createElement('div');
+                card.className = 'rule-card';
+                card.innerHTML = `
+                    <div class="rule-icon">${labor.icon}</div>
+                    <div class="rule-info">
+                        <div class="rule-number">ПОДВИГ ${labor.id}</div>
+                        <h3 class="rule-name">${labor.name}</h3>
+                        <p class="rule-desc">${labor.desc}</p>
+                        <div class="rule-time">⏱️ ${labor.time}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderFinals() {
+            const container = document.getElementById('finalsGrid');
+            container.innerHTML = '';
+            finals.forEach(final => {
+                const card = document.createElement('div');
+                card.className = 'rule-card final-card';
+                card.innerHTML = `
+                    <div class="rule-icon">${final.icon}</div>
+                    <div class="rule-info">
+                        <div class="rule-number">ФИНАЛ ${final.id}</div>
+                        <h3 class="rule-name">${final.name}</h3>
+                        <p class="rule-desc">${final.desc}</p>
+                        <div class="rule-points">🏆 +${final.points} очков</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Декоративные эффекты
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = 5 + Math.random() * 5 + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('twinklingStars');
+            if (!container) return;
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = 2 + Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        createParticles();
+        createStars();
+        renderQualifying();
+        renderFinals();
+    </script>
+</body>
+</html>
