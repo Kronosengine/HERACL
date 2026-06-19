@@ -5,6 +5,13 @@
 }
 
 @font-face {
+    font-family: 'SimpleSquare';
+    src: url('ST-SimpleSquare.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'DS Sofachrome';
     src: url('DS-Sofachrome.ttf') format('truetype');
     font-weight: normal;
@@ -771,7 +778,7 @@ body {
 }
 
 .modal-timer-label {
-    font-family: 'DS Sofachrome', monospace;
+    font-family: 'SimpleSquare', monospace;
     font-size: 0.45rem;
     color: #00f0ff;
     letter-spacing: 2px;
@@ -779,7 +786,7 @@ body {
 }
 
 .modal-timer-display {
-    font-family: 'DS Sofachrome', monospace;
+    font-family: 'SimpleSquare', monospace;
     font-size: 0.9rem;
     font-weight: bold;
     color: #00f0ff;
@@ -861,7 +868,7 @@ body {
 }
 
 .modal-header h2 {
-    font-family: 'DS Sofachrome', sans-serif;
+    font-family: 'SimpleSquare', sans-serif;
     font-size: clamp(0.85rem, 3vw, 1.1rem);
     color: #00f0ff;
     letter-spacing: 2px;
@@ -904,7 +911,7 @@ body {
 .hero-right .hero-icon { animation-delay: 1.5s; }
 
 .hero-name {
-    font-family: 'DS Sofachrome', sans-serif;
+    font-family: 'SimpleSquare', sans-serif;
     font-size: 0.5rem;
     color: #a0aaff;
     margin-top: 4px;
@@ -952,7 +959,7 @@ body {
 }
 
 .story-text, .task-text, .data-text {
-    font-family: 'DS Sofachrome', sans-serif;
+    font-family: 'SimpleSquare', sans-serif;
     font-size: clamp(0.65rem, 2vw, 0.8rem);
     color: #e0e0ff;
     line-height: 1.4;
@@ -987,7 +994,7 @@ body {
     border: 1px solid #ff00cc;
     border-radius: 10px;
     padding: 8px 12px;
-    font-family: 'DS Sofachrome', monospace;
+    font-family: 'SimpleSquare', monospace;
     font-size: 0.8rem;
     color: white;
     outline: none;
@@ -1003,7 +1010,7 @@ body {
     border: none;
     border-radius: 10px;
     padding: 8px 18px;
-    font-family: 'DS Sofachrome', sans-serif;
+    font-family: 'SimpleSquare', sans-serif;
     font-size: 0.75rem;
     color: white;
     cursor: pointer;
@@ -1023,7 +1030,7 @@ body {
 }
 
 .hint-text {
-    font-family: 'DS Sofachrome', sans-serif;
+    font-family: 'SimpleSquare', sans-serif;
     font-size: 0.55rem;
     color: #ffd700;
     padding: 5px 10px;
@@ -1041,14 +1048,14 @@ body {
 
 .result-success {
     color: #00ff88;
-    font-family: 'DS Sofachrome', sans-serif;
+    font-family: 'SimpleSquare', sans-serif;
     font-size: 0.75rem;
     text-shadow: 0 0 5px #00ff88;
 }
 
 .result-error {
     color: #ff4757;
-    font-family: 'DS Sofachrome', sans-serif;
+    font-family: 'SimpleSquare', sans-serif;
     font-size: 0.75rem;
 }
 
