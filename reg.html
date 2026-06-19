@@ -10,10 +10,13 @@
 
     <header class="cyber-header">
         <div class="nav-container">
-            <div class="logo">ГЕРАКЛ</div>
+            <div class="logo">
+                <span class="logo-text">ГЕРАКЛ</span>
+                <span class="logo-glow"></span>
+            </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
-                <a href="reg.html" class="nav-link active">Регистрация</a>
+                <a href="#" class="nav-link active">Регистрация</a>
                 <a href="urovni.html" class="nav-link">Этапы</a>
                 <a href="profil.html" class="nav-link">Профиль</a>
                 <a href="reiting.html" class="nav-link">Рейтинг</a>
@@ -91,14 +94,14 @@
                         <div class="input-group password-group">
                             <input type="password" id="password" class="input-field" placeholder="Пароль" 
                                    autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
-                            <button type="button" class="toggle-password" data-target="password">ПОКАЗАТЬ</button>
+                            <button type="button" class="toggle-password" data-target="password">⦿</button>
                             <div class="error-message" id="password-error"></div>
                         </div>
 
                         <div class="input-group password-group">
                             <input type="password" id="confirm-password" class="input-field" placeholder="Подтверждение пароля" 
                                    autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
-                            <button type="button" class="toggle-password" data-target="confirm-password">ПОКАЗАТЬ</button>
+                            <button type="button" class="toggle-password" data-target="confirm-password">⦿</button>
                             <div class="error-message" id="confirm-password-error"></div>
                         </div>
 
@@ -158,11 +161,11 @@
                 const targetInput = document.getElementById(targetId);
                 if (targetInput.type === 'password') {
                     targetInput.type = 'text';
-                    this.textContent = 'СКРЫТЬ';
+                    this.textContent = '▪';
                     this.classList.add('active');
                 } else {
                     targetInput.type = 'password';
-                    this.textContent = 'ПОКАЗАТЬ';
+                    this.textContent = '⦿';
                     this.classList.remove('active');
                 }
             });

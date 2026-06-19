@@ -549,7 +549,7 @@ body {
 .info-text {
     font-family: 'DS Sofachrome', sans-serif;
     font-size: clamp(1.2rem, 3vw, 3rem);
-    color: black;
+    color: white;
     letter-spacing: clamp(2px, 0.5vw, 6px);
     margin-bottom: clamp(15px, 3vh, 40px);
     white-space: nowrap;
