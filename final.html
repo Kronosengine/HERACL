@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- КИБЕРПАНК ШАПКА -->
     <header class="cyber-header">
         <div class="nav-container">
             <div class="logo">
@@ -27,7 +26,6 @@
         <div class="neon-line"></div>
     </header>
 
-    <!-- КИБЕРПАНК ПОДВАЛ -->
     <footer class="cyber-footer">
         <div class="footer-content">
             <div class="footer-line"></div>
@@ -37,7 +35,6 @@
         <div class="footer-neon"></div>
     </footer>
 
-    <!-- Оверлей блокировки при окончании времени -->
     <div class="timeout-overlay" id="timeoutOverlay">
         <div class="timeout-card">
             <div class="timeout-icon">⏰</div>
@@ -51,7 +48,6 @@
     <div class="layer-container">
         <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
 
-        <!-- Декоративные элементы -->
         <div class="cyber-grid"></div>
         <div class="particles" id="particles"></div>
         <div class="twinkling-stars" id="twinklingStars"></div>
@@ -68,9 +64,7 @@
         <div class="neon-corner corner-br"></div>
 
         <div class="content-wrapper">
-            <!-- HERO СЕКЦИЯ: ПРОГРЕСС СЛЕВА, ЗАГОЛОВОК ПО ЦЕНТРУ, ТАЙМЕР СПРАВА -->
             <div class="hero-section">
-                <!-- ПРОГРЕСС-БАР СЛЕВА -->
                 <div class="hero-left">
                     <div class="progress-bar-container">
                         <div class="progress-label">ПРОГРЕСС ПРОХОЖДЕНИЯ ФИНАЛОВ</div>
@@ -83,13 +77,11 @@
                     </div>
                 </div>
 
-                <!-- ЗАГОЛОВОК ПО ЦЕНТРУ -->
                 <div class="hero-center">
                     <h1 class="main-title glitch" data-text="ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ">ФИНАЛЫ: ИСПЫТАНИЯ БОГОВ</h1>
                     <p class="subtitle">ТРИ ФИНАЛЬНЫХ ИСПЫТАНИЯ ПЕРЕД ЛИЦОМ ОЛИМПИЙСКИХ БОГОВ</p>
                 </div>
 
-                <!-- ТАЙМЕР СПРАВА (часть hero-section) -->
                 <div class="hero-right">
                     <div class="timer-container" id="timerContainer">
                         <div class="timer-card">
@@ -105,14 +97,12 @@
         </div>
     </div>
 
-    <!-- Модальное окно для финала -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-container">
             <div class="modal-header">
                 <h2 id="modalTitle">ФИНАЛ 1: Клубок бога смерти Танатоса</h2>
                 <button class="modal-close" id="closeModalBtn">✖</button>
             </div>
-            <!-- МИНИ-ТАЙМЕР ВНУТРИ МОДАЛКИ -->
             <div class="modal-timer">
                 <div class="modal-timer-label">⏱️ ОСТАЛОСЬ ВРЕМЕНИ</div>
                 <div class="modal-timer-display" id="modalTimerDisplay">01:30:00</div>
@@ -316,39 +306,19 @@
             { id: 1, name: "Клубок бога смерти Танатоса", points: 250, answer: "Гектор 2", type: "text",
               story: "Танатос ведет учет душ в подземном царстве. Из-за бага некоторые записи повреждены или продублированы.",
               task: "Напишите программу, которая:\n1. Удалит все полные дубликаты строк.\n2. Отфильтрует только те души, у которых Грехи строго больше, чем Добродетели.\n3. Отсортирует оставшихся по Возрасту (от самых старых к самым молодым).\n\nВ качестве ответа выведите Имя самой старой грешной души и общее количество отфильтрованных душ через пробел.",
-              data: `souls.txt (пример данных):
-["Ахилл", 25, 5, 3]
-["Гектор", 30, 7, 2]
-["Ахилл", 25, 5, 3]
-["Парис", 22, 4, 4]
-["Одиссей", 35, 6, 5]
-["Аякс", 28, 8, 1]
-["Нестор", 45, 3, 6]
-["Гектор", 30, 7, 2]`,
+              data: `souls.txt (пример данных):\n["Ахилл", 25, 5, 3]\n["Гектор", 30, 7, 2]\n["Ахилл", 25, 5, 3]\n["Парис", 22, 4, 4]\n["Одиссей", 35, 6, 5]\n["Аякс", 28, 8, 1]\n["Нестор", 45, 3, 6]\n["Гектор", 30, 7, 2]`,
               hint: "После удаления дубликатов и фильтрации (Грехи > Добродетели) останутся: Гектор (30 лет, грехи 7 > добродетели 2), Аякс (28 лет, грехи 8 > добродетели 1). Самая старая — Гектор. Всего 2 души. Ответ: Гектор 2",
               hero: "💀", heroName: "Танатос" },
             { id: 2, name: "Гиперкуб титана Атланта", points: 250, answer: "SAFE", type: "text",
               story: "Атлант держит небосвод, представленный в виде квадратной матрицы чисел. Если сумма весов превышает K, небо рушится.",
               task: "Считайте матрицу N×N и число K. Поверните матрицу на 90 градусов по часовой стрелке. Найдите строку с максимальной суммой элементов в повернутой матрице. Если эта сумма больше K, выведите CRASH и номер строки. Если небо устояло, выведите SAFE.",
-              data: `N = 3, K = 15
-Исходная матрица:
-1 2 3
-4 5 6
-7 8 9
-После поворота на 90°:
-7 4 1
-8 5 2
-9 6 3
-Суммы строк: 12, 15, 18
-Максимальная сумма = 18 > K = 15 → CRASH 3`,
+              data: `N = 3, K = 15\nИсходная матрица:\n1 2 3\n4 5 6\n7 8 9\nПосле поворота на 90°:\n7 4 1\n8 5 2\n9 6 3\nСуммы строк: 12, 15, 18\nМаксимальная сумма = 18 > K = 15 → CRASH 3`,
               hint: "После поворота найдите строку с максимальной суммой. Если она > K → CRASH [номер], иначе SAFE",
               hero: "🌍", heroName: "Атлант" },
             { id: 3, name: "Колесница Гелиоса", points: 250, answer: "2", type: "number",
               story: "Гелиос должен пролететь на колеснице от Олимпа до Заката. На пути расположены облака-заправки.",
               task: "От точки 0 до точки X. Есть 10 облаков-заправок с координатами x_i и энергией f_i. Колесница тратит 1 энергии на 1 путь. Стартовый запас S. Нужно выбрать минимальное количество остановок, чтобы долететь до X. Если невозможно → -1.",
-              data: `X = 100, S = 20
-Облака (координата, энергия):
-[(20, 15), (35, 10), (50, 5), (65, 20), (80, 10), (90, 15), (95, 5), (100, 0), (110, 0), (120, 0)]`,
+              data: `X = 100, S = 20\nОблака (координата, энергия):\n[(20, 15), (35, 10), (50, 5), (65, 20), (80, 10), (90, 15), (95, 5), (100, 0), (110, 0), (120, 0)]`,
               hint: "Жадный алгоритм: на каждой остановке выбираем облако с максимальной энергией среди достижимых. Минимальное количество остановок = 2",
               hero: "☀️", heroName: "Гелиос" }
         ];
@@ -501,7 +471,6 @@
                     existingProgress.wins = (existingProgress.wins || 0) + 1;
                     localStorage.setItem(progressKey, JSON.stringify(existingProgress));
                     
-                    // Обновляем user в localStorage
                     userData.points = existingProgress.points;
                     userData.wins = existingProgress.wins;
                     localStorage.setItem('user', JSON.stringify(userData));
@@ -512,7 +481,6 @@
                 answerSubmitBtn.disabled = true;
                 answerInput.disabled = true;
                 
-                // Синхронизация с сервером
                 syncFinalsProgressToServer();
                 
                 showNotification(`✅ ФИНАЛ ${currentFinal.id} ПРОЙДЕН! +${currentFinal.points} очков`, 'success');
@@ -537,13 +505,18 @@
                 card.style.setProperty('--i', index);
                 card.onclick = () => openModal(final.id);
                 
+                // ТУТ ИСПРАВЛЕНО: Подтягиваем именно твои загруженные final1.jpg, final2.jpg, final3.jpg без папки и png
                 card.innerHTML = `
-                    <div class="final-number">ФИНАЛ ${final.id}</div>
-                    <div class="final-hero">${final.hero}</div>
-                    <h3 class="final-name">${final.name}</h3>
-                    <p class="final-description">${final.story.substring(0, 100)}...</p>
-                    <div class="final-points">🏆 +${final.points} очков</div>
-                    ${isCompleted ? '<div class="completed-mark">✔ ЗАВЕРШЕНО</div>' : '<div class="pending-mark">⚡ НЕ ПРОЙДЕН</div>'}
+                    <div class="final-image-wrapper">
+                        <img src="final${final.id}.jpg" alt="${final.name}" class="final-image" onerror="this.style.display='none'">
+                    </div>
+                    <div class="final-content">
+                        <div class="final-number">ФИНАЛ ${final.id}</div>
+                        <h3 class="final-name">${final.name}</h3>
+                        <p class="final-description">${final.story.substring(0, 100)}...</p>
+                        <div class="final-points">🏆 +${final.points} очков</div>
+                        ${isCompleted ? '<div class="completed-mark">✔ ЗАВЕРШЕНО</div>' : '<div class="pending-mark">⚡ НЕ ПРОЙДЕН</div>'}
+                    </div>
                 `;
                 container.appendChild(card);
             });

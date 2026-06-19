@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- КИБЕРПАНК ШАПКА -->
     <header class="cyber-header">
         <div class="nav-container">
             <div class="logo">
@@ -27,7 +26,6 @@
         <div class="neon-line"></div>
     </header>
 
-    <!-- КИБЕРПАНК ПОДВАЛ -->
     <footer class="cyber-footer">
         <div class="footer-content">
             <div class="footer-line"></div>
@@ -37,7 +35,6 @@
         <div class="footer-neon"></div>
     </footer>
 
-    <!-- Окно авторизации -->
     <div class="auth-overlay" id="authOverlay">
         <div class="auth-card">
             <h2>АВТОРИЗАЦИЯ КОМАНДЫ</h2>
@@ -51,7 +48,6 @@
         </div>
     </div>
 
-    <!-- Оверлей блокировки при окончании времени -->
     <div class="timeout-overlay" id="timeoutOverlay">
         <div class="timeout-card">
             <div class="timeout-icon">⏰</div>
@@ -65,7 +61,6 @@
     <div class="layer-container">
         <img class="bg-full" src="kartinki/fon.jpg" alt="Фоновое изображение">
 
-        <!-- Декоративные элементы -->
         <div class="cyber-grid"></div>
         <div class="particles" id="particles"></div>
         <div class="twinkling-stars" id="twinklingStars"></div>
@@ -82,7 +77,6 @@
         <div class="neon-corner corner-br"></div>
 
         <div class="content-wrapper">
-            <!-- HERO СЕКЦИЯ -->
             <div class="hero-section">
                 <div class="hero-left">
                     <div class="progress-bar-container">
@@ -116,7 +110,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для подвига -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-container">
             <div class="modal-header">
@@ -162,116 +155,35 @@
     </div>
 
     <script>
-        // ============================================
-        // API КОНСТАНТЫ
-        // ============================================
         const API_URL = 'http://localhost:5000/api';
 
-        // ============================================
-        // ПЕРЕРАБОТАННЫЕ ЗАДАНИЯ (12 ПОДВИГОВ)
-        // ============================================
         const laborsData = [
-            {
-                id: 1,
-                name: "Немейский лев",
-                icon: "kartinki/icon/1.png",
-                desc: "Логика • 5 пещер, 1 истина",
-                story: "Геракл-антивирус сканирует систему. Первая угроза — Немейский лев, который прячется в одном из 5 серверных отсеков.\n\n«Перед вами 5 пещер-серверов. На каждом — предупреждение. Ровно три из них истинны. Но помните: предупреждение на том сервере, где залёг лев, гарантированно ложно. Вычислите номер сервера».\n\nДанные:\nСервер 1: «Лев в сервере 3»\nСервер 2: «Лев не в сервере 4»\nСервер 3: «Лев в сервере 1 или 5»\nСервер 4: «Лев в сервере 2, 3 или 4»\nСервер 5: «Лев не в сервере 2»",
-                answer: "1"
-            },
-            {
-                id: 2,
-                name: "Лернейская гидра",
-                icon: "kartinki/icon/2.png",
-                desc: "Двоичный код • 10 голов",
-                story: "Геракл-антивирус обнаружил Лернейскую гидру — рекурсивный вирус, отращивающий новые головы-процессы. Нужно найти бессмертную голову.\n\n«У гидры 10 голов-процессов. Бессмертная голова — та, у которой количество единиц в двоичной записи длины её имени нечётно».\n\nВходные данные:\n[\"АРГОС\", \"ФИВА\", \"СПАРТА\", \"АФИНЫ\", \"КОРИНФ\", \"МИКЕНЫ\", \"ТИРИНФ\", \"ОЛИМПИЯ\", \"ДЕЛЬФЫ\", \"РОДОС\"]\n\nФормат ответа: Имя головы (заглавными буквами).",
-                answer: "ФИВА"
-            },
-            {
-                id: 3,
-                name: "Стимфалийские птицы",
-                icon: "kartinki/icon/3.png",
-                desc: "Побитовые операции • 4 байта",
-                story: "Геракл-антивирус перехватил пакет данных от Стимфалийских птиц-дронов. Они атакуют спам-пакетами. Нужно вычислить частоту для глушилки.\n\n«Формула частоты: (Байт_1 XOR Байт_2) + (Байт_3 AND Байт_4)».\n\nВходные данные (шестнадцатеричные): 0x3A, 0x5C, 0x8F, 0x70\n\nФормат ответа: Целое число.",
-                answer: "102"
-            },
-            {
-                id: 4,
-                name: "Керинейская лань",
-                icon: "kartinki/icon/4.png",
-                desc: "Баллистика • 30 выстрелов",
-                story: "Геракл-антивирус отслеживает Керинейскую лань — быстрый процесс, уклоняющийся от сканирования. Нужно рассчитать траекторию.\n\n«Формула: P = (Попаданий / 30) * Среднее Value. Результат округлите до 3 знаков».\n\nВходные данные: 17 попаданий из 30, среднее Value = 12.344\n\nФормат ответа: Число с тремя знаками после запятой (через точку).",
-                answer: "6.995"
-            },
-            {
-                id: 5,
-                name: "Эриманфский вепрь",
-                icon: "kartinki/icon/5.png",
-                desc: "Хэширование • SHA-256",
-                story: "Геракл-антивирус наткнулся на Эриманфского вепря — вредоносный алгоритм, который хэширует данные. Нужно найти исходное слово по его хэшу.\n\n«Известно, что SHA-256 хэш слова равен 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92. Какое из трёх слов было захешировано: «пароль», «password», «qwerty»?»\n\nПодсказка: это одно из самых популярных паролей в мире.\n\nФормат ответа: Слово строчными буквами.",
-                answer: "password"
-            },
-            {
-                id: 6,
-                name: "Авгиевы конюшни",
-                icon: "kartinki/icon/6.png",
-                desc: "SQL-запрос • База данных",
-                story: "Геракл-антивирус чистит базу данных Авгиевых конюшен. Нужно найти ошибки и написать их без дополнительных разделительных знаков и пробелов.\n\nНеправильный код:\nnumbers = [1, 2, 3, 4, 5,]\nsquared = [x**2 for x in numbers]\ntotal = sum(squared\naverage == total / len(squared)\nprint(Сумма= ; total)\nprint(Среднее // average)",
-                answer: ",)=;/"
-            },
-            {
-                id: 7,
-                name: "Критский бык",
-                icon: "kartinki/icon/7.png",
-                desc: "Анализ данных • Excel / CSV",
-                story: "Геракл-антивирус анализирует большой файл данных Критского быка (более 10 000 строк). Нужно найти аномалию.\n\n«В файле data.csv есть колонки: id, timestamp, value, status. Найдите количество записей, у которых value > 1000 И status = 'ERROR' И timestamp за последние 24 часа. В файле 15000 записей, из них: value > 1000 — 3200 записей, status = 'ERROR' — 450 записей, timestamp за последние 24 часа — 1800 записей. Пересечение всех трёх условий — 75 записей».\n\nФормат ответа: Целое число.",
-                answer: "75"
-            },
-            {
-                id: 8,
-                name: "Кони Диомеда",
-                icon: "kartinki/icon/8.png",
-                desc: "Рекурсия • Факториал",
-                story: "Геракл-антивирус вычисляет мощность коней Диомеда. Нужно посчитать рекурсивную функцию.\n\n«Функция F(n) определена рекурсивно:\nF(0) = 1\nF(1) = 2\nF(n) = F(n-1) * F(n-2) + 1\n\nВычислите F(32)».\n\nФормат ответа: Целое число.",
-                answer: "1856751023045509591"
-            },
-            {
-                id: 9,
-                name: "Пояс Ипполиты",
-                icon: "kartinki/icon/9.png",
-                desc: "Шифр • Сдвиг",
-                story: "Геракл-антивирус перехватил зашифрованное сообщение от амазонок.\n\nЗашифрованное сообщение: \n«ьрхзу чцтцшръщж урад лцщцсхгф»\n\nФормат ответа: Текст строчными буквами (без кавычек).",
-                answer: "финал покорится лишь достойным"
-            },
-            {
-                id: 10,
-                name: "Коровы Гериона",
-                icon: "kartinki/icon/10.png",
-                desc: "Массивы • Поиск дубликатов",
-                story: "Геракл-антивирус ищет дублирующиеся данные в массиве коров Гериона. Нужно найти первый повторяющийся элемент.\n\n«Дан массив чисел: [2, 5, 1, 2, 3, 5, 1, 2, 4]. Найдите первый элемент, который повторяется в массиве (встречается во второй раз при обходе слева направо)».\n\nФормат ответа: Целое число.",
-                answer: "2"
-            },
-            {
-                id: 11,
-                name: "Яблоки Гесперид",
-                icon: "kartinki/icon/11.png",
-                desc: "Деревья • Обход",
-                story: "Геракл-антивирус исследует дерево яблок Гесперид. Нужно найти сумму всех узлов на максимальной глубине.\n\n«Дано бинарное дерево:\n        10\n       /  \\\n      5    15\n     / \\   / \\\n    3   7 12  20\n   / \\\n  1   4\n\nНайдите сумму значений всех узлов, находящихся на максимальной глубине (самом нижнем уровне)».\n\nФормат ответа: Целое число.",
-                answer: "5"
-            },
-            {
-                id: 12,
-                name: "Цербер",
-                icon: "kartinki/icon/12.png",
-                desc: "Алгоритмы • Двоичный поиск",
-                story: "Геракл-антивирус ищет уязвимость в системе Цербера. Нужно найти индекс элемента в отсортированном массиве с помощью двоичного поиска.\n\n«В отсортированном массиве [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25] нужно найти число 17. Сколько итераций (сравнений) потребуется для двоичного поиска?»\n\nФормат ответа: Целое число.",
-                answer: "4"
-            }
+            { id: 1, name: "Немейский лев", icon: "kartinki/icon/1.png", desc: "Логика • 5 пещер, 1 истина", answer: "1",
+              story: "Геракл-антивирус сканирует систему. Первая угроза — Немейский лев...\n\n«Перед вами 5 пещер-серверов...»\n\nДанные:\nСервер 1: «Лев в сервере 3»\nСервер 2: «Лев не в сервере 4»\nСервер 3: «Лев в сервере 1 или 5»\nСервер 4: «Лев в сервере 2, 3 или 4»\nСервер 5: «Лев не в сервере 2»" },
+            { id: 2, name: "Лернейская гидра", icon: "kartinki/icon/2.png", desc: "Двоичный код • 10 голов", answer: "ФИВА",
+              story: "Геракл-антивирус обнаружил Лернейскую гидру...\n\n«У гидры 10 голов-процессов. Бессмертная голова — та, у которой количество единиц в двоичной записи длины её имени нечётно».\n\nВходные данные:\n[\"АРГОС\", \"ФИВА\", \"СПАРТА\", \"АФИНЫ\", \"КОРИНФ\", \"МИКЕНЫ\", \"ТИРИНФ\", \"ОЛИМПИЯ\", \"ДЕЛЬФЫ\", \"РОДОС\"]" },
+            { id: 3, name: "Стимфалийские птицы", icon: "kartinki/icon/3.png", desc: "Побитовые операции • 4 байта", answer: "102",
+              story: "Геракл-антивирус перехватил пакет данных...\n\n«Формула частоты: (Байт_1 XOR Байт_2) + (Байт_3 AND Байт_4)».\n\nВходные данные: 0x3A, 0x5C, 0x8F, 0x70" },
+            { id: 4, name: "Керинейская лань", icon: "kartinki/icon/4.png", desc: "Баллистика • 30 выстрелов", answer: "6.995",
+              story: "Геракл-антивирус отслеживает Керинейскую лань...\n\n«Формула: P = (Попаданий / 30) * Среднее Value. Результат округлите до 3 знаков».\n\nВходные данные: 17 попаданий из 30, среднее Value = 12.344" },
+            { id: 5, name: "Эриманфский вепрь", icon: "kartinki/icon/5.png", desc: "Хэширование • SHA-256", answer: "password",
+              story: "Геракл-антивирус наткнулся на Эриманфского вепря...\n\n«Известно, что SHA-256 хэш слова равен 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92»." },
+            { id: 6, name: "Авгиевы конюшни", icon: "kartinki/icon/6.png", desc: "Отладка кода • Python", answer: ",)=;/",
+              story: "Геракл-антивирус чистит базу данных...\n\nНеправильный код:\nnumbers = [1, 2, 3, 4, 5,]\nsquared = [x**2 for x in numbers]\ntotal = sum(squared\naverage == total / len(squared)\nprint(Сумма= ; total)\nprint(Среднее // average)" },
+            { id: 7, name: "Критский бык", icon: "kartinki/icon/7.png", desc: "Анализ данных • Excel", answer: "75",
+              story: "Геракл-антивирус анализирует большой файл данных...\n\n«В файле data.csv... value > 1000 — 3200, status = 'ERROR' — 450, timestamp за последние 24 часа — 1800. Пересечение всех трёх условий — 75 записей»." },
+            { id: 8, name: "Кони Диомеда", icon: "kartinki/icon/8.png", desc: "Рекурсия • Факториал", answer: "1856751023045509591",
+              story: "Геракл-антивирус вычисляет мощность коней Диомеда...\n\n«F(0) = 1, F(1) = 2, F(n) = F(n-1) * F(n-2) + 1. Вычислите F(32)»." },
+            { id: 9, name: "Пояс Ипполиты", icon: "kartinki/icon/9.png", desc: "Шифр • Сдвиг", answer: "финал покорится лишь достойным",
+              story: "Геракл-антивирус перехватил зашифрованное сообщение...\n\nЗашифрованное сообщение: «ьрхзу чцтцшръщж урад лцщцсхгф»" },
+            { id: 10, name: "Коровы Гериона", icon: "kartinki/icon/10.png", desc: "Массивы • Поиск дубликатов", answer: "2",
+              story: "Геракл-антивирус ищет дублирующиеся данные...\n\n«Дан массив чисел: [2, 5, 1, 2, 3, 5, 1, 2, 4]. Найдите первый повторяющийся элемент»." },
+            { id: 11, name: "Яблоки Гесперид", icon: "kartinki/icon/11.png", desc: "Деревья • Обход", answer: "5",
+              story: "Геракл-антивирус исследует дерево яблок...\n\n«Дано бинарное дерево. Найдите сумму значений всех узлов на максимальной глубине»." },
+            { id: 12, name: "Цербер", icon: "kartinki/icon/12.png", desc: "Двоичный поиск", answer: "4",
+              story: "Геракл-антивирус ищет уязвимость в системе Цербера...\n\n«В отсортированном массиве [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25] нужно найти число 17. Сколько итераций потребуется?»" }
         ];
 
-        // ============================================
-        // НАСТРОЙКИ ТАЙМЕРА (90 минут = 5400 секунд)
-        // ============================================
         const TIME_LIMIT_SECONDS = 90 * 60;
         let timeRemaining = TIME_LIMIT_SECONDS;
         let timerInterval = null;
@@ -323,12 +235,10 @@
             const modalTimerDisplay = document.getElementById('modalTimerDisplay');
             const timerWarning = document.getElementById('timerWarning');
             const timerCard = document.querySelector('.timer-card');
-
             const timeStr = formatTime(timeRemaining);
-
+            
             if (timerDisplay) {
                 timerDisplay.textContent = timeStr;
-
                 if (timeRemaining <= 300) {
                     timerDisplay.style.color = '#ff4757';
                     timerDisplay.style.textShadow = '0 0 10px #ff4757';
@@ -352,37 +262,29 @@
                     if (timerWarning) timerWarning.textContent = '';
                 }
             }
-
             if (modalTimerDisplay) {
                 modalTimerDisplay.textContent = timeStr;
                 modalTimerDisplay.classList.remove('warning', 'critical');
-                if (timeRemaining <= 300) {
-                    modalTimerDisplay.classList.add('warning');
-                } else if (timeRemaining <= 600) {
-                    modalTimerDisplay.classList.add('critical');
-                }
+                if (timeRemaining <= 300) modalTimerDisplay.classList.add('warning');
+                else if (timeRemaining <= 600) modalTimerDisplay.classList.add('critical');
             }
         }
 
         function lockPage() {
             if (isTimeExpired) return;
             isTimeExpired = true;
-
             const timeoutOverlay = document.getElementById('timeoutOverlay');
             if (timeoutOverlay) timeoutOverlay.classList.add('active');
-
             const cards = document.querySelectorAll('.final-card');
             cards.forEach(card => {
                 card.style.pointerEvents = 'none';
                 card.style.opacity = '0.5';
                 card.style.filter = 'grayscale(0.5)';
             });
-
             const modalOverlay = document.getElementById('modalOverlay');
             if (modalOverlay && modalOverlay.classList.contains('active')) {
                 modalOverlay.classList.remove('active');
             }
-
             showNotification('⏰ ВРЕМЯ ВЫШЛО! Этап заблокирован.', 'error');
         }
 
@@ -430,65 +332,7 @@
             }
         }
 
-        // ============================================
-        // ПРОГРЕСС И ОТВЕТЫ
-        // ============================================
-        function loadProgress() {
-            const savedUser = localStorage.getItem('user');
-            if (!savedUser) return { completed: {}, failed: {} };
-            const userData = JSON.parse(savedUser);
-            const saved = localStorage.getItem(`otbor_progress_${userData.teamName}`);
-            if (saved) return JSON.parse(saved);
-            return { completed: {}, failed: {} };
-        }
-
-        function saveProgress(progress) {
-            const savedUser = localStorage.getItem('user');
-            if (!savedUser) return;
-            const userData = JSON.parse(savedUser);
-            localStorage.setItem(`otbor_progress_${userData.teamName}`, JSON.stringify(progress));
-        }
-
-        // ============================================
-        // СИНХРОНИЗАЦИЯ С СЕРВЕРОМ
-        // ============================================
-        async function syncProgressToServer() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-
-            try {
-                const user = JSON.parse(localStorage.getItem('user') || '{}');
-                const completedLabors = Object.keys(progress.completed).filter(k => progress.completed[k]).map(Number);
-                const failedLabors = Object.keys(progress.failed).filter(k => progress.failed[k]).map(Number);
-
-                const response = await fetch(`${API_URL}/auth/progress`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        points: user.points || 0,
-                        wins: user.wins || 0,
-                        rating: user.rating || 1,
-                        completedLabors: completedLabors,
-                        failedLabors: failedLabors,
-                        completedFinals: []
-                    })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.user) {
-                        localStorage.setItem('user', JSON.stringify(data.user));
-                    }
-                }
-            } catch (error) {
-                console.error('Ошибка синхронизации прогресса:', error);
-            }
-        }
-
-        let progress = loadProgress();
+        let progress = { completed: {}, failed: {} };
         let currentLabor = null;
 
         const modalOverlay = document.getElementById('modalOverlay');
@@ -501,7 +345,62 @@
         const authOverlay = document.getElementById('authOverlay');
         const laborsGrid = document.getElementById('laborsGrid');
 
-        function updateProgress() {
+        function loadProgress() {
+            const savedUser = localStorage.getItem('user');
+            if (!savedUser) return { completed: {}, failed: {} };
+            const userData = JSON.parse(savedUser);
+            const saved = localStorage.getItem(`otbor_progress_${userData.teamName}`);
+            if (saved) return JSON.parse(saved);
+            return { completed: {}, failed: {} };
+        }
+
+        function saveProgress(progressData) {
+            const savedUser = localStorage.getItem('user');
+            if (!savedUser) return;
+            const userData = JSON.parse(savedUser);
+            localStorage.setItem(`otbor_progress_${userData.teamName}`, JSON.stringify(progressData));
+        }
+
+        async function syncProgressToServer() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const completedLabors = Object.keys(progress.completed).filter(k => progress.completed[k]).map(Number);
+                const failedLabors = Object.keys(progress.failed).filter(k => progress.failed[k]).map(Number);
+                await fetch(`${API_URL}/auth/progress`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({
+                        points: user.points || 0,
+                        wins: user.wins || 0,
+                        rating: user.rating || 1,
+                        completedLabors: completedLabors,
+                        failedLabors: failedLabors,
+                        completedFinals: []
+                    })
+                });
+            } catch (error) {
+                console.error('Ошибка синхронизации:', error);
+            }
+        }
+
+        function checkAllLaborsCompleted() {
+            const totalLabors = laborsData.length;
+            const completedCount = Object.values(progress.completed).filter(v => v === true).length;
+            const failedCount = Object.values(progress.failed).filter(v => v === true).length;
+            const totalAttempted = completedCount + failedCount;
+            
+            if (totalAttempted >= totalLabors) {
+                localStorage.setItem('all_labors_completed', 'true');
+                showNotification('🏆 ВСЕ ПОДВИГИ ЗАВЕРШЕНЫ! Возврат на страницу этапов...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'urovni.html';
+                }, 2500);
+            }
+        }
+
+        function updateProgressUI() {
             const total = laborsData.length;
             const completedCount = Object.values(progress.completed).filter(v => v === true).length;
             const percent = (completedCount / total) * 100;
@@ -538,28 +437,20 @@
                 return;
             }
             if (progress.completed[laborId] || progress.failed[laborId]) return;
-
             currentLabor = laborsData.find(l => l.id === laborId);
             if (!currentLabor) return;
-
             modalTitle.textContent = `ПОДВИГ ${currentLabor.id}: ${currentLabor.name}`;
-            
             document.getElementById('modalHeroImg').src = currentLabor.icon;
             document.getElementById('modalHeroImg').alt = currentLabor.name;
             document.getElementById('modalHeroName').textContent = currentLabor.name;
-            
             storyText.textContent = currentLabor.story;
             answerInput.value = '';
             modalResult.innerHTML = '';
             answerInput.disabled = false;
             answerSubmitBtn.disabled = false;
             answerSubmitBtn.textContent = '⚡ ПРОВЕРИТЬ';
-
             const modalTimerDisplay = document.getElementById('modalTimerDisplay');
-            if (modalTimerDisplay) {
-                modalTimerDisplay.textContent = formatTime(timeRemaining);
-            }
-
+            if (modalTimerDisplay) modalTimerDisplay.textContent = formatTime(timeRemaining);
             modalOverlay.classList.add('active');
         }
 
@@ -579,21 +470,18 @@
                 showNotification('Этот подвиг уже пройден или провален!', 'error');
                 return;
             }
-
             const userAnswer = answerInput.value.trim();
             if (!userAnswer) {
                 showNotification('Введите ответ!', 'error');
                 return;
             }
-
             const isCorrect = checkAnswer(currentLabor, userAnswer);
-
+            
             if (isCorrect) {
                 progress.completed[currentLabor.id] = true;
                 delete progress.failed[currentLabor.id];
                 saveProgress(progress);
-                updateProgress();
-
+                updateProgressUI();
                 const currentUser = localStorage.getItem('user');
                 if (currentUser) {
                     const userData = JSON.parse(currentUser);
@@ -602,20 +490,15 @@
                     existingProgress.points = (existingProgress.points || 0) + 50;
                     existingProgress.wins = (existingProgress.wins || 0) + 1;
                     localStorage.setItem(pointsKey, JSON.stringify(existingProgress));
-                    
-                    // Обновляем user в localStorage
                     userData.points = existingProgress.points;
                     userData.wins = existingProgress.wins;
                     localStorage.setItem('user', JSON.stringify(userData));
                 }
-
                 modalResult.innerHTML = `<div class="result-success">✅ ПРАВИЛЬНО! +50 очков</div>`;
                 answerSubmitBtn.disabled = true;
                 answerInput.disabled = true;
-                
-                // Синхронизация с сервером
                 syncProgressToServer();
-                
+                checkAllLaborsCompleted();
                 showNotification(`✅ ПОДВИГ ${currentLabor.id} ВЫПОЛНЕН! +50 очков`, 'success');
                 renderLabors();
                 setTimeout(closeModal, 1500);
@@ -627,10 +510,8 @@
                 renderLabors();
                 answerInput.classList.add('error-shake');
                 setTimeout(() => answerInput.classList.remove('error-shake'), 500);
-                
-                // Синхронизация с сервером
                 syncProgressToServer();
-                
+                checkAllLaborsCompleted();
                 showNotification(`❌ Подвиг ${currentLabor.id} провален!`, 'error');
                 setTimeout(closeModal, 2000);
             }
@@ -650,21 +531,13 @@
                     card.style.pointerEvents = 'none';
                     card.style.opacity = '0.5';
                 }
-
                 let statusMark = '';
-                if (isCompleted) {
-                    statusMark = '<div class="completed-mark">✔ ВЫПОЛНЕНО</div>';
-                } else if (isFailed) {
-                    statusMark = '<div class="failed-mark">❌ ПРОВАЛЕН</div>';
-                } else {
-                    statusMark = '<div class="pending-mark">⚡ НЕ ВЫПОЛНЕН</div>';
-                }
-
+                if (isCompleted) statusMark = '<div class="completed-mark">✔ ВЫПОЛНЕНО</div>';
+                else if (isFailed) statusMark = '<div class="failed-mark">❌ ПРОВАЛЕН</div>';
+                else statusMark = '<div class="pending-mark">⚡ НЕ ВЫПОЛНЕН</div>';
                 card.innerHTML = `
                     <div class="final-number">ПОДВИГ ${labor.id < 10 ? '0' + labor.id : labor.id}</div>
-                    <div class="final-hero">
-                        <img src="${labor.icon}" alt="${labor.name}" class="final-img">
-                    </div>
+                    <div class="final-hero"><img src="${labor.icon}" alt="${labor.name}" class="final-img"></div>
                     <h3 class="final-name">${labor.name}</h3>
                     <p class="final-description">${labor.desc}</p>
                     <div class="final-points">🏆 +50 очков</div>
@@ -674,18 +547,13 @@
             });
         }
 
-        // ============================================
-        // АВТОРИЗАЦИЯ
-        // ============================================
         async function performAuth() {
             const team = document.getElementById('authTeamName').value.trim();
             const pass = document.getElementById('authPassword').value.trim();
-
             if (!team || !pass) {
                 document.getElementById('authError').innerText = "Заполните все поля!";
                 return;
             }
-
             try {
                 const response = await fetch(`${API_URL}/auth/login`, {
                     method: 'POST',
@@ -693,13 +561,12 @@
                     body: JSON.stringify({ teamName: team, password: pass })
                 });
                 const data = await response.json();
-
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     authOverlay.style.display = 'none';
                     progress = loadProgress();
-                    updateProgress();
+                    updateProgressUI();
                     renderLabors();
                     initTimer();
                 } else {
@@ -710,9 +577,6 @@
             }
         }
 
-        document.getElementById('authSubmitBtn').addEventListener('click', performAuth);
-
-        // Проверяем авторизацию при загрузке
         async function checkAuth() {
             const token = localStorage.getItem('token');
             if (token) {
@@ -725,7 +589,7 @@
                         localStorage.setItem('user', JSON.stringify(data.user));
                         authOverlay.style.display = 'none';
                         progress = loadProgress();
-                        updateProgress();
+                        updateProgressUI();
                         renderLabors();
                         initTimer();
                         return;
@@ -734,13 +598,18 @@
                     console.error('Ошибка проверки авторизации:', error);
                 }
             }
-            // Если не авторизован — показываем окно входа
             authOverlay.style.display = 'flex';
         }
 
-        checkAuth();
+        document.getElementById('authSubmitBtn').addEventListener('click', performAuth);
+        document.getElementById('authPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') performAuth(); });
+        document.getElementById('authTeamName').addEventListener('keypress', (e) => { if (e.key === 'Enter') performAuth(); });
 
-        // Декоративные элементы
+        closeModalBtn.addEventListener('click', closeModal);
+        answerSubmitBtn.addEventListener('click', submitAnswer);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        answerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitAnswer(); });
+
         function createParticles() {
             const container = document.getElementById('particles');
             if (!container) return;
@@ -767,21 +636,9 @@
             }
         }
 
-        closeModalBtn.addEventListener('click', closeModal);
-        answerSubmitBtn.addEventListener('click', submitAnswer);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-        answerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitAnswer(); });
-
-        // Добавляем поддержку Enter в окне авторизации
-        document.getElementById('authPassword').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') performAuth();
-        });
-        document.getElementById('authTeamName').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') performAuth();
-        });
-
         createParticles();
         createStars();
+        checkAuth();
     </script>
 </body>
 </html>
