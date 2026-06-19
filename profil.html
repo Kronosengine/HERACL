@@ -68,7 +68,6 @@
         <div class="login-overlay" id="loginOverlay">
             <div class="login-card">
                 <div class="login-header">
-                    <span class="login-icon">🔓</span>
                     <h2>ВХОД В АККАУНТ</h2>
                     <button class="close-login" id="closeLoginBtn">✖</button>
                 </div>
@@ -95,16 +94,12 @@
                 <div class="profile-two-columns">
                     
                     <div class="profile-left">
-                        <div class="avatar-upload">
-                            <label for="avatar-input" class="avatar-label">
-                                <div class="avatar-frame">
-                                    <div class="avatar-placeholder" id="avatar-preview">
-                                        <span>⚡</span>
-                                    </div>
-                                </div>
-                                <div class="avatar-hint">НАЖМИТЕ ДЛЯ ЗАГРУЗКИ ФОТО</div>
-                            </label>
-                            <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                        <!-- АВАТАР ПОЯВЛЯЕТСЯ ТОЛЬКО ПРИ ВХОДЕ -->
+                        <div class="avatar-wrapper" id="avatarWrapper">
+                            <div class="avatar-placeholder" id="avatarPlaceholder">
+                                <span>⚡</span>
+                            </div>
+                            <img src="kartinki/avatar.png" alt="Аватар команды" class="avatar-image" id="avatarImage" style="display: none;">
                         </div>
                         <div class="level-badge">
                             <div class="level-icon">🏆</div>
@@ -212,8 +207,8 @@
         const nextLevelInfo = document.getElementById('nextLevelInfo');
         const levelText = document.getElementById('levelText');
 
-        const avatarInput = document.getElementById('avatar-input');
-        const avatarPreview = document.getElementById('avatar-preview');
+        const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+        const avatarImage = document.getElementById('avatarImage');
 
         function updateProfileUI(user) {
             if (!user) {
@@ -230,8 +225,11 @@
                 currentPointsSpan.textContent = '0 / 1600';
                 nextLevelInfo.textContent = '+0 ДО ПОВЫШЕНИЯ';
                 levelText.textContent = 'НОВИЧОК';
-                avatarPreview.innerHTML = '<span>⚡</span>';
-                avatarPreview.style.backgroundImage = '';
+                
+                // Скрываем аватарку, показываем заглушку
+                avatarImage.style.display = 'none';
+                avatarPlaceholder.style.display = 'flex';
+                
                 showLoginBtn.style.display = 'flex';
                 logoutBtn.style.display = 'none';
                 return;
@@ -267,6 +265,10 @@
             else level = 'НОВИЧОК';
             levelText.textContent = level;
 
+            // ПОКАЗЫВАЕМ АВАТАРКУ, СКРЫВАЕМ ЗАГЛУШКУ
+            avatarImage.style.display = 'block';
+            avatarPlaceholder.style.display = 'none';
+
             showLoginBtn.style.display = 'none';
             logoutBtn.style.display = 'flex';
         }
@@ -296,6 +298,18 @@
                 console.error('Ошибка загрузки профиля:', error);
                 updateProfileUI(null);
             }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification-popup ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 10);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
         }
 
         async function performLogin() {
@@ -335,6 +349,7 @@
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             updateProfileUI(null);
+            showNotification('Вы вышли из аккаунта', 'success');
         }
 
         showLoginBtn.addEventListener('click', () => {
@@ -367,20 +382,6 @@
 
         loginTeamName.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') performLogin();
-        });
-
-        avatarInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    avatarPreview.style.backgroundImage = `url(${e.target.result})`;
-                    avatarPreview.style.backgroundSize = 'cover';
-                    avatarPreview.style.backgroundPosition = 'center';
-                    avatarPreview.innerHTML = '';
-                };
-                reader.readAsDataURL(file);
-            }
         });
 
         function createParticles() {

@@ -9,7 +9,6 @@ router.post('/register', async (req, res) => {
     try {
         const { teamName, email, password, city, school } = req.body;
 
-        // Проверка существования
         const existingTeam = await pool.query(
             'SELECT * FROM users WHERE team_name = $1',
             [teamName]
@@ -185,11 +184,11 @@ router.post('/progress', async (req, res) => {
     }
 });
 
-// 🆕 ТАБЛИЦА ЛИДЕРОВ
+// ТАБЛИЦА ЛИДЕРОВ
 router.get('/leaderboard', async (req, res) => {
     try {
         const result = await pool.query(
-            `SELECT team_name, points, wins, rating 
+            `SELECT team_name, points, wins, rating
              FROM users 
              WHERE points > 0
              ORDER BY points DESC 

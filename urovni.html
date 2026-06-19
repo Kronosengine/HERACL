@@ -66,11 +66,9 @@
         <img class="toshka-1" src="kartinki/toshka.png" alt="Тошка 1">
         <img class="toshka-2" src="kartinki/toshka.png" alt="Тошка 2">
 
-        <!-- КНОПКИ ВХОДА/ВЫХОДА -->
-        <button class="login-toggle-btn" id="showLoginBtn" style="display: none;">👤 ВОЙТИ</button>
+        <button class="login-toggle-btn" id="showLoginBtn">👤 ВОЙТИ</button>
         <button class="logout-toggle-btn" id="logoutBtn" style="display: none;">🚪 ВЫЙТИ</button>
 
-        <!-- ФОРМА ВХОДА -->
         <div class="login-overlay" id="loginOverlay">
             <div class="login-card">
                 <div class="login-header">
@@ -96,7 +94,6 @@
             </div>
         </div>
 
-        <!-- БОКОВЫЕ КНОПКИ -->
         <div class="left-buttons">
             <div class="side-btn" id="profileBtn">
                 <img src="kartinki/gerakl.png" alt="Профиль">
@@ -114,12 +111,11 @@
                 <div class="stages-subtitle">⚡ ВЫБЕРИТЕ ЭТАП ДЛЯ УЧАСТИЯ ⚡</div>
                 
                 <div class="main-stages-split">
-                    <!-- ОТБОРОЧНЫЙ ЭТАП -->
                     <div class="main-stage-card qualification" id="qualifyingCard">
                         <div class="stage-tag">ЭТАП 1</div>
                         <div class="stage-huge-num" id="qualifyingLock">🔒</div>
                         <h2 class="stage-main-title">ОТБОРОЧНЫЙ ЭТАП</h2>
-                        <p class="stage-desc">Пройдите отборочный этап и войдите в топ-10, чтобы получить доступ к финальной битве</p>
+                        <p class="stage-desc">Пройдите отборочный этап, чтобы получить доступ к финальной битве</p>
                         <div class="stage-status" id="qualifyingStatus">ДОСТУП ЗАКРЫТ</div>
                         <a href="otbor.html" id="qualifyingLink">
                             <button class="stage-main-btn" id="qualifyingBtn" disabled>НЕ ДОСТУПНО</button>
@@ -127,34 +123,36 @@
                         <div class="card-glow"></div>
                     </div>
 
-                    <!-- ФИНАЛ (всегда закрыт) -->
-                    <div class="main-stage-card final locked-stage">
+                    <div class="main-stage-card final locked-stage" id="finalCard">
                         <div class="stage-tag">ЭТАП 2</div>
-                        <div class="stage-huge-num">🔒</div>
+                        <div class="stage-huge-num" id="finalLock">🔒</div>
                         <h2 class="stage-main-title">ФИНАЛЬНАЯ БИТВА</h2>
-                        <p class="stage-desc">Финальный этап. Доступ откроется после успешного прохождения отбора</p>
-                        <div class="stage-status final-status">ЗАКРЫТО</div>
-                        <button class="stage-main-btn disabled-btn" disabled>НЕ ДОСТУПНО</button>
+                        <p class="stage-desc">Финальный этап. Доступ открывается по специальному коду</p>
+                        <div class="stage-status final-status" id="finalStatus">ЗАКРЫТО</div>
+                        
+                        <a href="final.html" id="finalLink">
+                            <button class="stage-main-btn" id="finalBtn" disabled>НЕ ДОСТУПНО</button>
+                        </a>
+                        
+                        <div class="code-input-area" id="codeInputArea">
+                            <input type="text" id="secretCode" class="code-input" placeholder="ВВЕДИТЕ КОД">
+                            <button class="code-submit-btn" id="unlockFinalBtn">АКТИВИРОВАТЬ</button>
+                        </div>
+                        
                         <div class="card-glow"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Уведомления -->
         <div id="successNotification" class="notification success">✅ Успешно!</div>
         <div id="errorNotification" class="notification error">⚠️ Ошибка!</div>
     </div>
 
     <script>
-        // ============================================
-        // API КОНСТАНТЫ
-        // ============================================
         const API_URL = 'http://localhost:5000/api';
+        const SECRET_CODE = 'HERACLES2026';
 
-        // ============================================
-        // ДЕКОРАТИВНЫЕ ЭФФЕКТЫ
-        // ============================================
         function createParticles() {
             const container = document.getElementById('particles');
             if (!container) return;
@@ -179,7 +177,6 @@
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
                 star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = 2 + Math.random() * 3 + 's';
                 container.appendChild(star);
             }
         }
@@ -187,9 +184,6 @@
         createParticles();
         createStars();
 
-        // ============================================
-        // ЭЛЕМЕНТЫ
-        // ============================================
         const loginOverlay = document.getElementById('loginOverlay');
         const showLoginBtn = document.getElementById('showLoginBtn');
         const closeLoginBtn = document.getElementById('closeLoginBtn');
@@ -205,21 +199,25 @@
         const qualifyingLink = document.getElementById('qualifyingLink');
         const qualifyingCard = document.getElementById('qualifyingCard');
 
+        const finalBtn = document.getElementById('finalBtn');
+        const finalLock = document.getElementById('finalLock');
+        const finalStatus = document.getElementById('finalStatus');
+        const finalCard = document.getElementById('finalCard');
+        const finalLink = document.getElementById('finalLink');
+        const secretCodeInput = document.getElementById('secretCode');
+        const unlockFinalBtn = document.getElementById('unlockFinalBtn');
+        const codeInputArea = document.getElementById('codeInputArea');
+
         const profileBtn = document.getElementById('profileBtn');
         const ratingBtn = document.getElementById('ratingBtn');
 
-        // ============================================
-        // ПРОВЕРКА АВТОРИЗАЦИИ И ДОСТУПА
-        // ============================================
         async function checkAuthAndUpdateUI() {
             const token = localStorage.getItem('token');
-            
             if (token) {
                 try {
                     const response = await fetch(`${API_URL}/auth/profile`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
-                    
                     if (response.ok) {
                         const data = await response.json();
                         localStorage.setItem('user', JSON.stringify(data.user));
@@ -233,14 +231,11 @@
                     console.error('Ошибка проверки авторизации:', error);
                 }
             }
-            
-            // Если не авторизован
             updateUI(false, null);
         }
 
         function updateUI(isAuthorized, userData) {
             if (isAuthorized && userData) {
-                // Доступ открыт
                 qualifyingBtn.disabled = false;
                 qualifyingLock.textContent = '🔓';
                 qualifyingLock.style.color = '#00ff88';
@@ -251,12 +246,10 @@
                 qualifyingBtn.style.background = '#00f0ff';
                 qualifyingBtn.style.color = '#000';
                 qualifyingBtn.style.cursor = 'pointer';
-                
                 qualifyingCard.classList.add('access-granted');
                 showLoginBtn.style.display = 'none';
                 logoutBtn.style.display = 'flex';
             } else {
-                // Доступ закрыт
                 qualifyingBtn.disabled = true;
                 qualifyingLock.textContent = '🔒';
                 qualifyingLock.style.color = '#ff4757';
@@ -267,23 +260,108 @@
                 qualifyingBtn.style.background = '#1a0015';
                 qualifyingBtn.style.color = '#ff00cc';
                 qualifyingBtn.style.cursor = 'not-allowed';
-                
                 qualifyingCard.classList.remove('access-granted');
                 showLoginBtn.style.display = 'flex';
                 logoutBtn.style.display = 'none';
             }
+
+            updateFinalUI();
         }
 
-        // ============================================
-        // ФУНКЦИИ ВХОДА/ВЫХОДА
-        // ============================================
+        function updateFinalUI() {
+            const allLaborsCompleted = localStorage.getItem('all_labors_completed') === 'true';
+            const finalCompleted = localStorage.getItem('final_completed') === 'true';
+            const isUnlocked = localStorage.getItem('final_unlocked') === 'true';
+            
+            // Если финал уже пройден
+            if (finalCompleted) {
+                finalCard.classList.add('locked-stage');
+                finalCard.classList.remove('access-granted');
+                finalBtn.disabled = true;
+                finalLock.textContent = '🏆';
+                finalLock.style.color = '#ffd700';
+                finalLock.style.textShadow = '0 0 10px #ffd700';
+                finalStatus.textContent = '✅ ЗАВЕРШЕНО';
+                finalStatus.style.color = '#ffd700';
+                finalBtn.textContent = 'ЗАВЕРШЕНО';
+                finalBtn.style.background = '#1a1a00';
+                finalBtn.style.color = '#ffd700';
+                finalBtn.style.cursor = 'not-allowed';
+                codeInputArea.style.display = 'none';
+                return;
+            }
+            
+            // Если все подвиги завершены
+            if (allLaborsCompleted && !finalCompleted) {
+                finalCard.classList.remove('locked-stage');
+                finalCard.classList.add('access-granted');
+                finalBtn.disabled = false;
+                finalLock.textContent = '🔓';
+                finalLock.style.color = '#00ff88';
+                finalLock.style.textShadow = '0 0 10px #00ff88';
+                finalStatus.textContent = '✅ ДОСТУП ОТКРЫТ';
+                finalStatus.style.color = '#00ff88';
+                finalBtn.textContent = 'ПЕРЕЙТИ К ФИНАЛУ';
+                finalBtn.style.background = 'linear-gradient(135deg, #ff00cc, #cc0099)';
+                finalBtn.style.color = '#fff';
+                finalBtn.style.cursor = 'pointer';
+                codeInputArea.style.display = 'none';
+                return;
+            }
+            
+            // Если открыт по коду
+            if (isUnlocked && !allLaborsCompleted && !finalCompleted) {
+                finalCard.classList.remove('locked-stage');
+                finalCard.classList.add('access-granted');
+                finalBtn.disabled = false;
+                finalLock.textContent = '🔓';
+                finalLock.style.color = '#00ff88';
+                finalLock.style.textShadow = '0 0 10px #00ff88';
+                finalStatus.textContent = '✅ ДОСТУП ОТКРЫТ (ПО КОДУ)';
+                finalStatus.style.color = '#00ff88';
+                finalBtn.textContent = 'ПЕРЕЙТИ К ФИНАЛУ';
+                finalBtn.style.background = 'linear-gradient(135deg, #ff00cc, #cc0099)';
+                finalBtn.style.color = '#fff';
+                finalBtn.style.cursor = 'pointer';
+                codeInputArea.style.display = 'none';
+                return;
+            }
+            
+            // Доступ закрыт
+            finalCard.classList.add('locked-stage');
+            finalCard.classList.remove('access-granted');
+            finalBtn.disabled = true;
+            finalLock.textContent = '🔒';
+            finalLock.style.color = '#ff4757';
+            finalLock.style.textShadow = 'none';
+            finalStatus.textContent = '🔒 ТРЕБУЕТСЯ КОД';
+            finalStatus.style.color = '#ff4757';
+            finalBtn.textContent = 'НЕ ДОСТУПНО';
+            finalBtn.style.background = '#1a0015';
+            finalBtn.style.color = '#ff00cc';
+            finalBtn.style.cursor = 'not-allowed';
+            codeInputArea.style.display = 'flex';
+        }
+
+        function activateFinal() {
+            const code = secretCodeInput.value.trim();
+            if (code === SECRET_CODE) {
+                localStorage.setItem('final_unlocked', 'true');
+                updateFinalUI();
+                showNotification('✅ ФИНАЛ РАЗБЛОКИРОВАН!', 'success');
+                secretCodeInput.value = '';
+            } else {
+                showNotification('❌ НЕВЕРНЫЙ КОД!', 'error');
+                secretCodeInput.classList.add('error-shake');
+                setTimeout(() => secretCodeInput.classList.remove('error-shake'), 500);
+            }
+        }
+
         function showNotification(message, type = 'success') {
             const notification = type === 'success' ? 
                 document.getElementById('successNotification') : 
                 document.getElementById('errorNotification');
-            
             if (!notification) return;
-            
             notification.textContent = type === 'success' ? `✅ ${message}` : `⚠️ ${message}`;
             notification.style.display = 'flex';
             setTimeout(() => {
@@ -302,12 +380,10 @@
         async function performLogin() {
             const teamName = loginTeamName.value.trim();
             const password = loginPassword.value.trim();
-            
             if (!teamName || !password) {
                 loginError.textContent = 'Заполните все поля!';
                 return;
             }
-
             try {
                 const response = await fetch(`${API_URL}/auth/login`, {
                     method: 'POST',
@@ -315,7 +391,6 @@
                     body: JSON.stringify({ teamName, password })
                 });
                 const data = await response.json();
-
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
@@ -323,7 +398,7 @@
                     loginTeamName.value = '';
                     loginPassword.value = '';
                     loginError.textContent = '';
-                    showNotification(`Добро пожаловать, ${teamName}! Доступ к отборочному этапу открыт.`, 'success');
+                    showNotification(`Добро пожаловать, ${teamName}!`, 'success');
                     checkAuthAndUpdateUI();
                 } else {
                     loginError.textContent = data.error || 'Неверные данные!';
@@ -336,28 +411,21 @@
         function performLogout() {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            showNotification('Вы вышли из аккаунта. Доступ к этапу закрыт.', 'success');
+            showNotification('Вы вышли из аккаунта.', 'success');
             checkAuthAndUpdateUI();
         }
 
-        // ============================================
-        // ОБРАБОТЧИКИ
-        // ============================================
         showLoginBtn.addEventListener('click', () => {
             loginOverlay.style.display = 'flex';
         });
-        
         logoutBtn.addEventListener('click', performLogout);
-        
         closeLoginBtn.addEventListener('click', () => {
             loginOverlay.style.display = 'none';
             loginError.textContent = '';
             loginTeamName.value = '';
             loginPassword.value = '';
         });
-        
         loginSubmitBtn.addEventListener('click', performLogin);
-        
         loginOverlay.addEventListener('click', (e) => {
             if (e.target === loginOverlay) {
                 loginOverlay.style.display = 'none';
@@ -366,41 +434,51 @@
                 loginPassword.value = '';
             }
         });
-        
-        // Поддержка Enter в окне входа
-        loginPassword.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') performLogin();
+        loginPassword.addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
+        loginTeamName.addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
+
+        unlockFinalBtn.addEventListener('click', activateFinal);
+        secretCodeInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') activateFinal(); });
+
+        finalBtn.addEventListener('click', (e) => {
+            const isUnlocked = localStorage.getItem('final_unlocked') === 'true';
+            const allLaborsCompleted = localStorage.getItem('all_labors_completed') === 'true';
+            const finalCompleted = localStorage.getItem('final_completed') === 'true';
+            if (finalCompleted) {
+                e.preventDefault();
+                showNotification('Финал уже пройден!', 'error');
+                return;
+            }
+            if (!isUnlocked && !allLaborsCompleted) {
+                e.preventDefault();
+                showNotification('Доступ к финалу закрыт!', 'error');
+                return;
+            }
+            window.location.href = 'final.html';
         });
-        loginTeamName.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') performLogin();
-        });
-        
+
         qualifyingBtn.addEventListener('click', (e) => {
             const token = localStorage.getItem('token');
             if (!token) {
                 e.preventDefault();
-                showNotification('Необходимо авторизоваться для доступа к этапу!', 'error');
+                showNotification('Необходимо авторизоваться!', 'error');
                 loginOverlay.style.display = 'flex';
                 return false;
             }
             window.location.href = 'otbor.html';
         });
-        
+
         if (profileBtn) {
             profileBtn.addEventListener('click', () => {
                 window.location.href = 'profil.html';
             });
         }
-        
         if (ratingBtn) {
             ratingBtn.addEventListener('click', () => {
                 window.location.href = 'reiting.html';
             });
         }
-        
-        // ============================================
-        // ЗАПУСК
-        // ============================================
+
         checkAuthAndUpdateUI();
     </script>
 </body>

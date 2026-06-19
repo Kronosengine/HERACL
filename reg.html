@@ -77,34 +77,40 @@
                 <form id="registerForm" autocomplete="off">
                     <div class="form-container">
                         <div class="input-group">
-                            <input type="text" id="team-name" class="input-field" placeholder="Название команды" autocomplete="off">
+                            <input type="text" id="team-name" class="input-field" placeholder="Название команды" 
+                                   autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
                             <div class="error-message" id="team-name-error"></div>
                         </div>
 
                         <div class="input-group">
-                            <input type="email" id="email" class="input-field" placeholder="Электронная почта" autocomplete="off">
+                            <input type="email" id="email" class="input-field" placeholder="Электронная почта" 
+                                   autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
                             <div class="error-message" id="email-error"></div>
                         </div>
 
                         <div class="input-group password-group">
-                            <input type="password" id="password" class="input-field" placeholder="Пароль" autocomplete="new-password">
+                            <input type="password" id="password" class="input-field" placeholder="Пароль" 
+                                   autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
                             <button type="button" class="toggle-password" data-target="password">ПОКАЗАТЬ</button>
                             <div class="error-message" id="password-error"></div>
                         </div>
 
                         <div class="input-group password-group">
-                            <input type="password" id="confirm-password" class="input-field" placeholder="Подтверждение пароля" autocomplete="new-password">
+                            <input type="password" id="confirm-password" class="input-field" placeholder="Подтверждение пароля" 
+                                   autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
                             <button type="button" class="toggle-password" data-target="confirm-password">ПОКАЗАТЬ</button>
                             <div class="error-message" id="confirm-password-error"></div>
                         </div>
 
                         <div class="input-group">
-                            <input type="text" id="city" class="input-field" placeholder="Город" autocomplete="off">
+                            <input type="text" id="city" class="input-field" placeholder="Город" 
+                                   autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
                             <div class="error-message" id="city-error"></div>
                         </div>
 
                         <div class="input-group">
-                            <input type="text" id="school" class="input-field" placeholder="Название школы" autocomplete="off">
+                            <input type="text" id="school" class="input-field" placeholder="Название школы" 
+                                   autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
                             <div class="error-message" id="school-error"></div>
                         </div>
                     </div>
@@ -247,12 +253,7 @@
 
         function validateCity(city) {
             if (!city || city.trim() === '') return { isValid: false, message: 'Введите город' };
-            const trimmed = city.trim();
-            const firstChar = trimmed.charAt(0);
-            if (firstChar !== firstChar.toUpperCase() || firstChar === firstChar.toLowerCase()) {
-                return { isValid: false, message: 'С заглавной буквы' };
-            }
-            if (trimmed.length < 2) return { isValid: false, message: 'Название слишком короткое' };
+            if (city.trim().length < 2) return { isValid: false, message: 'Название слишком короткое' };
             return { isValid: true, message: '' };
         }
 
@@ -262,6 +263,14 @@
             if (school.trim().length > 100) return { isValid: false, message: 'Не более 100 символов' };
             return { isValid: true, message: '' };
         }
+
+        // Убираем readonly при фокусе
+        const allInputs = [teamNameInput, emailInput, passwordInput, confirmPasswordInput, cityInput, schoolInput];
+        allInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.removeAttribute('readonly');
+            });
+        });
 
         submitBtn.addEventListener('click', async function(e) {
             e.preventDefault();

@@ -547,6 +547,7 @@ body {
     top: 0;
 }
 
+/* ========== ФОРМА ========== */
 .form-container {
     margin-top: 15px;
     display: flex;
@@ -559,7 +560,7 @@ body {
 }
 
 .input-group {
-    width: auto;
+    width: 100%;
     margin-bottom: 2px;
     position: relative;
     display: flex;
@@ -580,6 +581,7 @@ body {
     outline: none;
     width: 500px;
     cursor: text;
+    flex-shrink: 0;
 }
 
 .input-field:focus {
@@ -610,6 +612,25 @@ body {
     width: 100%;
 }
 
+/* ========== СТИЛИ ДЛЯ АВТОЗАПОЛНЕНИЯ (СОХРАНЯЕМ ШРИФТ) ========== */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.95) inset !important;
+    -webkit-text-fill-color: #000 !important;
+    font-family: 'DS Sofachrome', 'Courier New', monospace !important;
+    font-size: clamp(0.85rem, 1.2vw, 1rem) !important;
+    letter-spacing: 1px !important;
+    caret-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+input:-moz-autofill {
+    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.95) inset !important;
+    font-family: 'DS Sofachrome', 'Courier New', monospace !important;
+}
+
 /* ========== КНОПКИ ПОКАЗА/СКРЫТИЯ ПАРОЛЯ ========== */
 .password-group {
     display: flex;
@@ -619,8 +640,8 @@ body {
 }
 
 .password-group .input-field {
-    flex: 1;
-    min-width: 200px;
+    width: 500px;
+    flex-shrink: 0;
 }
 
 .toggle-password {
@@ -640,7 +661,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 5px;
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -655,20 +675,6 @@ body {
     background: #00f0ff;
     color: #000;
     border-color: #fff;
-}
-
-/* Убираем жёлтый фон автозаполнения */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
-    -webkit-text-fill-color: #000 !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-input:-moz-autofill {
-    box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
 }
 
 .toshka-1 {
@@ -800,7 +806,10 @@ img {
 
 @media (max-width: 1200px) {
     .input-field {
-        width: 300px;
+        width: 350px;
+    }
+    .password-group .input-field {
+        width: 350px;
     }
     .form-container {
         margin-left: 80px;
@@ -817,7 +826,10 @@ img {
 
 @media (max-width: 1000px) {
     .input-field {
-        width: 260px;
+        width: 300px;
+    }
+    .password-group .input-field {
+        width: 300px;
     }
     .form-container {
         margin-left: 60px;
@@ -845,7 +857,10 @@ img {
 
 @media (max-width: 800px) {
     .input-field {
-        width: 230px;
+        width: 250px;
+    }
+    .password-group .input-field {
+        width: 250px;
     }
     .form-container {
         margin-left: 40px;
@@ -879,6 +894,9 @@ img {
 
 @media (max-width: 650px) {
     .input-field {
+        width: 200px;
+    }
+    .password-group .input-field {
         width: 200px;
     }
     .form-container {
@@ -917,8 +935,11 @@ img {
 
 @media (max-width: 500px) {
     .input-field {
-        width: 180px;
+        width: 160px;
         font-size: 0.7rem;
+    }
+    .password-group .input-field {
+        width: 160px;
     }
     .form-container {
         margin-left: 15px;
