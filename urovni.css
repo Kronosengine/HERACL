@@ -261,10 +261,10 @@ img {
     pointer-events: none;
 }
 
-/* БОКОВЫЕ КНОПКИ */
+/* БОКОВЫЕ КНОПКИ (УВЕЛИЧЕННЫЕ И СДВИНУТЫЕ НА 100px ВПРАВО) */
 .left-buttons {
     position: absolute;
-    left: clamp(150px, 15vw, 190px);
+    left: clamp(150px, 15vw, 190px);  /* сдвинуты на 100px вправо (было 50-90px) */
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -275,8 +275,8 @@ img {
 }
 
 .side-btn {
-    width: clamp(90px, 8vw, 130px);
-    height: clamp(90px, 8vw, 130px);
+    width: clamp(90px, 8vw, 130px);    /* увеличены (было 50-75px) */
+    height: clamp(90px, 8vw, 130px);   /* увеличены */
     background: rgba(1, 10, 32, 0.85);
     border: 2px solid #00f0ff;
     border-radius: 20px;
@@ -291,14 +291,14 @@ img {
 }
 
 .side-btn img {
-    width: 65%;
+    width: 65%;                       /* увеличены */
     height: auto;
     margin-bottom: 8px;
     filter: drop-shadow(0 0 8px #00f0ff);
 }
 
 .side-btn .btn-label {
-    font-size: 0.65rem;
+    font-size: 0.65rem;               /* увеличен шрифт */
     color: #00f0ff;
     font-family: 'DS Sofachrome', monospace;
     letter-spacing: 1.5px;
@@ -318,7 +318,7 @@ img {
     color: #000;
 }
 
-/* СЕТКА С КАРТОЧКАМИ */
+/* СЕТКА С КАРТОЧКАМИ (УМЕНЬШЕННЫЙ БЛОК) */
 .stages-container.clean-split {
     text-align: center;
     pointer-events: auto;
@@ -329,7 +329,7 @@ img {
     padding: clamp(20px, 3vh, 35px) clamp(25px, 3vw, 40px);
     border: 1px solid rgba(0, 240, 255, 0.35);
     box-shadow: 0 0 35px rgba(0, 240, 255, 0.15);
-    margin-top: clamp(70px, 10vh, 90px);
+    margin-top: clamp(70px, 10vh, 90px);  /* увеличено на 50px (было 20px, 3vh, 40px) */
     margin-left: 80px;
 }
 
@@ -522,82 +522,6 @@ img {
 }
 .main-stage-card:hover .card-glow { opacity: 1; }
 
-/* ========== ПОЛЕ ВВОДА КОДА (ПОД КНОПКОЙ) ========== */
-.code-input-area {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    margin-top: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 0 5px;
-}
-
-.code-input {
-    font-family: 'DS Sofachrome', monospace;
-    background: rgba(0, 0, 0, 0.7);
-    border: 1.5px solid #ff00cc;
-    border-radius: 8px;
-    padding: 7px 14px;
-    color: #00f0ff;
-    font-size: clamp(0.55rem, 0.85vw, 0.7rem);
-    letter-spacing: 2px;
-    width: 170px;
-    text-align: center;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.code-input:focus {
-    border-color: #00f0ff;
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-}
-
-.code-input::placeholder {
-    color: #555;
-    letter-spacing: 1px;
-}
-
-.code-submit-btn {
-    font-family: 'DS Sofachrome', monospace;
-    background: linear-gradient(135deg, #ff00cc, #cc0099);
-    border: none;
-    border-radius: 8px;
-    padding: 7px 16px;
-    color: white;
-    font-size: clamp(0.5rem, 0.8vw, 0.65rem);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 1.5px;
-    white-space: nowrap;
-    font-weight: bold;
-}
-
-.code-submit-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
-}
-
-.code-submit-btn:active {
-    transform: scale(0.95);
-}
-
-.error-shake {
-    animation: shake 0.3s ease;
-    border-color: #ff4757 !important;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-/* Скрываем поле ввода когда финал открыт */
-.final-card.access-granted .code-input-area {
-    display: none !important;
-}
-
 /* ДЕКОР, ЭФФЕКТЫ, СЕТКА, ЧАСТИЦЫ */
 .neon-line, .footer-neon {
     position: absolute; width: 100%; height: 2px;
@@ -655,21 +579,20 @@ img {
         padding: 20px;
         margin-left: 0;
         width: min(500px, 85vw);
-        margin-top: 80px;
+        margin-top: 80px;  /* добавлен отступ для мобильных */
     }
     .left-buttons { position: fixed; bottom: 80px; top: auto; left: 20px; transform: none; flex-direction: row; gap: 15px; }
     .side-btn { width: 70px; height: 70px; }
     .side-btn img { width: 55%; }
     .side-btn .btn-label { font-size: 0.5rem; }
     .main-stage-card { min-height: auto; }
-    .code-input { width: 140px; }
 }
 
 @media (min-width: 1920px) {
     .stages-container.clean-split {
         width: min(900px, 65vw);
         padding: 40px 50px;
-        margin-top: 100px;
+        margin-top: 100px;  /* увеличен отступ для больших экранов */
     }
     .main-stages-split { gap: 40px; }
     .main-stage-card { padding: 35px; border-radius: 20px; min-height: 420px; }
@@ -680,5 +603,4 @@ img {
     .side-btn { width: 110px; height: 110px; }
     .side-btn .btn-label { font-size: 0.6rem; }
     .left-buttons { left: 180px; }
-    .code-input { width: 200px; }
 }

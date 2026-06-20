@@ -14,6 +14,7 @@
 body {
     font-family: 'DS Sofachrome', 'Courier New', monospace;
     overflow: hidden;
+    background: #00091B;
 }
 
 /* ========== КИБЕРПАНК ШАПКА ========== */
@@ -27,7 +28,7 @@ body {
     backdrop-filter: blur(12px);
     border-bottom: 2px solid #00f0ff;
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-    padding: 0 clamp(15px, 3vw, 40px);
+    padding: 0 clamp(10px, 3vw, 40px);
 }
 
 .nav-container {
@@ -42,10 +43,11 @@ body {
 .logo {
     position: relative;
     cursor: pointer;
+    z-index: 201;
 }
 
 .logo-text {
-    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+    font-size: clamp(0.7rem, 1.5vw, 1.1rem);
     font-weight: bold;
     letter-spacing: 3px;
     color: #00f0ff;
@@ -81,16 +83,50 @@ body {
     50% { opacity: 0.8; width: 140%; height: 170%; }
 }
 
+/* ========== БУРГЕР-МЕНЮ ========== */
+.burger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 201;
+    padding: 5px;
+}
+
+.burger-btn span {
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: #00f0ff;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.burger-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
 .nav-links {
     display: flex;
-    gap: clamp(12px, 1.8vw, 30px);
+    gap: clamp(8px, 1.8vw, 30px);
     align-items: center;
+    transition: all 0.3s ease;
 }
 
 .nav-link {
     color: #e0e0ff;
     text-decoration: none;
-    font-size: clamp(0.6rem, 1vw, 0.8rem);
+    font-size: clamp(0.5rem, 1vw, 0.8rem);
     letter-spacing: 1.5px;
     font-family: 'DS Sofachrome', monospace;
     padding: 6px 0;
@@ -143,7 +179,7 @@ body {
     backdrop-filter: blur(10px);
     border-top: 1px solid #ff00cc;
     box-shadow: 0 -5px 20px rgba(255, 0, 204, 0.2);
-    padding: 8px clamp(15px, 3vw, 40px);
+    padding: clamp(4px, 0.6vh, 8px) clamp(10px, 3vw, 40px);
 }
 
 .footer-neon {
@@ -162,13 +198,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(15px, 3vw, 40px);
+    gap: clamp(10px, 3vw, 40px);
 }
 
 .footer-text {
     color: #a0aaff;
     font-family: 'DS Sofachrome', monospace;
-    font-size: clamp(0.65rem, 1vw, 0.85rem);
+    font-size: clamp(0.4rem, 0.8vw, 0.7rem);
     letter-spacing: 2px;
     text-transform: uppercase;
     animation: textFlicker 3s infinite;
@@ -183,7 +219,7 @@ body {
 }
 
 .footer-line {
-    width: clamp(40px, 6vw, 80px);
+    width: clamp(20px, 4vw, 60px);
     height: 1px;
     background: linear-gradient(90deg, #00f0ff, #ff00cc, transparent);
 }
@@ -203,7 +239,6 @@ body {
     pointer-events: none;
 }
 
-/* ========== ПАРЯЩИЕ ЧАСТИЦЫ ========== */
 .particles {
     position: absolute;
     top: 0;
@@ -227,23 +262,12 @@ body {
 }
 
 @keyframes floatParticle {
-    0% {
-        opacity: 0;
-        transform: translateY(100vh) translateX(0);
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-20vh) translateX(50px);
-    }
+    0% { opacity: 0; transform: translateY(100vh) translateX(0); }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { opacity: 0; transform: translateY(-20vh) translateX(50px); }
 }
 
-/* ========== МЕРЦАЮЩИЕ ЗВЁЗДЫ ========== */
 .twinkling-stars {
     position: absolute;
     top: 0;
@@ -269,14 +293,13 @@ body {
     50% { opacity: 0.8; box-shadow: 0 0 5px #00f0ff; }
 }
 
-/* ========== ГОЛОГРАФИЧЕСКИЙ КРУГ ========== */
 .holo-circle {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: min(450px, 30vw);
-    height: min(450px, 30vw);
+    width: min(300px, 30vw);
+    height: min(300px, 30vw);
     z-index: 4;
     pointer-events: none;
     border-radius: 50%;
@@ -309,7 +332,7 @@ body {
 }
 
 @keyframes holoPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; width: min(450px, 30vw); height: min(450px, 30vw); }
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
     50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; }
 }
 
@@ -323,7 +346,6 @@ body {
     100% { transform: rotate(0deg); }
 }
 
-/* ========== БЕГУЩИЕ ОГНИ ========== */
 .running-lights {
     position: absolute;
     top: 0;
@@ -336,97 +358,33 @@ body {
 
 .running-light {
     position: absolute;
-    width: min(120px, 10vw);
+    width: min(80px, 6vw);
     height: 2px;
     background: linear-gradient(90deg, transparent, #00f0ff, #ff00cc, transparent);
     animation: runLight 4s linear infinite;
 }
 
-.running-light.top {
-    top: 0;
-    left: min(-120px, -10vw);
-    animation-delay: 0s;
-}
-
-.running-light.bottom {
-    bottom: 0;
-    left: min(-120px, -10vw);
-    animation-delay: 2s;
-}
-
-.running-light.left {
-    left: 0;
-    top: min(-120px, -10vw);
-    width: 2px;
-    height: min(120px, 10vw);
-    background: linear-gradient(180deg, transparent, #ff00cc, #00f0ff, transparent);
-    animation: runLightVertical 4s linear infinite;
-    animation-delay: 1s;
-}
-
-.running-light.right {
-    right: 0;
-    top: min(-120px, -10vw);
-    width: 2px;
-    height: min(120px, 10vw);
-    background: linear-gradient(180deg, transparent, #00f0ff, #ff00cc, transparent);
-    animation: runLightVertical 4s linear infinite;
-    animation-delay: 3s;
-}
+.running-light.top { top: 0; left: min(-80px, -6vw); animation-delay: 0s; }
+.running-light.bottom { bottom: 0; left: min(-80px, -6vw); animation-delay: 2s; }
+.running-light.left { left: 0; top: min(-80px, -6vw); width: 2px; height: min(80px, 6vw); background: linear-gradient(180deg, transparent, #ff00cc, #00f0ff, transparent); animation: runLightVertical 4s linear infinite; animation-delay: 1s; }
+.running-light.right { right: 0; top: min(-80px, -6vw); width: 2px; height: min(80px, 6vw); background: linear-gradient(180deg, transparent, #00f0ff, #ff00cc, transparent); animation: runLightVertical 4s linear infinite; animation-delay: 3s; }
 
 @keyframes runLight {
-    0% { left: min(-120px, -10vw); opacity: 0; }
+    0% { left: min(-80px, -6vw); opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
     100% { left: 100%; opacity: 0; }
 }
 
 @keyframes runLightVertical {
-    0% { top: min(-120px, -10vw); opacity: 0; }
+    0% { top: min(-80px, -6vw); opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
     100% { top: 100%; opacity: 0; }
 }
 
-/* ========== НЕОНОВЫЕ УГЛЫ ========== */
 .neon-corner {
-    position: absolute;
-    width: min(50px, 4vw);
-    height: min(50px, 4vw);
-    z-index: 25;
-    pointer-events: none;
-}
-
-.corner-tl {
-    top: clamp(60px, 8vh, 100px);
-    left: clamp(15px, 2vw, 40px);
-    border-top: 3px solid #00f0ff;
-    border-left: 3px solid #00f0ff;
-    box-shadow: 0 0 10px #00f0ff;
-}
-
-.corner-tr {
-    top: clamp(60px, 8vh, 100px);
-    right: clamp(15px, 2vw, 40px);
-    border-top: 3px solid #ff00cc;
-    border-right: 3px solid #ff00cc;
-    box-shadow: 0 0 10px #ff00cc;
-}
-
-.corner-bl {
-    bottom: clamp(60px, 8vh, 100px);
-    left: clamp(15px, 2vw, 40px);
-    border-bottom: 3px solid #ff00cc;
-    border-left: 3px solid #ff00cc;
-    box-shadow: 0 0 10px #ff00cc;
-}
-
-.corner-br {
-    bottom: clamp(60px, 8vh, 100px);
-    right: clamp(15px, 2vw, 40px);
-    border-bottom: 3px solid #00f0ff;
-    border-right: 3px solid #00f0ff;
-    box-shadow: 0 0 10px #00f0ff;
+    display: none;
 }
 
 /* ========== ОСНОВНОЙ КОНТЕЙНЕР ========== */
@@ -435,8 +393,8 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    padding-top: 65px;
-    padding-bottom: 55px;
+    padding-top: 55px;
+    padding-bottom: 40px;
 }
 
 .bg-full {
@@ -449,36 +407,16 @@ body {
     z-index: 1;
 }
 
-.layer-1-wrapper {
+.layer-container::before {
+    content: '';
     position: absolute;
-    top: clamp(70px, 8vh, 100px);
-    right: clamp(30px, 5vw, 70px);
-    bottom: clamp(65px, 8vh, 95px);
-    left: clamp(30px, 5vw, 70px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75));
+    pointer-events: none;
     z-index: 2;
-}
-
-.layer-1-img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    display: block;
-}
-
-.layer-2-wrapper {
-    position: absolute;
-    top: clamp(75px, 8.5vh, 105px);
-    right: clamp(35px, 5.5vw, 75px);
-    bottom: clamp(70px, 8.5vh, 100px);
-    left: clamp(35px, 5.5vw, 75px);
-    z-index: 3;
-}
-
-.layer-2-img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    display: block;
 }
 
 .foreground {
@@ -502,19 +440,23 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: clamp(130px, 18vh, 200px);
-    margin-left: clamp(30px, 8vw, 150px);
+    margin-top: clamp(80px, 15vh, 180px);
+    margin-left: clamp(15px, 6vw, 120px);
     z-index: 30;
+    width: 100%;
+    max-width: 700px;
+    padding: 0 15px;
 }
 
 .registration-title-wrapper {
     position: relative;
     display: inline-block;
+    width: 100%;
 }
 
 .registration-title {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(1rem, 4vw, 5rem);
+    font-size: clamp(1.2rem, 4vw, 3.5rem);
     color: #00e5ff;
     letter-spacing: clamp(3px, 1vw, 8px);
     margin: 0;
@@ -533,8 +475,8 @@ body {
 
 .underline-lines {
     position: relative;
-    margin-top: 8px;
-    height: 4px;
+    margin-top: 5px;
+    height: 3px;
     width: 100%;
 }
 
@@ -543,20 +485,19 @@ body {
     height: 2px;
     background-color: white;
     left: 0;
-    width: 65%;
+    width: 55%;
     top: 0;
 }
 
-/* ========== ФОРМА ========== */
 .form-container {
-    margin-top: 15px;
+    margin-top: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: clamp(30px, 12vw, 250px);
-    gap: 2px;
-    width: auto;
-    min-width: auto;
+    margin-left: clamp(10px, 8vw, 200px);
+    gap: 3px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .input-group {
@@ -564,14 +505,15 @@ body {
     margin-bottom: 2px;
     position: relative;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .input-field {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.85rem, 1.2vw, 1rem);
-    padding: clamp(8px, 1.2vh, 12px) clamp(12px, 1.5vw, 16px);
+    font-size: clamp(0.7rem, 1vw, 0.95rem);
+    padding: clamp(6px, 1vh, 10px) clamp(10px, 1.2vw, 14px);
     background-color: rgba(255, 255, 255, 0.95);
     color: black;
     border: 2px solid white;
@@ -579,9 +521,9 @@ body {
     transition: all 0.3s ease;
     letter-spacing: 1px;
     outline: none;
-    width: 500px;
+    width: 100%;
+    max-width: 380px;
     cursor: text;
-    flex-shrink: 0;
 }
 
 .input-field:focus {
@@ -592,7 +534,7 @@ body {
 .input-field::placeholder {
     color: #888;
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(0.75rem, 1rem, 0.9rem);
+    font-size: clamp(0.6rem, 0.8vw, 0.8rem);
     letter-spacing: 1px;
 }
 
@@ -603,57 +545,23 @@ body {
 
 .error-message {
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: 0.55rem;
+    font-size: clamp(0.4rem, 0.5vw, 0.5rem);
     color: #ff4757;
-    margin-top: 2px;
+    margin-top: 1px;
     margin-left: 5px;
     letter-spacing: 0.5px;
-    min-height: 14px;
+    min-height: 12px;
     width: 100%;
-}
-
-/* ========== СТИЛИ ДЛЯ АВТОЗАПОЛНЕНИЯ (СОХРАНЯЕМ ШРИФТ) ========== */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.95) inset !important;
-    -webkit-text-fill-color: #000 !important;
-    font-family: 'DS Sofachrome', 'Courier New', monospace !important;
-    font-size: clamp(0.85rem, 1.2vw, 1rem) !important;
-    letter-spacing: 1px !important;
-    caret-color: #000 !important;
-    transition: background-color 5000s ease-in-out 0s !important;
-}
-
-input:-moz-autofill {
-    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.95) inset !important;
-    font-family: 'DS Sofachrome', 'Courier New', monospace !important;
-}
-
-/* ========== КНОПКИ ПОКАЗА/СКРЫТИЯ ПАРОЛЯ ========== */
-.password-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.password-group .input-field {
-    width: 500px;
-    flex-shrink: 0;
 }
 
 .toggle-password {
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid #00f0ff;
-    font-family: 'DS Sofachrome', monospace;
-    font-size: clamp(0.5rem, 0.7vw, 0.65rem);
+    font-family: monospace;
+    font-size: clamp(0.9rem, 1.1vw, 1.2rem);
     font-weight: bold;
-    letter-spacing: 1px;
-    padding: 6px 14px;
-    min-width: 75px;
-    height: 36px;
+    width: clamp(30px, 3.5vw, 40px);
+    height: clamp(30px, 3.5vw, 40px);
     cursor: pointer;
     transition: all 0.3s ease;
     color: #00f0ff;
@@ -661,7 +569,6 @@ input:-moz-autofill {
     display: flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap;
     flex-shrink: 0;
 }
 
@@ -677,12 +584,19 @@ input:-moz-autofill {
     border-color: #fff;
 }
 
+.password-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .toshka-1 {
     position: absolute;
-    top: 70px;
-    left: 220px;
+    top: 60px;
+    left: 160px;
     z-index: 4;
-    width: clamp(15%, 18vw, 25%);
+    width: clamp(12%, 15vw, 20%);
     height: auto;
     pointer-events: none;
     filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3));
@@ -690,26 +604,25 @@ input:-moz-autofill {
 
 .toshka-2 {
     position: absolute;
-    bottom: -40px;
-    right: 40px;
+    bottom: -20px;
+    right: 30px;
     z-index: 8;
-    width: clamp(25%, 28vw, 38%);
+    width: clamp(18%, 22vw, 30%);
     height: auto;
     pointer-events: none;
-    transform: translate(50px, -50px);
     filter: drop-shadow(0 0 15px rgba(255, 0, 204, 0.3));
 }
 
-/* Кнопка ОТПРАВИТЬ */
+/* ========== КНОПКА ОТПРАВИТЬ ========== */
 .submit-btn {
     position: absolute;
-    top: calc(clamp(100px, 12vh, 140px) - 20px);
-    right: calc(clamp(80px, 10vw, 150px) - 20px);
+    top: calc(clamp(80px, 10vh, 120px) - 10px);
+    right: calc(clamp(40px, 8vw, 130px) - 10px);
     z-index: 1100;
     font-family: 'DS Sofachrome', sans-serif;
-    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-    width: 450px;
-    height: 100px;
+    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+    width: clamp(200px, 30vw, 400px);
+    height: clamp(50px, 7vw, 90px);
     background-color: white;
     color: black;
     border: none;
@@ -723,15 +636,15 @@ input:-moz-autofill {
 .submit-btn span {
     display: inline-block;
     transform: skewX(-30deg);
-    line-height: 100px;
+    line-height: clamp(50px, 7vw, 90px);
 }
 
 .submit-btn::before {
     content: '';
     position: absolute;
-    top: 6px;
-    left: 12px;
-    right: 12px;
+    top: 4px;
+    left: 10px;
+    right: 10px;
     height: 2px;
     background-color: black;
 }
@@ -739,9 +652,9 @@ input:-moz-autofill {
 .submit-btn::after {
     content: '';
     position: absolute;
-    bottom: 6px;
-    left: 12px;
-    right: 12px;
+    bottom: 4px;
+    left: 10px;
+    right: 10px;
     height: 2px;
     background-color: black;
 }
@@ -765,13 +678,13 @@ img {
 /* ========== УВЕДОМЛЕНИЯ ========== */
 .notification {
     position: fixed;
-    bottom: clamp(60px, 8vh, 80px);
+    bottom: clamp(50px, 8vh, 70px);
     right: clamp(15px, 3vw, 30px);
     color: white;
     font-family: 'DS Sofachrome', monospace;
-    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    font-size: clamp(0.6rem, 1vw, 0.9rem);
     letter-spacing: 1px;
-    padding: clamp(10px, 1.5vh, 15px) clamp(15px, 2vw, 25px);
+    padding: clamp(8px, 1.2vh, 12px) clamp(12px, 1.5vw, 20px);
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -780,6 +693,7 @@ img {
     display: none;
     opacity: 0;
     transform: translateX(450px);
+    max-width: 90%;
 }
 
 .notification.success {
@@ -793,181 +707,206 @@ img {
 }
 
 /* ========== АДАПТИВ ========== */
-@media (max-width: 1400px) {
-    .submit-btn {
-        width: 400px;
-        height: 90px;
-        font-size: 1.2rem;
+@media (max-width: 1024px) {
+    .toshka-1 {
+        left: 100px;
+        width: 15%;
     }
-    .submit-btn span {
-        line-height: 90px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .input-field {
-        width: 350px;
-    }
-    .password-group .input-field {
-        width: 350px;
-    }
-    .form-container {
-        margin-left: 80px;
-    }
-    .submit-btn {
-        width: 350px;
-        height: 80px;
-        font-size: 1.1rem;
-    }
-    .submit-btn span {
-        line-height: 80px;
-    }
-}
-
-@media (max-width: 1000px) {
-    .input-field {
-        width: 300px;
-    }
-    .password-group .input-field {
-        width: 300px;
+    .toshka-2 {
+        width: 22%;
     }
     .form-container {
         margin-left: 60px;
     }
-    .registration-title {
-        font-size: 2rem;
-    }
-    .toshka-1 {
-        width: 18%;
-        left: 60px;
-    }
-    .toshka-2 {
-        width: 22%;
-        right: 120px;
+    .input-field {
+        max-width: 320px;
     }
     .submit-btn {
-        width: 300px;
-        height: 70px;
+        width: 280px;
+        height: 65px;
         font-size: 1rem;
     }
     .submit-btn span {
-        line-height: 70px;
+        line-height: 65px;
     }
 }
 
-@media (max-width: 800px) {
-    .input-field {
-        width: 250px;
+@media (max-width: 768px) {
+    .burger-btn {
+        display: flex;
     }
-    .password-group .input-field {
-        width: 250px;
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(8, 12, 25, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        transition: right 0.4s ease;
+        padding: 80px 20px 40px;
+        border-left: 2px solid #00f0ff;
     }
-    .form-container {
-        margin-left: 40px;
+
+    .nav-links.open {
+        right: 0;
     }
-    .registration-title {
-        font-size: 1.6rem;
-    }
-    .toshka-1 {
-        width: 15%;
-        left: 40px;
-    }
-    .toshka-2 {
-        width: 18%;
-        right: 80px;
-    }
-    .submit-btn {
-        width: 260px;
-        height: 60px;
+
+    .nav-link {
         font-size: 0.9rem;
+        white-space: normal;
+        text-align: center;
     }
-    .submit-btn span {
-        line-height: 60px;
-    }
-    .toggle-password {
-        min-width: 65px;
-        height: 32px;
-        font-size: 0.55rem;
-        padding: 4px 10px;
-    }
-}
 
-@media (max-width: 650px) {
-    .input-field {
-        width: 200px;
+    .registration-container {
+        margin-top: 70px;
+        margin-left: 10px;
+        padding: 0 10px;
     }
-    .password-group .input-field {
-        width: 200px;
+
+    .registration-title {
+        font-size: 1.5rem;
+        white-space: normal;
     }
+
+    .line-first {
+        width: 80%;
+    }
+
     .form-container {
         margin-left: 20px;
+        max-width: 100%;
     }
-    .registration-title {
-        font-size: 1.3rem;
+
+    .input-field {
+        max-width: 280px;
+        font-size: 0.8rem;
+        padding: 8px 12px;
     }
+
+    .input-group {
+        gap: 6px;
+    }
+
+    .toggle-password {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
     .toshka-1 {
         display: none;
     }
+
     .toshka-2 {
         display: none;
     }
+
     .submit-btn {
         position: fixed;
         bottom: 70px;
         top: auto;
         right: 20px;
         transform: skewX(20deg);
-        width: 200px;
+        width: 180px;
         height: 50px;
         font-size: 0.8rem;
     }
+
     .submit-btn span {
         transform: skewX(-20deg);
         line-height: 50px;
     }
-    .toggle-password {
-        min-width: 55px;
-        height: 28px;
-        font-size: 0.5rem;
-        padding: 3px 8px;
-    }
 }
 
 @media (max-width: 500px) {
-    .input-field {
-        width: 160px;
-        font-size: 0.7rem;
-    }
-    .password-group .input-field {
-        width: 160px;
-    }
-    .form-container {
-        margin-left: 15px;
-    }
-    .registration-container {
-        margin-left: 15px;
-        margin-top: 160px;
-    }
     .registration-title {
         font-size: 1.1rem;
-        white-space: normal;
     }
-    .password-group {
-        gap: 5px;
+
+    .form-container {
+        margin-left: 5px;
+        gap: 2px;
     }
-    .toggle-password {
-        min-width: 48px;
-        height: 24px;
-        font-size: 0.45rem;
-        padding: 2px 6px;
-    }
-    .submit-btn {
-        width: 160px;
-        height: 45px;
+
+    .input-field {
+        max-width: 200px;
         font-size: 0.7rem;
-        bottom: 60px;
+        padding: 6px 10px;
     }
+
+    .input-field::placeholder {
+        font-size: 0.6rem;
+    }
+
+    .input-group {
+        gap: 4px;
+    }
+
+    .toggle-password {
+        width: 26px;
+        height: 26px;
+        font-size: 0.8rem;
+    }
+
+    .error-message {
+        font-size: 0.35rem;
+        min-height: 10px;
+    }
+
+    .submit-btn {
+        width: 140px;
+        height: 42px;
+        font-size: 0.65rem;
+        bottom: 60px;
+        right: 15px;
+    }
+
     .submit-btn span {
-        line-height: 45px;
+        line-height: 42px;
+    }
+
+    .notification {
+        font-size: 0.6rem;
+        padding: 8px 12px;
+        bottom: 55px;
+        right: 10px;
+    }
+
+    .footer-text {
+        font-size: 0.4rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .registration-title {
+        font-size: 0.9rem;
+    }
+
+    .input-field {
+        max-width: 160px;
+        font-size: 0.6rem;
+        padding: 5px 8px;
+    }
+
+    .submit-btn {
+        width: 110px;
+        height: 36px;
+        font-size: 0.55rem;
+        bottom: 55px;
+    }
+
+    .submit-btn span {
+        line-height: 36px;
+    }
+
+    .nav-link {
+        font-size: 0.7rem;
     }
 }

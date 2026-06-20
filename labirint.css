@@ -5,13 +5,6 @@
 }
 
 @font-face {
-    font-family: 'SimpleSquare';
-    src: url('ST-SimpleSquare.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'DS Sofachrome';
     src: url('DS-Sofachrome.ttf') format('truetype');
     font-weight: normal;
@@ -827,7 +820,7 @@ body {
 }
 
 .hero-name {
-    font-family: 'SimpleSquare', sans-serif;
+    font-family: 'DS Sofachrome', sans-serif;
     font-size: clamp(0.5rem, 0.8vw, 0.7rem);
     color: #a0aaff;
     margin-top: 8px;
@@ -847,7 +840,7 @@ body {
 }
 
 .modal-timer-label {
-    font-family: 'SimpleSquare', monospace;
+    font-family: 'DS Sofachrome', monospace;
     font-size: 0.45rem;
     color: #00f0ff;
     letter-spacing: 2px;
@@ -855,7 +848,7 @@ body {
 }
 
 .modal-timer-display {
-    font-family: 'SimpleSquare', monospace;
+    font-family: 'DS Sofachrome', monospace;
     font-size: 0.9rem;
     font-weight: bold;
     color: #00f0ff;
@@ -937,7 +930,7 @@ body {
 }
 
 .modal-header h2 {
-    font-family: 'SimpleSquare', sans-serif;
+    font-family: 'DS Sofachrome', sans-serif;
     font-size: clamp(0.85rem, 3vw, 1.1rem);
     color: #00f0ff;
     letter-spacing: 2px;
@@ -981,29 +974,6 @@ body {
     50% { opacity: 1; transform: scale(1.1); }
 }
 
-.modal-wrapper {
-    display: flex;
-}
-
-.modal-character-largo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #0a0f2a, #060a18);
-    border: 2px solid #00f0ff;
-    border-radius: 30px;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 0 60px rgba(0, 240, 255, 0.4);
-    animation: modalFadeIn 0.3s ease;
-}
-
-.modal-character-largo img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
 .modal-body {
     padding: clamp(12px, 2vh, 20px);
 }
@@ -1022,7 +992,7 @@ body {
 }
 
 .story-text {
-    font-family: 'SimpleSquare', sans-serif;
+    font-family: 'DS Sofachrome', sans-serif;
     font-size: clamp(0.65rem, 2vw, 0.8rem);
     color: #e0e0ff;
     line-height: 1.4;
@@ -1047,7 +1017,7 @@ body {
     border: 1px solid #ff00cc;
     border-radius: 10px;
     padding: 8px 12px;
-    font-family: 'SimpleSquare', monospace;
+    font-family: 'DS Sofachrome', monospace;
     font-size: 0.8rem;
     color: white;
     outline: none;
@@ -1063,7 +1033,7 @@ body {
     border: none;
     border-radius: 10px;
     padding: 8px 18px;
-    font-family: 'SimpleSquare', sans-serif;
+    font-family: 'DS Sofachrome', sans-serif;
     font-size: 0.75rem;
     color: white;
     cursor: pointer;
@@ -1090,14 +1060,14 @@ body {
 
 .result-success {
     color: #00ff88;
-    font-family: 'SimpleSquare', sans-serif;
+    font-family: 'DS Sofachrome', sans-serif;
     font-size: 0.75rem;
     text-shadow: 0 0 5px #00ff88;
 }
 
 .result-error {
     color: #ff4757;
-    font-family: 'SimpleSquare', sans-serif;
+    font-family: 'DS Sofachrome', sans-serif;
     font-size: 0.75rem;
 }
 
