@@ -111,51 +111,45 @@
     </div>
 
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-wrapper">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <h2 id="modalTitle">ПОДВИГ 1: Немейский лев</h2>
-                    <button class="modal-close" id="closeModalBtn">✖</button>
-                </div>
-                <div class="modal-timer">
-                    <div class="modal-timer-label">⏱️ ОСТАЛОСЬ ВРЕМЕНИ</div>
-                    <div class="modal-timer-display" id="modalTimerDisplay">01:30:00</div>
-                </div>
-                <div class="hero-images" id="heroImages">
-                    <div class="hero-left">
-                        <div class="hero-icon">
-                            <img src="" alt="" class="hero-img" id="modalHeroImg">
-                        </div>
-                        <div class="hero-name" id="modalHeroName">Немейский лев</div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle">ПОДВИГ 1: Немейский лев</h2>
+                <button class="modal-close" id="closeModalBtn">✖</button>
+            </div>
+            <div class="modal-timer">
+                <div class="modal-timer-label">⏱️ ОСТАЛОСЬ ВРЕМЕНИ</div>
+                <div class="modal-timer-display" id="modalTimerDisplay">01:30:00</div>
+            </div>
+            <div class="hero-images" id="heroImages">
+                <div class="hero-left">
+                    <div class="hero-icon">
+                        <img src="" alt="" class="hero-img" id="modalHeroImg">
                     </div>
-                    <div class="hero-center">
-                        <div class="hero-icon-large">
-                            <img src="kartinki/icon/fight.png" alt="Битва" class="hero-center-img">
-                        </div>
-                    </div>
-                    <div class="hero-right">
-                        <div class="hero-icon">
-                            <img src="kartinki/icon/olimp.png" alt="Олимп" class="hero-img">
-                        </div>
-                        <div class="hero-name">Олимп</div>
+                    <div class="hero-name" id="modalHeroName">Немейский лев</div>
+                </div>
+                <div class="hero-center">
+                    <div class="hero-icon-large">
+                        <img src="kartinki/icon/fight.png" alt="Битва" class="hero-center-img">
                     </div>
                 </div>
-                <div class="modal-body">
-                    <div class="story-box">
-                        <div class="story-text" id="storyText"></div>
+                <div class="hero-right">
+                    <div class="hero-icon">
+                        <img src="kartinki/icon/olimp.png" alt="Олимп" class="hero-img">
                     </div>
-                    <div class="answer-box">
-                        <div class="answer-input-area">
-                            <input type="text" id="answerInput" class="answer-input" placeholder="Введите ответ...">
-                            <button class="answer-submit" id="answerSubmitBtn">ПРОВЕРИТЬ</button>
-                        </div>
-                    </div>
-                    <div class="modal-result" id="modalResult"></div>
+                    <div class="hero-name">Олимп</div>
                 </div>
             </div>
-
-            <div class="modal-character-largo">
-                <img src="" alt="" id="modalCharacterLargo" />
+            <div class="modal-body">
+                <div class="story-box">
+                    <div class="story-text" id="storyText"></div>
+                </div>
+                <div class="answer-box">
+                    <div class="answer-input-area">
+                        <input type="text" id="answerInput" class="answer-input" placeholder="Введите ответ...">
+                        <button class="answer-submit" id="answerSubmitBtn">ПРОВЕРИТЬ</button>
+                    </div>
+                </div>
+                <div class="modal-result" id="modalResult"></div>
             </div>
         </div>
     </div>
@@ -164,30 +158,30 @@
         const API_URL = 'http://localhost:5000/api';
 
         const laborsData = [
-            { id: 1, name: "Немейский лев", icon: "kartinki/icon/1.png", character: "kartinki/characters/lion.png", desc: "Логика • 5 пещер, 1 истина", answer: "1",
+            { id: 1, name: "Немейский лев", icon: "kartinki/icon/1.png", desc: "Логика • 5 пещер, 1 истина", answer: "1",
               story: "Геракл-антивирус сканирует систему. Первая угроза — Немейский лев...\n\n«Перед вами 5 пещер-серверов...»\n\nДанные:\nСервер 1: «Лев в сервере 3»\nСервер 2: «Лев не в сервере 4»\nСервер 3: «Лев в сервере 1 или 5»\nСервер 4: «Лев в сервере 2, 3 или 4»\nСервер 5: «Лев не в сервере 2»" },
-            { id: 2, name: "Лернейская гидра", icon: "kartinki/icon/2.png", character: "kartinki/characters/hydra.png", desc: "Двоичный код • 10 голов", answer: "ФИВА",
+            { id: 2, name: "Лернейская гидра", icon: "kartinki/icon/2.png", desc: "Двоичный код • 10 голов", answer: "ФИВА",
               story: "Геракл-антивирус обнаружил Лернейскую гидру...\n\n«У гидры 10 голов-процессов. Бессмертная голова — та, у которой количество единиц в двоичной записи длины её имени нечётно».\n\nВходные данные:\n[\"АРГОС\", \"ФИВА\", \"СПАРТА\", \"АФИНЫ\", \"КОРИНФ\", \"МИКЕНЫ\", \"ТИРИНФ\", \"ОЛИМПИЯ\", \"ДЕЛЬФЫ\", \"РОДОС\"]" },
-            { id: 3, name: "Стимфалийские птицы", icon: "kartinki/icon/3.png", character: "kartinki/characters/stimfalian_birds.png", desc: "Побитовые операции • 4 байта", answer: "102",
+            { id: 3, name: "Стимфалийские птицы", icon: "kartinki/icon/3.png", desc: "Побитовые операции • 4 байта", answer: "102",
               story: "Геракл-антивирус перехватил пакет данных...\n\n«Формула частоты: (Байт_1 XOR Байт_2) + (Байт_3 AND Байт_4)».\n\nВходные данные: 0x3A, 0x5C, 0x8F, 0x70" },
-            { id: 4, name: "Керинейская лань", icon: "kartinki/icon/4.png", character: "kartinki/characters/lani.png", desc: "Баллистика • 30 выстрелов", answer: "6.995",
+            { id: 4, name: "Керинейская лань", icon: "kartinki/icon/4.png", desc: "Баллистика • 30 выстрелов", answer: "6.995",
               story: "Геракл-антивирус отслеживает Керинейскую лань...\n\n«Формула: P = (Попаданий / 30) * Среднее Value. Результат округлите до 3 знаков».\n\nВходные данные: 17 попаданий из 30, среднее Value = 12.344" },
-            { id: 5, name: "Эриманфский вепрь", icon: "kartinki/icon/5.png", character: "kartinki/characters/vepri.png", desc: "Хэширование • SHA-256", answer: "password",
+            { id: 5, name: "Эриманфский вепрь", icon: "kartinki/icon/5.png", desc: "Хэширование • SHA-256", answer: "password",
               story: "Геракл-антивирус наткнулся на Эриманфского вепря...\n\n«Известно, что SHA-256 хэш слова равен 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92»." },
-            { id: 6, name: "Авгиевы конюшни", icon: "kartinki/icon/6.png", character: "kartinki/characters/koniuszni.png", desc: "Отладка кода • Python", answer: ",)=;/",
+            { id: 6, name: "Авгиевы конюшни", icon: "kartinki/icon/6.png", desc: "Отладка кода • Python", answer: ",)=;/",
               story: "Геракл-антивирус чистит базу данных...\n\nНеправильный код:\nnumbers = [1, 2, 3, 4, 5,]\nsquared = [x**2 for x in numbers]\ntotal = sum(squared\naverage == total / len(squared)\nprint(Сумма= ; total)\nprint(Среднее // average)" },
-            { id: 7, name: "Критский бык", icon: "kartinki/icon/7.png", character: "kartinki/characters/byk.png", desc: "Анализ данных • Excel", answer: "75",
+            { id: 7, name: "Критский бык", icon: "kartinki/icon/7.png", desc: "Анализ данных • Excel", answer: "75",
               story: "Геракл-антивирус анализирует большой файл данных...\n\n«В файле data.csv... value > 1000 — 3200, status = 'ERROR' — 450, timestamp за последние 24 часа — 1800. Пересечение всех трёх условий — 75 записей»." },
-            { id: 8, name: "Кони Диомеда", icon: "kartinki/icon/8.png", character: "kartinki/characters/koni.png", desc: "Рекурсия • Факториал", answer: "1856751023045509591",
+            { id: 8, name: "Кони Диомеда", icon: "kartinki/icon/8.png", desc: "Рекурсия • Факториал", answer: "1856751023045509591",
               story: "Геракл-антивирус вычисляет мощность коней Диомеда...\n\n«F(0) = 1, F(1) = 2, F(n) = F(n-1) * F(n-2) + 1. Вычислите F(32)»." },
-            { id: 9, name: "Пояс Ипполиты", icon: "kartinki/icon/9.png", character: "kartinki/characters/ippolita.png", desc: "Шифр • Сдвиг", answer: "финал покорится лишь достойным",
+            { id: 9, name: "Пояс Ипполиты", icon: "kartinki/icon/9.png", desc: "Шифр • Сдвиг", answer: "финал покорится лишь достойным",
               story: "Геракл-антивирус перехватил зашифрованное сообщение...\n\nЗашифрованное сообщение: «ьрхзу чцтцшръщж урад лцщцсхгф»" },
-            { id: 10, name: "Коровы Гериона", icon: "kartinki/icon/10.png", character: "kartinki/characters/cows.png", desc: "Массивы • Поиск дубликатов", answer: "2",
-              story: "Геракл-антивирус ищет дублирующиеся данные...\n\n«Дан массив чисел: [2, 5, 1, 2, 3, 5, 1, 2, 4]. Найдите первый повторяющийся элемент»." },
-            { id: 11, name: "Яблоки Гесперид", icon: "kartinki/icon/11.png", character: "kartinki/characters/yablonya.png", desc: "Деревья • Обход", answer: "5",
+            { id: 10, name: "Коровы Гериона", icon: "kartinki/icon/10.png", desc: "Массивы • Поиск дубликатов", answer: "2",
+              story: "Геракл-антивирус ищет дублирующиеся данные...\n\n«Дан массив чисел, задание10 по ссылке https://golnk.ru/4bNpr. Найдите первый повторяющийся элемент»." },
+            { id: 11, name: "Яблоки Гесперид", icon: "kartinki/icon/11.png", desc: "Деревья • Обход", answer: "5",
               story: "Геракл-антивирус исследует дерево яблок...\n\n«Дано бинарное дерево. Найдите сумму значений всех узлов на максимальной глубине»." },
-            { id: 12, name: "Цербер", icon: "kartinki/icon/12.png", character: "kartinki/characters/cerber.png", desc: "Двоичный поиск", answer: "4",
-              story: "Геракл-антивирус ищет уязвимость в системе Цербера...\n\n«В отсортированном массиве [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25] нужно найти число 17. Сколько итераций потребуется?»" }
+            { id: 12, name: "Цербер", icon: "kartinki/icon/12.png", desc: "Двоичный поиск", answer: "4",
+              story: "Геракл-антивирус ищет уязвимость в системе Цербера...\n\n«В отсортированном массиве, доступном по ссылке https://golnk.ru/4bNpr (задание12). Нужно найти число 17. Сколько итераций потребуется?»" }
         ];
 
         const TIME_LIMIT_SECONDS = 90 * 60;
@@ -449,8 +443,6 @@
             document.getElementById('modalHeroImg').src = currentLabor.icon;
             document.getElementById('modalHeroImg').alt = currentLabor.name;
             document.getElementById('modalHeroName').textContent = currentLabor.name;
-            document.getElementById('modalCharacterLargo').src = currentLabor.character;
-            document.getElementById('modalCharacterLargo').alt = currentLabor.name;
             storyText.textContent = currentLabor.story;
             answerInput.value = '';
             modalResult.innerHTML = '';
