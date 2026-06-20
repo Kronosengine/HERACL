@@ -809,6 +809,30 @@ body {
     text-shadow: 0 0 5px #ffa502;
 }
 
+.modal-wrapper {
+    display: flex;
+}
+
+.modal-character-largo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0a0f2a, #060a18);
+    border: 2px solid #00f0ff;
+    border-radius: 30px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 0 60px rgba(0, 240, 255, 0.4);
+    animation: modalFadeIn 0.3s ease;
+}
+
+.modal-character-largo img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
 /* ========== МОДАЛЬНОЕ ОКНО ========== */
 .modal-overlay {
     position: fixed;
